@@ -1,0 +1,91 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+    "id": "9cc4251b-4d50-48c3-819a-679484c9dcc3",
+    "name": "{{taskname}}",
+    "friendlyName": "{{taskfriendlyname}}",
+    "description": "{{taskdescription}}",
+    "helpMarkDown": "",
+    "category": "Utility",
+    "author": "{{taskauthor}}",
+    "version": {
+        "Major": 0,
+        "Minor": 1,
+        "Patch": 0
+    },
+    "groups": [
+        {
+            "name": "mainGroup",
+            "displayName": "Setup",
+            "isExpanded": true
+        },
+        {
+            "name": "enrollGroup",
+            "displayName": "Enroll",
+            "isExpanded": true
+        },
+        {
+            "name": "pickupGroup",
+            "displayName": "Pickup",
+            "isExpanded": true
+        },
+        {
+            "name": "renewGroup",
+            "displayName": "Renew",
+            "isExpanded": true
+        }
+    ],
+    "instanceNameFormat": "Echo $(samplestring)",
+    "inputs": [
+        {
+            "name": "serverType",
+            "type": "radio",
+            "label": "Server Type",
+            "defaultValue": "tpp",
+            "required": true,
+            "helpMarkDown": "Server type to connect to",
+            "options": {
+                "tpp": "Trust Protection Platform (TPP)",
+                "cloud": "Venafi Cloud"
+            },
+            "groupName": "mainGroup"
+        },
+        {
+            "name": "serverUrl",
+            "type": "string",
+            "label": "Server URL",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "TPP server URL",
+            "visibleRule": "serverType == tpp",
+            "groupName": "mainGroup"
+        },
+        {
+            "name": "serverUrl",
+            "type": "string",
+            "label": "Server URL",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "TPP server URL",
+            "visibleRule": "serverType == tpp",
+            "groupName": "mainGroup"
+        },
+        {
+            "name": "action",
+            "type": "pickList",
+            "label": "Action",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Select the action to perform",
+            "options": {
+                "enrollAction": "Request Certificate",
+                "pickupAction": "Download Certificate",
+                "renewAction": "Renew Certificate"
+            }
+        }
+    ],
+    "execution": {
+        "Node10": {
+            "target": "index.js"
+        }
+    }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "vcert",
+  "version": "0.0.1",
+  "description": "Access Venafi Vcert functionality from Azure DevOps pipline",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "venafi",
+    "vcert",
+    "certificate"
+  ],
+  "author": "Greg Brownstein",
+  "license": "ISC",
+  "dependencies": {
+    "azure-pipelines-task-lib": "^3.0.6-preview.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.22",
+    "@types/q": "^1.5.4",
+    "typescript": "^4.0.2"
+  }
+}
