@@ -1,0 +1,75 @@
+pool:
+  name: Azure Pipelines
+  demands: npm
+
+steps:
+- powershell: |
+    gci env:
+    pwd
+    gci . -recurse
+  displayName: 'get env vars'
+
+- task: ms-devlabs.vsts-developer-tools-build-tasks.tfx-installer-build-task.TfxInstaller@2
+  displayName: 'Use Node CLI for Azure DevOps (tfx-cli): v0.6.x'
+  enabled: false
+
+- task: ms-devlabs.vsts-developer-tools-build-tasks.extension-version-build-task.QueryAzureDevOpsExtensionVersion@2
+  displayName: 'Query Extension Version: GregBrownsteinAtDeloitte.Deloitte-CMDB-Data-Access'
+  inputs:
+    connectedServiceName: 'VS Marketplace - Extensions - GDB'
+    publisherId: GregBrownsteinAtDeloitte
+    extensionId: 'Deloitte-CMDB-Data-Access'
+    versionAction: Patch
+  enabled: false
+
+- task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    workingDir: ./buildAndReleaseTask
+    verbose: false
+
+- powershell: |
+   & .\node_modules\.bin\tsc.cmd -p .\tsconfig.json
+
+  workingDirectory: ./buildAndReleaseTask
+  displayName: 'Compile code'
+  env:
+    system.debug: true
+
+- powershell: |
+   gci env:|fl
+
+   $newPatchVersion = ([version] $env:QUERYAZUREDEVOPSEXTENSIONVERSION_EXTENSION_VERSION) | select -ExpandProperty Build
+
+   $taskObject = Get-Content '.\buildAndReleaseTask\task.json' -raw | ConvertFrom-Json
+
+   # update version
+   $taskObject.Version.Patch = [int]::Parse($newPatchVersion)
+   Write-Output ('Updating task patch version to {0}' -f $taskObject.Version.Patch)
+
+   # should be able to do this via Package Extension, get this working
+   $manifest = Get-Content '.\vss-extension.json' -raw | ConvertFrom-Json
+   $manifestVersion = [version] $manifest.Version
+   $newVersion = ('{0}.{1}.{2}' -f $manifestVersion.Major, $manifestVersion.Minor, $newPatchVersion)
+   $manifest.Version = $newVersion
+
+   $taskObject | ConvertTo-Json -Depth 10  | set-content '.\buildAndReleaseTask\task.json'
+   $manifest | ConvertTo-Json -Depth 10  | set-content '.\vss-extension.json'
+  # workingDirectory: Build/VSTS/Tasks/CMDB
+  displayName: 'Update task and extension version'
+  enabled: false
+
+- task: ms-devlabs.vsts-developer-tools-build-tasks.package-extension-build-task.PackageAzureDevOpsExtension@2
+  displayName: 'Package Extension: Build/VSTS/Tasks/CMDB'
+  inputs:
+    rootFolder: Build/VSTS/Tasks/CMDB
+    outputPath: '$(Build.ArtifactStagingDirectory)/CMDB.vsix'
+    extensionVisibility: private
+    extensionPricing: free
+  enabled: false
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: Extension_DeloitteCmdbDataAccess'
+  inputs:
+    PathtoPublish: .
+    ArtifactName: 'Extension_DeloitteCmdbDataAccess'
