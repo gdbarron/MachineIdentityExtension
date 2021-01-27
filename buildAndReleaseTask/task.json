@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
     "id": "9cc4251b-4d50-48c3-819a-679484c9dcc3",
-    "name": "Venafi-Vcert",
+    "name": "VenafiVcert",
     "friendlyName": "Venafi Vcert",
     "description": "Simplify key generation and enrollment of machine identities (also known as SSL/TLS certificates and keys) that comply with enterprise security policy by using the Venafi Platform or Venafi Cloud.",
     "helpMarkDown": "",
@@ -34,7 +34,7 @@
             "isExpanded": true
         }
     ],
-    "instanceNameFormat": "Echo $(samplestring)",
+    "instanceNameFormat": "$(action)",
     "inputs": [
         {
             "name": "serverType",
@@ -103,6 +103,9 @@
             }
         },
         {
+            "name": "todo",
+            "label": "todo",
+            "type": "pickList",
             "options": {
                 "enroll/cn": "common name",
                 "enroll/z": "Use to specify the folder path where the certificate object will be placed. VCert prepends \\VED\\Policy, so you only need to specify child folders under the root Policy folder.  Example: -z DevOps\\CorpApp",
@@ -117,13 +120,13 @@
                 "enroll/san-dns": "multiple allowed, provide key/value again",
                 "enroll/san-email": "multiple allowed, provide key/value again",
                 "enroll/san-ip": "multiple allowed, provide key/value again",
-                "enroll/field":"custom fields, key=value format, multiple allowed",
-                "enroll/no-pickup":"dont retrieve cert",
-                "pickup-id-file":"id for subsequent actions.  stdout by default, offer option for env var",
-                "pickup/pickup-id":"provide id for pickup, this or file below",
-                "pickup/pickup-id-file":"provide file for id.  this or id above",
-                "renew/id":"id for renewal or file:filepath",
-                "renew/thumbprint":"sha1 thumbprint, string or read from cert file with file:filepath"
+                "enroll/field": "custom fields, key=value format, multiple allowed",
+                "enroll/no-pickup": "dont retrieve cert",
+                "pickup-id-file": "id for subsequent actions.  stdout by default, offer option for env var",
+                "pickup/pickup-id": "provide id for pickup, this or file below",
+                "pickup/pickup-id-file": "provide file for id.  this or id above",
+                "renew/id": "id for renewal or file:filepath",
+                "renew/thumbprint": "sha1 thumbprint, string or read from cert file with file:filepath"
             }
         }
     ],
