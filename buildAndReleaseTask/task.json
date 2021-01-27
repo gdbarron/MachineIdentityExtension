@@ -1,16 +1,16 @@
 {
     "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
     "id": "9cc4251b-4d50-48c3-819a-679484c9dcc3",
-    "name": "{{taskname}}",
-    "friendlyName": "{{taskfriendlyname}}",
-    "description": "{{taskdescription}}",
+    "name": "Venafi-Vcert",
+    "friendlyName": "Venafi Vcert",
+    "description": "Simplify key generation and enrollment of machine identities (also known as SSL/TLS certificates and keys) that comply with enterprise security policy by using the Venafi Platform or Venafi Cloud.",
     "helpMarkDown": "",
     "category": "Utility",
-    "author": "{{taskauthor}}",
+    "author": "Greg Brownstein",
     "version": {
         "Major": 0,
-        "Minor": 1,
-        "Patch": 0
+        "Minor": 0,
+        "Patch": 1
     },
     "groups": [
         {
@@ -50,23 +50,43 @@
             "groupName": "mainGroup"
         },
         {
-            "name": "serverUrl",
+            "name": "tppServerUrl",
             "type": "string",
             "label": "Server URL",
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "TPP server URL",
-            "visibleRule": "serverType == tpp",
+            "visibleRule": "serverType = tpp",
             "groupName": "mainGroup"
         },
         {
-            "name": "serverUrl",
+            "name": "tppAuthToken",
             "type": "string",
-            "label": "Server URL",
+            "label": "Auth Token",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "TPP server URL",
-            "visibleRule": "serverType == tpp",
+            "helpMarkDown": "Authentication token, requires TPP v19.2 or greater",
+            "visibleRule": "serverType = tpp",
+            "groupName": "mainGroup"
+        },
+        {
+            "name": "cloudApiKey",
+            "type": "string",
+            "label": "API Key",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "API key for Venafi Cloud",
+            "visibleRule": "serverType = cloud",
+            "groupName": "mainGroup"
+        },
+        {
+            "name": "cloudZone",
+            "type": "string",
+            "label": "Project Zone",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "DevOps project zone where the certificate will be located",
+            "visibleRule": "serverType = cloud",
             "groupName": "mainGroup"
         },
         {
@@ -80,6 +100,30 @@
                 "enrollAction": "Request Certificate",
                 "pickupAction": "Download Certificate",
                 "renewAction": "Renew Certificate"
+            }
+        },
+        {
+            "options": {
+                "enroll/cn": "common name",
+                "enroll/z": "Use to specify the folder path where the certificate object will be placed. VCert prepends \\VED\\Policy, so you only need to specify child folders under the root Policy folder.  Example: -z DevOps\\CorpApp",
+                "enroll/tpp_user": "",
+                "enroll/tpp_password": "",
+                "enroll/key-password": "private key password.  without use --no-prompt.  support pw directly or via file",
+                "enroll/csr": "local, service, file",
+                "enroll/format": "pem, json, pkcs12, jks",
+                "enroll/file": "output file. required for format pkcs12 and jks",
+                "enroll/chain": "root-last, root-first, ignore",
+                "enroll/nickname": "name for new certificate object",
+                "enroll/san-dns": "multiple allowed, provide key/value again",
+                "enroll/san-email": "multiple allowed, provide key/value again",
+                "enroll/san-ip": "multiple allowed, provide key/value again",
+                "enroll/field":"custom fields, key=value format, multiple allowed",
+                "enroll/no-pickup":"dont retrieve cert",
+                "pickup-id-file":"id for subsequent actions.  stdout by default, offer option for env var",
+                "pickup/pickup-id":"provide id for pickup, this or file below",
+                "pickup/pickup-id-file":"provide file for id.  this or id above",
+                "renew/id":"id for renewal or file:filepath",
+                "renew/thumbprint":"sha1 thumbprint, string or read from cert file with file:filepath"
             }
         }
     ],

@@ -1,29 +1,44 @@
 {
     "manifestVersion": 1,
-    "id": "build-release-task",
-    "name": "Fabrikam Build and Release Tools",
+    "id": "VenafiVcert",
+    "name": "Venafi Vcert",
     "version": "0.0.1",
-    "publisher": "fabrikam",
+    "publisher": "GregBrownstein",
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
         }
     ],
-    "description": "Tools for building/releasing with Fabrikam. Includes one build/release task.",
+    "description": "Create, retrieve, and renew certificates via Venafi TPP or Venafi Cloud.",
     "categories": [
         "Azure Pipelines"
     ],
     "icons": {
-        "default": "images/extension-icon.png"
+        "default": "images/Ven_circleV_logo.png"
     },
     "files": [
         {
-            "path": "buildAndReleaseTask"
+            "path": "buildAndReleaseTask/node_modules"
+        },
+        {
+            "path": "buildAndReleaseTask/bin"
+        },
+        {
+            "path": "buildAndReleaseTask/index.js"
+        },
+        {
+            "path": "buildAndReleaseTask/task.json"
+        },
+        {
+            "path": "images"
         }
+    ],
+    "galleryFlags": [
+        "Preview"
     ],
     "contributions": [
         {
-            "id": "custom-build-release-task",
+            "id": "VenafiVcert",
             "type": "ms.vss-distributed-task.task",
             "targets": [
                 "ms.vss-distributed-task.tasks"

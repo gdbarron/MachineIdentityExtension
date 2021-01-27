@@ -14,4 +14,5 @@ async function run() {
     }
 }
 
+// use --no-prompt
 run();
