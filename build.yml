@@ -26,12 +26,14 @@ steps:
 
 - task: ms-devlabs.vsts-developer-tools-build-tasks.tfx-installer-build-task.TfxInstaller@3
   displayName: 'Use Node CLI for Azure DevOps (tfx-cli): v0.7.x'
+  enabled: false
 
 - task: PackageAzureDevOpsExtension@3
   inputs:
     rootFolder: '.'
     outputPath: './VcertExtension.vsix'
     updateTasksVersion: false
+  enabled: false
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: VcertExtension'
