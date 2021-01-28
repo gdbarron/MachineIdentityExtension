@@ -18,6 +18,9 @@
     },
     "files": [
         {
+            "path": "buildAndReleaseTask/bin"
+        },
+        {
             "path": "buildAndReleaseTask/node_modules/azure-pipelines-task-lib"
         },
         {
