@@ -148,6 +148,13 @@
             "groupName": "pickupGroup"
         },
         {
+            "name": "runParams",
+            "type": "string",
+            "label": "Run Params",
+            "defaultValue": "",
+            "required": false
+        },
+        {
             "name": "todo",
             "label": "todo",
             "type": "pickList",

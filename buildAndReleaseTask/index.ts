@@ -7,6 +7,7 @@ async function run() {
 
         // let action:string = tl.getInput('action', true)
         let action = tl.getInput('action', true) as string
+        let runParams = tl.getInput('runParams', false) as string
 
         switch (action) {
             case "enrollAction":
@@ -24,7 +25,7 @@ async function run() {
         console.log(vcertArgs)
 
         const { execFile } = require('child_process');
-        const child = execFile(path.join(__dirname, 'bin/vcert.exe'), ['--verbose'], (error: string, stdout: string, stderr: string) => {
+        const child = execFile(path.join(__dirname, 'bin/vcert.exe'), [runParams], (error: string, stdout: string, stderr: string) => {
             if (error) {
                 throw error;
             }
