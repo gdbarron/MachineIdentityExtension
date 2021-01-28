@@ -6,6 +6,10 @@
     "description": "Simplify key generation and enrollment of machine identities (also known as SSL/TLS certificates and keys) that comply with enterprise security policy by using the Venafi Platform or Venafi Cloud.",
     "helpMarkDown": "",
     "category": "Utility",
+    "visibility": [
+        "Build",
+        "Release"
+    ],
     "author": "Greg Brownstein",
     "version": {
         "Major": 0,
