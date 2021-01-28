@@ -1,3 +1,4 @@
+import path = require('path')
 import tl = require('azure-pipelines-task-lib/task');
 
 async function run() {
@@ -21,6 +22,14 @@ async function run() {
 
         console.log(__dirname)
         console.log(vcertArgs)
+
+        const { execFile } = require('child_process');
+        const child = execFile(path.join(__dirname, 'bin/vcert.exe'), ['--verbose'], (error, stdout, stderr) => {
+            if (error) {
+                throw error;
+            }
+            console.log(stdout);
+        });
     }
     catch (err) {
         tl.setResult(tl.TaskResult.Failed, err.message);
