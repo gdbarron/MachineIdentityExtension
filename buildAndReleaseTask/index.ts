@@ -2,12 +2,24 @@ import tl = require('azure-pipelines-task-lib/task');
 
 async function run() {
     try {
-        const inputString: string | undefined = tl.getInput('samplestring', true);
-        if (inputString == 'bad') {
-            tl.setResult(tl.TaskResult.Failed, 'Bad input was given');
-            return;
+        let vcertArgs: string = ''
+
+        let action: string = tl.getInput('action', true)
+
+        switch (action) {
+            case "enrollAction":
+                vcertArgs = 'enroll'
+                break;
+            case "pickupAction":
+                vcertArgs = 'pickup'
+                break;
+            case "renewAction":
+                vcertArgs = 'renew'
+                break;
         }
-        console.log('Hello', inputString);
+
+        console.log(__dirname)
+        console.log(vcertArgs)
     }
     catch (err) {
         tl.setResult(tl.TaskResult.Failed, err.message);
