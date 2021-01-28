@@ -18,9 +18,6 @@
     },
     "files": [
         {
-            "path": "buildAndReleaseTask/node_modules"
-        },
-        {
             "path": "buildAndReleaseTask/index.js"
         },
         {
