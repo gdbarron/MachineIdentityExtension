@@ -13,14 +13,24 @@ steps:
 - task: Npm@1
   displayName: 'npm install'
   inputs:
+    command: 'install'
     workingDir: ./buildAndReleaseTask
     verbose: false
+
+- task: Bash@3
+  displayName: Compile Javascript
+  inputs:
+    targetType: "inline"
+    script: |
+      cd buildAndReleaseTask
+      tsc
 
 - powershell: |
    & .\node_modules\.bin\tsc.cmd -p .\tsconfig.json
 
   workingDirectory: ./buildAndReleaseTask
   displayName: 'Compile code'
+  enabled: false
   env:
     system.debug: true
 

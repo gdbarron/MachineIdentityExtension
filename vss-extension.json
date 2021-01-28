@@ -18,13 +18,7 @@
     },
     "files": [
         {
-            "path": "buildAndReleaseTask/bin"
-        },
-        {
-            "path": "buildAndReleaseTask/index.js"
-        },
-        {
-            "path": "buildAndReleaseTask/task.json"
+            "path": "buildAndReleaseTask"
         }
     ],
     "galleryFlags": [
