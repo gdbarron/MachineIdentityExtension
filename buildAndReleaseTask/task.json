@@ -113,6 +113,7 @@
             "label": "Common Name (CN)",
             "defaultValue": "",
             "required": true,
+            "visibleRule": "action = enrollAction",
             "groupName": "enrollGroup"
         },
         {
@@ -125,6 +126,7 @@
                 "pickupId": "ID",
                 "pickupIdFile": "File path"
             },
+            "visibleRule": "action = pickupAction",
             "groupName": "pickupGroup"
         },
         {
@@ -133,7 +135,7 @@
             "label": "Retrieval ID",
             "defaultValue": "",
             "required": true,
-            "visibleRule": "pickupBy = pickupId",
+            "visibleRule": "action = pickupAction && pickupBy = pickupId",
             "groupName": "pickupGroup"
         },
         {
@@ -142,7 +144,7 @@
             "label": "Retrieval file path",
             "defaultValue": "",
             "required": true,
-            "visibleRule": "pickupBy = pickupIdFile",
+            "visibleRule": "action = pickupAction && pickupBy = pickupIdFile",
             "groupName": "pickupGroup"
         },
         {
