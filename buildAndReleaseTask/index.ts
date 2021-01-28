@@ -4,7 +4,8 @@ async function run() {
     try {
         let vcertArgs: string = ''
 
-        let action: string = tl.getInput('action', true)
+        // let action:string = tl.getInput('action', true)
+        let action = tl.getInput('action', true) as string
 
         switch (action) {
             case "enrollAction":
