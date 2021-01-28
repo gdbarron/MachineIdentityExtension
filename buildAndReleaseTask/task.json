@@ -38,7 +38,7 @@
             "isExpanded": false
         }
     ],
-    "instanceNameFormat": "$(action)",
+    "instanceNameFormat": "Venafi Vcert",
     "inputs": [
         {
             "name": "serverType",
@@ -104,8 +104,7 @@
                 "enrollAction": "Request Certificate",
                 "pickupAction": "Download Certificate",
                 "renewAction": "Renew Certificate"
-            },
-            "groupName": "mainGroup"
+            }
         },
         {
             "name": "enrollCommonName",
