@@ -14,7 +14,8 @@
   "author": "Greg Brownstein",
   "license": "ISC",
   "dependencies": {
-    "azure-pipelines-task-lib": "^3.0.6-preview.1"
+    "azure-pipelines-task-lib": "^3.0.6-preview.1",
+    "vss-web-extension-sdk": "^5.141.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.22",
