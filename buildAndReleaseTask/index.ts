@@ -24,7 +24,7 @@ async function run() {
         console.log(vcertArgs)
 
         const { execFile } = require('child_process');
-        const child = execFile(path.join(__dirname, 'bin/vcert.exe'), ['--verbose'], (error, stdout, stderr) => {
+        const child = execFile(path.join(__dirname, 'bin/vcert.exe'), ['--verbose'], (error: string, stdout: string, stderr: string) => {
             if (error) {
                 throw error;
             }
