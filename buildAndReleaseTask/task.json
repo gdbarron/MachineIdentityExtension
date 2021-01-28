@@ -24,17 +24,17 @@
         },
         {
             "name": "enrollGroup",
-            "displayName": "Certificate Request (enroll)",
+            "displayName": "Request Certificate",
             "isExpanded": false
         },
         {
             "name": "pickupGroup",
-            "displayName": "Certificate Retrieval (pickup)",
+            "displayName": "Retrieve Certificate",
             "isExpanded": false
         },
         {
             "name": "renewGroup",
-            "displayName": "Certificate Renewal (renew)",
+            "displayName": "Renew Certificate",
             "isExpanded": false
         }
     ],
@@ -97,14 +97,15 @@
             "name": "action",
             "type": "pickList",
             "label": "Action",
-            "defaultValue": "",
+            "defaultValue": "enrollAction",
             "required": true,
             "helpMarkDown": "Select the action to perform",
             "options": {
                 "enrollAction": "Request Certificate",
-                "pickupAction": "Download Certificate",
+                "pickupAction": "Retrieve Certificate",
                 "renewAction": "Renew Certificate"
-            }
+            },
+            "groupName": "mainGroup"
         },
         {
             "name": "enrollCommonName",
@@ -131,7 +132,7 @@
         {
             "name": "pickupId",
             "type": "string",
-            "label": "Retrieval ID",
+            "label": "ID",
             "defaultValue": "",
             "required": true,
             "visibleRule": "action = pickupAction && pickupBy = pickupId",
@@ -140,7 +141,7 @@
         {
             "name": "pickupIdFile",
             "type": "string",
-            "label": "Retrieval file path",
+            "label": "File path",
             "defaultValue": "",
             "required": true,
             "visibleRule": "action = pickupAction && pickupBy = pickupIdFile",
