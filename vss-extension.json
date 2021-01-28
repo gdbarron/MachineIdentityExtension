@@ -21,9 +21,6 @@
             "path": "buildAndReleaseTask/node_modules"
         },
         {
-            "path": "buildAndReleaseTask/bin"
-        },
-        {
             "path": "buildAndReleaseTask/index.js"
         },
         {
