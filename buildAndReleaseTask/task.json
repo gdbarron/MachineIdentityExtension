@@ -19,23 +19,23 @@
     "groups": [
         {
             "name": "mainGroup",
-            "displayName": "Setup",
+            "displayName": "Main",
             "isExpanded": true
         },
         {
             "name": "enrollGroup",
-            "displayName": "Enroll",
-            "isExpanded": true
+            "displayName": "Certificate Request (enroll)",
+            "isExpanded": false
         },
         {
             "name": "pickupGroup",
-            "displayName": "Pickup",
-            "isExpanded": true
+            "displayName": "Certificate Retrieval (pickup)",
+            "isExpanded": false
         },
         {
             "name": "renewGroup",
-            "displayName": "Renew",
-            "isExpanded": true
+            "displayName": "Certificate Renewal (renew)",
+            "isExpanded": false
         }
     ],
     "instanceNameFormat": "$(action)",
@@ -104,7 +104,46 @@
                 "enrollAction": "Request Certificate",
                 "pickupAction": "Download Certificate",
                 "renewAction": "Renew Certificate"
-            }
+            },
+            "groupName": "mainGroup"
+        },
+        {
+            "name": "enrollCommonName",
+            "type": "string",
+            "label": "Common Name (CN)",
+            "defaultValue": "",
+            "required": true,
+            "groupName": "enrollGroup"
+        },
+        {
+            "name": "pickupBy",
+            "type": "radio",
+            "label": "Retrieve by",
+            "defaultValue": "pickupId",
+            "required": true,
+            "options": {
+                "pickupId": "ID",
+                "pickupIdFile": "File path"
+            },
+            "groupName": "pickupGroup"
+        },
+        {
+            "name": "pickupId",
+            "type": "string",
+            "label": "Retrieval ID",
+            "defaultValue": "",
+            "required": true,
+            "visibleRule": "pickupBy = pickupId",
+            "groupName": "pickupGroup"
+        },
+        {
+            "name": "pickupIdFile",
+            "type": "string",
+            "label": "Retrieval file path",
+            "defaultValue": "",
+            "required": true,
+            "visibleRule": "pickupBy = pickupIdFile",
+            "groupName": "pickupGroup"
         },
         {
             "name": "todo",
