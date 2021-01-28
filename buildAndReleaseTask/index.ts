@@ -3,7 +3,7 @@ import tl = require('azure-pipelines-task-lib/task');
 
 async function run() {
     try {
-        let vcertArgs: string = ''
+        let vcertArgs: string[] = []
         let vcertPath: string = 'bin/vcert_'
 
         var isWin = process.platform === "win32";
@@ -34,24 +34,24 @@ async function run() {
 
         switch (action) {
             case "enrollAction":
-                vcertArgs = 'enroll'
+                vcertArgs.push('enroll')
                 break;
             case "pickupAction":
-                vcertArgs = 'pickup'
+                vcertArgs.push('pickup')
                 break;
             case "renewAction":
-                vcertArgs = 'renew'
+                vcertArgs.push('renew')
                 break;
         }
 
         console.log(__dirname)
 
-        vcertArgs += ' ' + runParams
+        vcertArgs.push(runParams)
         console.log(path.join(__dirname, vcertPath))
         console.log(vcertArgs)
 
         const { execFile } = require('child_process');
-        const child = execFile(path.join(__dirname, vcertPath), [vcertArgs], (error: string, stdout: string, stderr: string) => {
+        const child = execFile(path.join(__dirname, vcertPath), vcertArgs, (error: string, stdout: string, stderr: string) => {
             if (error) {
                 throw error;
             }
