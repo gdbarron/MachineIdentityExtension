@@ -12,7 +12,11 @@ async function run() {
 
         // let action:string = tl.getInput('action', true)
         let action = tl.getInput('action', true) as string
+        let serverType = tl.getInput('serverType', true) as string
         let runParams = tl.getInput('runParams', false) as string
+        let cloudApiKey = tl.getInput('cloudApiKey', (serverType === 'cloud')) as string
+        let cloudZone = tl.getInput('cloudZone', (serverType === 'cloud')) as string
+        let enrollCommonName = tl.getInput('cloudZone', (action === 'enrollAction')) as string
 
         switch (process.platform) {
             case 'win32':
@@ -35,6 +39,8 @@ async function run() {
         switch (action) {
             case "enrollAction":
                 vcertArgs.push('enroll')
+                vcertArgs.push('--cn')
+                vcertArgs.push(enrollCommonName)
                 break;
             case "pickupAction":
                 vcertArgs.push('pickup')
@@ -44,6 +50,12 @@ async function run() {
                 break;
         }
 
+        if (serverType === 'cloud') {
+            vcertArgs.push('-k')
+            vcertArgs.push(cloudApiKey)
+            vcertArgs.push('-z')
+            vcertArgs.push(cloudZone)
+        }
         console.log(__dirname)
 
         vcertArgs.push(runParams)
