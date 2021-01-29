@@ -1,7 +1,7 @@
 pool:
   name: Azure Pipelines
   demands: npm
-  vmImage: 'windows-latest'
+  vmImage: 'ubuntu-latest'
 
 steps:
 - powershell: |
