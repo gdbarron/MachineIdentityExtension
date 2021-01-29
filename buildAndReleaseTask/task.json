@@ -36,9 +36,14 @@
             "name": "renewGroup",
             "displayName": "Renew Certificate",
             "isExpanded": false
+        },
+        {
+            "name": "advanced",
+            "displayName": "Advanced",
+            "isExpanded": false
         }
     ],
-    "instanceNameFormat": "Venafi Vcert",
+    "instanceNameFormat": "Venafi vCert",
     "inputs": [
         {
             "name": "serverType",
@@ -180,6 +185,15 @@
                 "renew/id": "id for renewal or file:filepath",
                 "renew/thumbprint": "sha1 thumbprint, string or read from cert file with file:filepath"
             }
+        },
+        {
+            "name": "verbose",
+            "label": "Verbose",
+            "defaultValue": false,
+            "required": false,
+            "type": "boolean",
+            "helpMarkDown": "Use to increase the level of logging detail, which is helpful when troubleshooting issues.",
+            "groupName": "advanced"
         }
     ],
     "execution": {

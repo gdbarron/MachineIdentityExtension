@@ -20,6 +20,9 @@ async function run() {
         // enroll
         let enrollCommonName = tl.getInput('enrollCommonName', (action === 'enrollAction')) as string
 
+        // advanced
+        let verbose = tl.getBoolInput('verbose', false) as boolean
+
         switch (process.platform) {
             case 'win32':
                 vcertPath += 'windows.exe'
@@ -57,6 +60,10 @@ async function run() {
             vcertArgs.push(cloudApiKey)
             vcertArgs.push('-z')
             vcertArgs.push(cloudZone)
+        }
+
+        if (verbose) {
+            vcertArgs.push('--verbose')
         }
 
         // ensure we aren't prompting for a password
