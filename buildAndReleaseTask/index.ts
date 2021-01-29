@@ -56,9 +56,7 @@ async function run() {
             vcertArgs.push('-z')
             vcertArgs.push(cloudZone)
         }
-        console.log(__dirname)
 
-        vcertArgs.push(runParams)
         console.log(path.join(__dirname, vcertPath))
         console.log(vcertArgs)
 
