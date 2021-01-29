@@ -123,6 +123,15 @@ async function run() {
         console.log(vcertArgs)
 
         const { execFile } = require('child_process');
+
+        // run with version switch first
+        const childVersion = execFile(path.join(__dirname, vcertPath), ['--version'], (error: string, stdout: string, stderr: string) => {
+            if (error) {
+                throw error;
+            }
+            console.log(stdout);
+        });
+
         const child = execFile(path.join(__dirname, vcertPath), vcertArgs, (error: string, stdout: string, stderr: string) => {
             if (error) {
                 throw error;
