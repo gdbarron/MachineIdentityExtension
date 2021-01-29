@@ -16,7 +16,10 @@ async function run() {
         let serverType = tl.getInput('serverType', true) as string
         let runParams = tl.getInput('runParams', false) as string
         let tppServerUrl = tl.getInput('tppServerUrl', (serverType === 'tpp')) as string
-        let tppAuthToken = tl.getInput('tppAuthToken', (serverType === 'tpp')) as string
+        let tppAuthType = tl.getInput('tppAuthType', (serverType === 'tpp')) as string
+        let tppAuthToken = tl.getInput('tppAuthToken', (tppAuthType === 'token')) as string
+        let tppUsername = tl.getInput('tppUsername', (tppAuthType === 'username')) as string
+        let tppPassword = tl.getInput('tppPassword', (tppAuthType === 'username')) as string
         let cloudApiKey = tl.getInput('cloudApiKey', (serverType === 'cloud')) as string
         let cloudZone = tl.getInput('cloudZone', (serverType === 'cloud')) as string
 
@@ -29,10 +32,6 @@ async function run() {
         let enrollSanDns = tl.getInput('enrollSanDns', false) as string
         let enrollSanEmail = tl.getInput('enrollSanEmail', false) as string
         let enrollSanIp = tl.getInput('enrollSanIp', false) as string
-
-        // getcred
-        let tppUsername = tl.getInput('tppUsername', (action === 'getcredAction')) as string
-        let tppPassword = tl.getInput('tppPassword', (action === 'getcredAction')) as string
 
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
@@ -114,10 +113,6 @@ async function run() {
                 break;
             case "getcredAction":
                 vcertArgs.push('getcred')
-                vcertArgs.push('--username')
-                vcertArgs.push(tppUsername)
-                vcertArgs.push('--password')
-                vcertArgs.push(tppPassword)
                 break;
         }
 
@@ -128,8 +123,15 @@ async function run() {
         } else {
             vcertArgs.push('-u')
             vcertArgs.push('https://' + tppServerUrl)
-            vcertArgs.push('-t')
-            vcertArgs.push(tppAuthToken)
+            if (tppAuthType === 'token') {
+                vcertArgs.push('-t')
+                vcertArgs.push(tppAuthToken)
+            } else {
+                vcertArgs.push('--username')
+                vcertArgs.push(tppUsername)
+                vcertArgs.push('--password')
+                vcertArgs.push(tppPassword)
+            }
         }
 
         if (verbose) {

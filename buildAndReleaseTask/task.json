@@ -70,8 +70,8 @@
             "required": true,
             "helpMarkDown": "Server type to connect to",
             "options": {
-                "tpp": "Trust Protection Platform (TPP)",
-                "cloud": "Venafi Cloud"
+                "cloud": "Venafi Cloud",
+                "tpp": "Trust Protection Platform (TPP)"
             },
             "visibleRule": "action != getcredAction",
             "groupName": "mainGroup"
@@ -84,8 +84,8 @@
             "required": true,
             "helpMarkDown": "",
             "options": {
-                "username": "Username/Password",
-                "token": "Token"
+                "token": "Token",
+                "username": "Username/Password"
             },
             "visibleRule": "serverType = tpp",
             "groupName": "mainGroup"
