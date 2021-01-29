@@ -121,20 +121,20 @@ async function run() {
             vcertArgs.push('--verbose')
         }
 
-        console.log(path.join(__dirname, vcertPath))
+        console.log(vcertPath)
         console.log(vcertArgs)
 
         const { execFile } = require('child_process');
 
         // run with version switch first
-        const childVersion = execFile(path.join(__dirname, vcertPath), ['--version'], (error: string, stdout: string, stderr: string) => {
+        const childVersion = execFile(vcertPath, ['--version'], (error: string, stdout: string, stderr: string) => {
             if (error) {
                 throw error;
             }
             console.log(stdout);
         });
 
-        const child = execFile(path.join(__dirname, vcertPath), vcertArgs, (error: string, stdout: string, stderr: string) => {
+        const child = execFile(vcertPath, vcertArgs, (error: string, stdout: string, stderr: string) => {
             if (error) {
                 throw error;
             }
