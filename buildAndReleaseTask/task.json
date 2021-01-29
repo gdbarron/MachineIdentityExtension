@@ -25,17 +25,20 @@
         {
             "name": "enrollGroup",
             "displayName": "Request Certificate",
-            "isExpanded": false
+            "isExpanded": false,
+            "visibleRule": "action = enrollAction"
         },
         {
             "name": "pickupGroup",
             "displayName": "Retrieve Certificate",
-            "isExpanded": false
+            "isExpanded": false,
+            "visibleRule": "action = pickupAction"
         },
         {
             "name": "renewGroup",
             "displayName": "Renew Certificate",
-            "isExpanded": false
+            "isExpanded": false,
+            "visibleRule": "action = renewAction"
         },
         {
             "name": "advanced",
@@ -118,7 +121,15 @@
             "label": "Common Name (CN)",
             "defaultValue": "",
             "required": true,
-            "visibleRule": "action = enrollAction",
+            "groupName": "enrollGroup"
+        },
+        {
+            "name": "enrollKeyPassword",
+            "type": "string",
+            "label": "Private Key Password",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Password for encrypting the private key.  Specifying a value here will override the default non-encrypted private key.  It is recommended to use a secret variable, https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables.",
             "groupName": "enrollGroup"
         },
         {

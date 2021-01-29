@@ -14,11 +14,14 @@ async function run() {
         let action = tl.getInput('action', true) as string
         let serverType = tl.getInput('serverType', true) as string
         let runParams = tl.getInput('runParams', false) as string
+        let tppServerUrl = tl.getInput('tppServerUrl', (serverType === 'tpp')) as string
+        let tppAuthToken = tl.getInput('tppAuthToken', (serverType === 'tpp')) as string
         let cloudApiKey = tl.getInput('cloudApiKey', (serverType === 'cloud')) as string
         let cloudZone = tl.getInput('cloudZone', (serverType === 'cloud')) as string
 
         // enroll
         let enrollCommonName = tl.getInput('enrollCommonName', (action === 'enrollAction')) as string
+        let enrollKeyPassword = tl.getInput('enrollKeyPassword', false) as string
 
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
@@ -44,8 +47,18 @@ async function run() {
         switch (action) {
             case "enrollAction":
                 vcertArgs.push('enroll')
+                if (serverType === 'cloud') {
+                    vcertArgs.push('-z')
+                    vcertArgs.push(cloudZone)
+                }
                 vcertArgs.push('--cn')
                 vcertArgs.push(enrollCommonName)
+                if (enrollKeyPassword) {
+                    vcertArgs.push('--key-password')
+                    vcertArgs.push(enrollKeyPassword)
+                } else {
+                    vcertArgs.push('--no-prompt')
+                }
                 break;
             case "pickupAction":
                 vcertArgs.push('pickup')
@@ -55,19 +68,20 @@ async function run() {
                 break;
         }
 
+        // needed for all cloud/tpp calls
         if (serverType === 'cloud') {
             vcertArgs.push('-k')
             vcertArgs.push(cloudApiKey)
-            vcertArgs.push('-z')
-            vcertArgs.push(cloudZone)
+        } else {
+            vcertArgs.push('-u')
+            vcertArgs.push(tppServerUrl)
+            vcertArgs.push('-t')
+            vcertArgs.push(tppAuthToken)
         }
 
         if (verbose) {
             vcertArgs.push('--verbose')
         }
-
-        // ensure we aren't prompting for a password
-        vcertArgs.push('--no-prompt')
 
         console.log(path.join(__dirname, vcertPath))
         console.log(vcertArgs)
