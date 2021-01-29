@@ -22,6 +22,7 @@ async function run() {
 
         // enroll
         let enrollCommonName = tl.getInput('enrollCommonName', (action === 'enrollAction')) as string
+        let enrollZoneTpp = tl.getInput('enrollZoneTpp', (serverType === 'tpp')) as string
         let enrollKeyPassword = tl.getInput('enrollKeyPassword', false) as string
         let enrollFormat = tl.getInput('enrollFormat', false) as string
         let enrollChain = tl.getInput('enrollChain', false) as string
@@ -39,6 +40,7 @@ async function run() {
 
             case 'linux':
                 vcertPath += 'linux'
+                // need to make vcert executable
                 fs.chmodSync(vcertPath, 0o111)
                 break;
 
@@ -55,9 +57,11 @@ async function run() {
             case "enrollAction":
                 vcertArgs.push('enroll')
 
+                vcertArgs.push('-z')
                 if (serverType === 'cloud') {
-                    vcertArgs.push('-z')
                     vcertArgs.push(cloudZone)
+                } else {
+                    vcertArgs.push(enrollZoneTpp)
                 }
 
                 vcertArgs.push('--cn')
@@ -106,7 +110,7 @@ async function run() {
                 break;
         }
 
-        // needed for all cloud/tpp calls
+        // needed for all cloud/tpp actions
         if (serverType === 'cloud') {
             vcertArgs.push('-k')
             vcertArgs.push(cloudApiKey)

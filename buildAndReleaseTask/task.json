@@ -67,7 +67,7 @@
             "label": "Server URL",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "TPP server URL",
+            "helpMarkDown": "TPP server URL, eg. tpp.venafi.example. https:// will be appended automatically.",
             "visibleRule": "serverType = tpp",
             "groupName": "mainGroup"
         },
@@ -121,6 +121,16 @@
             "label": "Common Name (CN)",
             "defaultValue": "",
             "required": true,
+            "groupName": "enrollGroup"
+        },
+        {
+            "name": "enrollZoneTpp",
+            "type": "string",
+            "label": "Target Folder Path",
+            "defaultValue": "",
+            "required": true,
+            "visibleRule": "serverType = tpp",
+            "helpMarkDown": "Use to specify the folder path where the certificate object will be placed. VCert prepends \\VED\\Policy, so you only need to specify child folders under the root Policy folder.`r`nExample: DevOps\\CorpApp",
             "groupName": "enrollGroup"
         },
         {
