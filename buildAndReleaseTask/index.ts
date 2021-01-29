@@ -16,6 +16,8 @@ async function run() {
         let runParams = tl.getInput('runParams', false) as string
         let cloudApiKey = tl.getInput('cloudApiKey', (serverType === 'cloud')) as string
         let cloudZone = tl.getInput('cloudZone', (serverType === 'cloud')) as string
+
+        // enroll
         let enrollCommonName = tl.getInput('cloudZone', (action === 'enrollAction')) as string
 
         switch (process.platform) {
@@ -56,6 +58,8 @@ async function run() {
             vcertArgs.push('-z')
             vcertArgs.push(cloudZone)
         }
+
+        vcertArgs.push('--no-prompt')
 
         console.log(path.join(__dirname, vcertPath))
         console.log(vcertArgs)
