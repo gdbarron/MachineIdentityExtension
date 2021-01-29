@@ -73,7 +73,7 @@
                 "tpp": "Trust Protection Platform (TPP)",
                 "cloud": "Venafi Cloud"
             },
-            "visibleRule": "action !== getcredAction",
+            "visibleRule": "action != getcredAction",
             "groupName": "mainGroup"
         },
         {
@@ -83,7 +83,7 @@
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "TPP server URL, eg. tpp.venafi.example. 'https://' will be appended automatically.",
-            "visibleRule": "serverType = tpp || action === getcredAction",
+            "visibleRule": "serverType = tpp || action = getcredAction",
             "groupName": "mainGroup"
         },
         {
@@ -93,7 +93,7 @@
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "Authentication token, requires TPP v20.1 or greater",
-            "visibleRule": "serverType = tpp && action !== getcredAction",
+            "visibleRule": "serverType = tpp && action != getcredAction",
             "groupName": "mainGroup"
         },
         {
@@ -103,7 +103,7 @@
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "",
-            "visibleRule": "action === getcredAction",
+            "visibleRule": "action = getcredAction",
             "groupName": "mainGroup"
         },
         {
@@ -113,7 +113,7 @@
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "",
-            "visibleRule": "action === getcredAction",
+            "visibleRule": "action = getcredAction",
             "groupName": "mainGroup"
         },
         {
