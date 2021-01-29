@@ -123,7 +123,7 @@ async function run() {
         } else {
             vcertArgs.push('-u')
             vcertArgs.push('https://' + tppServerUrl)
-            if (tppAuthType === 'token') {
+            if (tppAuthType === 'token' && action !== 'getcredAction') {
                 vcertArgs.push('-t')
                 vcertArgs.push(tppAuthToken)
             } else {
