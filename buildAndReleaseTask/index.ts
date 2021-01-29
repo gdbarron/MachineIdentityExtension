@@ -18,7 +18,7 @@ async function run() {
         let cloudZone = tl.getInput('cloudZone', (serverType === 'cloud')) as string
 
         // enroll
-        let enrollCommonName = tl.getInput('cloudZone', (action === 'enrollAction')) as string
+        let enrollCommonName = tl.getInput('enrollCommonName', (action === 'enrollAction')) as string
 
         switch (process.platform) {
             case 'win32':
@@ -59,6 +59,7 @@ async function run() {
             vcertArgs.push(cloudZone)
         }
 
+        // ensure we aren't prompting for a password
         vcertArgs.push('--no-prompt')
 
         console.log(path.join(__dirname, vcertPath))
