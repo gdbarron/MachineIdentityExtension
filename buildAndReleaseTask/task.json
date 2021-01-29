@@ -77,6 +77,20 @@
             "groupName": "mainGroup"
         },
         {
+            "name": "tppAuthType",
+            "type": "radio",
+            "label": "Auth Type",
+            "defaultValue": "token",
+            "required": true,
+            "helpMarkDown": "",
+            "options": {
+                "username": "Username/Password",
+                "token": "Token"
+            },
+            "visibleRule": "serverType = tpp",
+            "groupName": "mainGroup"
+        },
+        {
             "name": "tppServerUrl",
             "type": "string",
             "label": "Server URL",
@@ -93,7 +107,7 @@
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "Authentication token, requires TPP v20.1 or greater",
-            "visibleRule": "serverType = tpp && action != getcredAction",
+            "visibleRule": "tppAuthType = token",
             "groupName": "mainGroup"
         },
         {
@@ -103,7 +117,7 @@
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "",
-            "visibleRule": "action = getcredAction",
+            "visibleRule": "tppAuthType = username || action = getcredAction",
             "groupName": "mainGroup"
         },
         {
@@ -113,7 +127,7 @@
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "",
-            "visibleRule": "action = getcredAction",
+            "visibleRule": "tppAuthType = username || action = getcredAction",
             "groupName": "mainGroup"
         },
         {

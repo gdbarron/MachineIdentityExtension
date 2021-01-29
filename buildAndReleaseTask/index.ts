@@ -30,6 +30,10 @@ async function run() {
         let enrollSanEmail = tl.getInput('enrollSanEmail', false) as string
         let enrollSanIp = tl.getInput('enrollSanIp', false) as string
 
+        // getcred
+        let tppUsername = tl.getInput('tppUsername', (action === 'getcredAction')) as string
+        let tppPassword = tl.getInput('tppPassword', (action === 'getcredAction')) as string
+
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
 
@@ -107,6 +111,13 @@ async function run() {
                 break;
             case "renewAction":
                 vcertArgs.push('renew')
+                break;
+            case "getcredAction":
+                vcertArgs.push('getcred')
+                vcertArgs.push('--username')
+                vcertArgs.push(tppUsername)
+                vcertArgs.push('--password')
+                vcertArgs.push(tppPassword)
                 break;
         }
 
