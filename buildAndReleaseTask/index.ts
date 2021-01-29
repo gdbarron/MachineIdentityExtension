@@ -116,7 +116,7 @@ async function run() {
             vcertArgs.push(cloudApiKey)
         } else {
             vcertArgs.push('-u')
-            vcertArgs.push(tppServerUrl)
+            vcertArgs.push('https://' + tppServerUrl)
             vcertArgs.push('-t')
             vcertArgs.push(tppAuthToken)
         }

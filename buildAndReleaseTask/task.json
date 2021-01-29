@@ -49,6 +49,20 @@
     "instanceNameFormat": "Venafi vCert",
     "inputs": [
         {
+            "name": "action",
+            "type": "pickList",
+            "label": "Action",
+            "defaultValue": "enrollAction",
+            "required": true,
+            "helpMarkDown": "Select the action to perform",
+            "options": {
+                "enrollAction": "Request Certificate",
+                "pickupAction": "Retrieve Certificate",
+                "renewAction": "Renew Certificate",
+                "getcredAction": "New Auth Token (TPP only)"
+            }
+        },
+        {
             "name": "serverType",
             "type": "radio",
             "label": "Server Type",
@@ -59,6 +73,7 @@
                 "tpp": "Trust Protection Platform (TPP)",
                 "cloud": "Venafi Cloud"
             },
+            "visibleRule": "action !== getcredAction",
             "groupName": "mainGroup"
         },
         {
@@ -67,8 +82,8 @@
             "label": "Server URL",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "TPP server URL, eg. tpp.venafi.example. https:// will be appended automatically.",
-            "visibleRule": "serverType = tpp",
+            "helpMarkDown": "TPP server URL, eg. tpp.venafi.example. 'https://' will be appended automatically.",
+            "visibleRule": "serverType = tpp || action === getcredAction",
             "groupName": "mainGroup"
         },
         {
@@ -77,8 +92,28 @@
             "label": "Auth Token",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "Authentication token, requires TPP v19.2 or greater",
-            "visibleRule": "serverType = tpp",
+            "helpMarkDown": "Authentication token, requires TPP v20.1 or greater",
+            "visibleRule": "serverType = tpp && action !== getcredAction",
+            "groupName": "mainGroup"
+        },
+        {
+            "name": "tppUsername",
+            "type": "string",
+            "label": "Username",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "",
+            "visibleRule": "action === getcredAction",
+            "groupName": "mainGroup"
+        },
+        {
+            "name": "tppPassword",
+            "type": "string",
+            "label": "Password",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "",
+            "visibleRule": "action === getcredAction",
             "groupName": "mainGroup"
         },
         {
@@ -97,22 +132,8 @@
             "label": "Project Zone",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "DevOps project zone where the certificate will be located",
+            "helpMarkDown": "DevOps project zone where the certificate will be located.<br/><br/>Example: vvvvvvvv-wwww-xxxx-yyyy-zzzzzzzzzzzz",
             "visibleRule": "serverType = cloud",
-            "groupName": "mainGroup"
-        },
-        {
-            "name": "action",
-            "type": "pickList",
-            "label": "Action",
-            "defaultValue": "enrollAction",
-            "required": true,
-            "helpMarkDown": "Select the action to perform",
-            "options": {
-                "enrollAction": "Request Certificate",
-                "pickupAction": "Retrieve Certificate",
-                "renewAction": "Renew Certificate"
-            },
             "groupName": "mainGroup"
         },
         {
@@ -130,7 +151,7 @@
             "defaultValue": "",
             "required": true,
             "visibleRule": "serverType = tpp",
-            "helpMarkDown": "Use to specify the folder path where the certificate object will be placed. VCert prepends \\VED\\Policy, so you only need to specify child folders under the root Policy folder.`r`nExample: DevOps\\CorpApp",
+            "helpMarkDown": "Folder path where the certificate object will be placed. \\VED\\Policy will be prepended, you only need to specify child folders under the root Policy folder.<br/><br/>Example: DevOps\\CorpApp",
             "groupName": "enrollGroup"
         },
         {
