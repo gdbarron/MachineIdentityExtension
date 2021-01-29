@@ -1,10 +1,11 @@
 import path = require('path')
 import tl = require('azure-pipelines-task-lib/task');
+import fs = require('fs');
 
 async function run() {
     try {
         let vcertArgs: string[] = []
-        let vcertPath: string = 'bin/vcert_'
+        let vcertPath: string = path.join(__dirname, 'bin/vcert_')
 
         var isWin = process.platform === "win32";
         var isLinux = process.platform === "linux";
@@ -38,6 +39,7 @@ async function run() {
 
             case 'linux':
                 vcertPath += 'linux'
+                fs.chmod(vcertPath, 0o111)
                 break;
 
             case 'darwin':
