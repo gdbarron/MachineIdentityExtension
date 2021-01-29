@@ -220,13 +220,6 @@
             "groupName": "pickupGroup"
         },
         {
-            "name": "runParams",
-            "type": "string",
-            "label": "Run Params",
-            "defaultValue": "",
-            "required": false
-        },
-        {
             "name": "todo",
             "label": "todo",
             "type": "pickList",
@@ -251,7 +244,8 @@
                 "pickup/pickup-id-file": "provide file for id.  this or id above",
                 "renew/id": "id for renewal or file:filepath",
                 "renew/thumbprint": "sha1 thumbprint, string or read from cert file with file:filepath"
-            }
+            },
+            "groupName": "advanced"
         },
         {
             "name": "verbose",
