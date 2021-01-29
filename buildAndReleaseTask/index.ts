@@ -22,6 +22,11 @@ async function run() {
         // enroll
         let enrollCommonName = tl.getInput('enrollCommonName', (action === 'enrollAction')) as string
         let enrollKeyPassword = tl.getInput('enrollKeyPassword', false) as string
+        let enrollFormat = tl.getInput('enrollFormat', false) as string
+        let enrollChain = tl.getInput('enrollChain', false) as string
+        let enrollSanDns = tl.getInput('enrollSanDns', false) as string
+        let enrollSanEmail = tl.getInput('enrollSanEmail', false) as string
+        let enrollSanIp = tl.getInput('enrollSanIp', false) as string
 
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
@@ -47,12 +52,43 @@ async function run() {
         switch (action) {
             case "enrollAction":
                 vcertArgs.push('enroll')
+
                 if (serverType === 'cloud') {
                     vcertArgs.push('-z')
                     vcertArgs.push(cloudZone)
                 }
+
                 vcertArgs.push('--cn')
                 vcertArgs.push(enrollCommonName)
+                vcertArgs.push('--format')
+                vcertArgs.push(enrollFormat)
+                vcertArgs.push('--chain')
+                vcertArgs.push(enrollChain)
+
+                if (enrollSanDns) {
+                    var sanDns = enrollSanDns.split(",")
+                    sanDns.forEach(element => {
+                        vcertArgs.push('--san-dns')
+                        vcertArgs.push(element)
+                    });
+                }
+
+                if (enrollSanEmail) {
+                    var sanEmail = enrollSanEmail.split(",")
+                    sanEmail.forEach(element => {
+                        vcertArgs.push('--san-email')
+                        vcertArgs.push(element)
+                    });
+                }
+
+                if (enrollSanIp) {
+                    var sanIp = enrollSanIp.split(",")
+                    sanIp.forEach(element => {
+                        vcertArgs.push('--san-ip')
+                        vcertArgs.push(element)
+                    });
+                }
+
                 if (enrollKeyPassword) {
                     vcertArgs.push('--key-password')
                     vcertArgs.push(enrollKeyPassword)

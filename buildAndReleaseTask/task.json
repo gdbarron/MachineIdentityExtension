@@ -129,7 +129,63 @@
             "label": "Private Key Password",
             "defaultValue": "",
             "required": false,
-            "helpMarkDown": "Password for encrypting the private key.  Specifying a value here will override the default non-encrypted private key.  It is recommended to use a secret variable, https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables.",
+            "helpMarkDown": "Password for encrypting the private key.  Specifying a value here will override the default non-encrypted private key.  It is recommended to use a secret variable, <https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables>.",
+            "groupName": "enrollGroup"
+        },
+        {
+            "name": "enrollFormat",
+            "type": "radio",
+            "label": "Format",
+            "defaultValue": "pem",
+            "required": true,
+            "options": {
+                "pem": "PEM",
+                "json": "JSON",
+                "pkcs12": "PKCS#12",
+                "jks": "JKS"
+            },
+            "helpMarkDown": "",
+            "groupName": "enrollGroup"
+        },
+        {
+            "name": "enrollChain",
+            "type": "radio",
+            "label": "Chain",
+            "defaultValue": "root-last",
+            "required": true,
+            "options": {
+                "root-last": "Root Last",
+                "root-first": "Root First",
+                "ignore": "Ignore"
+            },
+            "helpMarkDown": "Use to include the certificate chain in the output, and to specify where to place it in the file.",
+            "groupName": "enrollGroup"
+        },
+        {
+            "name": "enrollSanDns",
+            "type": "string",
+            "label": "DNS SAN",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Use to specify a DNS Subject Alternative Name. To specify more than one, separate with a comma.",
+            "groupName": "enrollGroup"
+        },
+        {
+            "name": "enrollSanEmail",
+            "type": "string",
+            "label": "Email SAN",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Use to specify a Email Subject Alternative Name. To specify more than one, separate with a comma.",
+            "groupName": "enrollGroup"
+        },
+        {
+            "name": "enrollSanIp",
+            "type": "string",
+            "label": "IP SAN",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Use to specify a IP Subject Alternative Name. To specify more than one, separate with a comma.",
             "groupName": "enrollGroup"
         },
         {
