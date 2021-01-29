@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
-    "id": "VenafiVcert",
-    "name": "Venafi vCert",
+    "id": "VenafiVCert",
+    "name": "Venafi VCert",
     "version": "0.0.1",
     "publisher": "GregBrownstein",
     "targets": [
@@ -41,7 +41,7 @@
     ],
     "contributions": [
         {
-            "id": "VenafiVcert",
+            "id": "VenafiVCert",
             "type": "ms.vss-distributed-task.task",
             "targets": [
                 "ms.vss-distributed-task.tasks"

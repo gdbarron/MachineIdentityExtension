@@ -1,9 +1,9 @@
 {
     "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
     "id": "9cc4251b-4d50-48c3-819a-679484c9dcc3",
-    "name": "VenafiVcert",
-    "friendlyName": "Venafi Vcert",
-    "description": "Simplify key generation and enrollment of machine identities (also known as SSL/TLS certificates and keys) that comply with enterprise security policy by using the Venafi Platform or Venafi Cloud.",
+    "name": "VenafiVCert",
+    "friendlyName": "Venafi VCert",
+    "description": "Generate keys and simplify certificate acquisition by eliminating the need to write code to interact with the Venafi REST API",
     "helpMarkDown": "",
     "category": "Utility",
     "visibility": [
@@ -46,7 +46,7 @@
             "isExpanded": false
         }
     ],
-    "instanceNameFormat": "Venafi vCert",
+    "instanceNameFormat": "Venafi VCert",
     "inputs": [
         {
             "name": "action",
