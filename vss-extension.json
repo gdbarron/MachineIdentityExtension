@@ -18,7 +18,22 @@
     },
     "files": [
         {
-            "path": "buildAndReleaseTask"
+            "path": "buildAndReleaseTask/bin"
+        },
+        {
+            "path": "buildAndReleaseTask/node_modules/azure-pipelines-task-lib"
+        },
+        {
+            "path": "buildAndReleaseTask/node_modules/vss-web-extension-sdk"
+        },
+        {
+            "path": "buildAndReleaseTask/icon.png"
+        },
+        {
+            "path": "buildAndReleaseTask/index.js"
+        },
+        {
+            "path": "buildAndReleaseTask/task.json"
         }
     ],
     "galleryFlags": [
