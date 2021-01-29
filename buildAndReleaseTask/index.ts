@@ -117,7 +117,7 @@ async function run() {
         }
 
         // needed for all cloud/tpp actions
-        if (serverType === 'cloud') {
+        if (serverType === 'cloud' && action !== 'getcredAction') {
             vcertArgs.push('-k')
             vcertArgs.push(cloudApiKey)
         } else {
