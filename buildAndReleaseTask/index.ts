@@ -1,6 +1,6 @@
 import path = require('path')
 import tl = require('azure-pipelines-task-lib/task');
-import fs = require('fs');
+// import fs = require('fs');
 
 async function run() {
     try {
@@ -39,7 +39,7 @@ async function run() {
 
             case 'linux':
                 vcertPath += 'linux'
-                fs.chmod(vcertPath, 0o111)
+                // fs.chmod(vcertPath, 0o111)
                 break;
 
             case 'darwin':
