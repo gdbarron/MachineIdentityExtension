@@ -38,8 +38,8 @@ async function run() {
         let enrollFormat = tl.getInput('enrollFormat', false) as string
         let enrollChain = tl.getInput('enrollChain', false) as string
         let enrollSanDns = tl.getDelimitedInput('enrollSanDns', ',', false) as string[]
-        let enrollSanEmailTpp = tl.getInput('enrollSanEmailTpp', ',', false) as string[]
-        let enrollSanIpTpp = tl.getInput('enrollSanIpTpp', ',', false) as string[]
+        let enrollSanEmailTpp = tl.getDelimitedInput('enrollSanEmailTpp', ',', false) as string[]
+        let enrollSanIpTpp = tl.getDelimitedInput('enrollSanIpTpp', ',', false) as string[]
 
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
