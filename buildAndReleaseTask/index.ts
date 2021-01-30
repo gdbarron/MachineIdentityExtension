@@ -1,9 +1,16 @@
+// AZURE-PIPELINES-TASK-LIB TYPESCRIPT API
+// https://github.com/microsoft/azure-pipelines-task-lib/blob/master/node/docs/azure-pipelines-task-lib.md
+
 import path = require('path')
 import tl = require('azure-pipelines-task-lib/task');
 import fs = require('fs');
 
 async function run() {
     try {
+
+        'Token: ' + tl.getTaskVariable('getcredToken')
+        tl.setTaskVariable('getcredToken', 'TokenTest')
+
         let vcertArgs: string[] = []
         let vcertPath: string = path.join(__dirname, 'bin/vcert_')
 
@@ -15,23 +22,24 @@ async function run() {
         let action = tl.getInput('action', true) as string
         let serverType = tl.getInput('serverType', true) as string
         let runParams = tl.getInput('runParams', false) as string
-        let tppServerUrl = tl.getInput('tppServerUrl', (serverType === 'tpp')) as string
-        let tppAuthType = tl.getInput('tppAuthType', (serverType === 'tpp')) as string
-        let tppAuthToken = tl.getInput('tppAuthToken', (tppAuthType === 'token')) as string
-        let tppUsername = tl.getInput('tppUsername', (tppAuthType === 'username')) as string
-        let tppPassword = tl.getInput('tppPassword', (tppAuthType === 'username')) as string
-        let cloudApiKey = tl.getInput('cloudApiKey', (serverType === 'cloud')) as string
-        let cloudZone = tl.getInput('cloudZone', (serverType === 'cloud')) as string
+        let serverUrlTpp = tl.getInput('serverUrlTpp', (serverType === 'tpp')) as string
+        let authTypeTpp = tl.getInput('authTypeTpp', (serverType === 'tpp')) as string
+        let authTokenTpp = tl.getInput('authTokenTpp', (authTypeTpp === 'token')) as string
+        let authUsernameTpp = tl.getInput('authUsernameTpp', (authTypeTpp === 'username')) as string
+        let authPasswordTpp = tl.getInput('authPasswordTpp', (authTypeTpp === 'username')) as string
+        let apiKeyCloud = tl.getInput('apiKeyCloud', (serverType === 'cloud')) as string
+        let enrollZoneCloud = tl.getInput('enrollZoneCloud', (serverType === 'cloud')) as string
 
         // enroll
         let enrollCommonName = tl.getInput('enrollCommonName', (action === 'enrollAction')) as string
+        let enrollNicknameTpp = tl.getInput('enrollNicknameTpp', false) as string
         let enrollZoneTpp = tl.getInput('enrollZoneTpp', (serverType === 'tpp')) as string
         let enrollKeyPassword = tl.getInput('enrollKeyPassword', false) as string
         let enrollFormat = tl.getInput('enrollFormat', false) as string
         let enrollChain = tl.getInput('enrollChain', false) as string
-        let enrollSanDns = tl.getInput('enrollSanDns', false) as string
-        let enrollSanEmail = tl.getInput('enrollSanEmail', false) as string
-        let enrollSanIp = tl.getInput('enrollSanIp', false) as string
+        let enrollSanDns = tl.getDelimitedInput('enrollSanDns', ',', false) as string[]
+        let enrollSanEmailTpp = tl.getInput('enrollSanEmailTpp', ',', false) as string[]
+        let enrollSanIpTpp = tl.getInput('enrollSanIpTpp', ',', false) as string[]
 
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
@@ -49,6 +57,8 @@ async function run() {
 
             case 'darwin':
                 vcertPath += 'darwin'
+                // need to make vcert executable
+                fs.chmodSync(vcertPath, 0o111)
                 break;
 
             default:
@@ -62,7 +72,7 @@ async function run() {
 
                 vcertArgs.push('-z')
                 if (serverType === 'cloud') {
-                    vcertArgs.push(cloudZone)
+                    vcertArgs.push(enrollZoneCloud)
                 } else {
                     vcertArgs.push(enrollZoneTpp)
                 }
@@ -75,25 +85,9 @@ async function run() {
                 vcertArgs.push(enrollChain)
 
                 if (enrollSanDns) {
-                    var sanDns = enrollSanDns.split(",")
-                    sanDns.forEach(element => {
+                    // var sanDns = enrollSanDns.split(",")
+                    enrollSanDns.forEach(element => {
                         vcertArgs.push('--san-dns')
-                        vcertArgs.push(element)
-                    });
-                }
-
-                if (enrollSanEmail) {
-                    var sanEmail = enrollSanEmail.split(",")
-                    sanEmail.forEach(element => {
-                        vcertArgs.push('--san-email')
-                        vcertArgs.push(element)
-                    });
-                }
-
-                if (enrollSanIp) {
-                    var sanIp = enrollSanIp.split(",")
-                    sanIp.forEach(element => {
-                        vcertArgs.push('--san-ip')
                         vcertArgs.push(element)
                     });
                 }
@@ -104,6 +98,31 @@ async function run() {
                 } else {
                     vcertArgs.push('--no-prompt')
                 }
+
+                // tpp specific params
+                if (serverType === 'tpp') {
+                    if (enrollNicknameTpp) {
+                        vcertArgs.push('--nickname')
+                        vcertArgs.push(enrollNicknameTpp)
+                    }
+
+                    if (enrollSanEmailTpp) {
+                        // var sanEmail = enrollSanEmailTpp.split(",")
+                        enrollSanEmailTpp.forEach(element => {
+                            vcertArgs.push('--san-email')
+                            vcertArgs.push(element)
+                        });
+                    }
+
+                    if (enrollSanIpTpp) {
+                        // var sanIp = enrollSanIpTpp.split(",")
+                        enrollSanIpTpp.forEach(element => {
+                            vcertArgs.push('--san-ip')
+                            vcertArgs.push(element)
+                        });
+                    }
+                }
+
                 break;
             case "pickupAction":
                 vcertArgs.push('pickup')
@@ -119,18 +138,19 @@ async function run() {
         // needed for all cloud/tpp actions
         if (serverType === 'cloud' && action !== 'getcredAction') {
             vcertArgs.push('-k')
-            vcertArgs.push(cloudApiKey)
+            vcertArgs.push(apiKeyCloud)
         } else {
+            // tpp specific
             vcertArgs.push('-u')
-            vcertArgs.push('https://' + tppServerUrl)
-            if (tppAuthType === 'token' && action !== 'getcredAction') {
+            vcertArgs.push('https://' + serverUrlTpp)
+            if (authTypeTpp === 'token' && action !== 'getcredAction') {
                 vcertArgs.push('-t')
-                vcertArgs.push(tppAuthToken)
+                vcertArgs.push(authTokenTpp)
             } else {
                 vcertArgs.push('--username')
-                vcertArgs.push(tppUsername)
+                vcertArgs.push(authUsernameTpp)
                 vcertArgs.push('--password')
-                vcertArgs.push(tppPassword)
+                vcertArgs.push(authPasswordTpp)
             }
         }
 
@@ -157,6 +177,10 @@ async function run() {
             }
             console.log(stdout);
         });
+
+        if (action === 'getcredAction') {
+            // tl.setVariable('VCertToken', '', true)
+        }
     }
     catch (err) {
         tl.setResult(tl.TaskResult.Failed, err.message);

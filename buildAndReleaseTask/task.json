@@ -5,7 +5,7 @@
     "friendlyName": "Venafi VCert",
     "description": "Generate keys and simplify certificate acquisition by eliminating the need to write code to interact with the Venafi REST API",
     "helpMarkDown": "",
-    "category": "Utility",
+    "category": "Azure Pipelines",
     "visibility": [
         "Build",
         "Release"
@@ -77,7 +77,7 @@
             "groupName": "mainGroup"
         },
         {
-            "name": "tppAuthType",
+            "name": "authTypeTpp",
             "type": "radio",
             "label": "Auth Type",
             "defaultValue": "token",
@@ -91,7 +91,7 @@
             "groupName": "mainGroup"
         },
         {
-            "name": "tppServerUrl",
+            "name": "serverUrlTpp",
             "type": "string",
             "label": "Server URL",
             "defaultValue": "",
@@ -101,54 +101,53 @@
             "groupName": "mainGroup"
         },
         {
-            "name": "tppAuthToken",
+            "name": "authTokenTpp",
             "type": "string",
             "label": "Auth Token",
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "Authentication token, requires TPP v20.1 or greater",
-            "visibleRule": "tppAuthType = token",
+            "visibleRule": "authTypeTpp = token",
             "groupName": "mainGroup"
         },
         {
-            "name": "tppUsername",
+            "name": "authUsernameTpp",
             "type": "string",
             "label": "Username",
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "",
-            "visibleRule": "tppAuthType = username || action = getcredAction",
+            "visibleRule": "authTypeTpp = username || action = getcredAction",
             "groupName": "mainGroup"
         },
         {
-            "name": "tppPassword",
+            "name": "authPasswordTpp",
             "type": "string",
             "label": "Password",
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "",
-            "visibleRule": "tppAuthType = username || action = getcredAction",
+            "visibleRule": "authTypeTpp = username || action = getcredAction",
             "groupName": "mainGroup"
         },
         {
-            "name": "cloudApiKey",
+            "name": "apiKeyCloud",
             "type": "string",
             "label": "API Key",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "API key for Venafi Cloud",
+            "helpMarkDown": "API key for Venafi Cloud.<br/><br/>Example: vvvvvvvv-wwww-xxxx-yyyy-zzzzzzzzzzzz",
             "visibleRule": "serverType = cloud",
             "groupName": "mainGroup"
         },
         {
-            "name": "cloudZone",
+            "name": "enrollZoneCloud",
             "type": "string",
             "label": "Project Zone",
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "DevOps project zone where the certificate will be located.<br/><br/>Example: vvvvvvvv-wwww-xxxx-yyyy-zzzzzzzzzzzz",
-            "visibleRule": "serverType = cloud",
-            "groupName": "mainGroup"
+            "groupName": "enrollGroup"
         },
         {
             "name": "enrollCommonName",
@@ -216,7 +215,7 @@
             "groupName": "enrollGroup"
         },
         {
-            "name": "enrollSanEmail",
+            "name": "enrollSanEmailTpp",
             "type": "string",
             "label": "Email SAN",
             "defaultValue": "",
@@ -226,13 +225,23 @@
             "groupName": "enrollGroup"
         },
         {
-            "name": "enrollSanIp",
+            "name": "enrollSanIpTpp",
             "type": "string",
             "label": "IP SAN",
             "defaultValue": "",
             "required": false,
             "visibleRule": "serverType = tpp",
             "helpMarkDown": "Use to specify a IP Subject Alternative Name. To specify more than one, separate with a comma.",
+            "groupName": "enrollGroup"
+        },
+        {
+            "name": "enrollNicknameTpp",
+            "type": "string",
+            "label": "New Certificate Name",
+            "defaultValue": "",
+            "required": false,
+            "visibleRule": "serverType = tpp",
+            "helpMarkDown": "Create a new certificate with the same CN, but a distinct object in TPP.",
             "groupName": "enrollGroup"
         },
         {
@@ -271,15 +280,8 @@
             "label": "todo",
             "type": "pickList",
             "options": {
-                "enroll/cn": "common name",
-                "enroll/z": "diff for tpp and cloud.  Use to specify the folder path where the certificate object will be placed. VCert prepends \\VED\\Policy, so you only need to specify child folders under the root Policy folder.  Example: -z DevOps\\CorpApp",
-                "enroll/tpp_user": "",
-                "enroll/tpp_password": "",
-                "enroll/key-password": "private key password.  without use --no-prompt.  support pw directly or via file",
                 "enroll/csr": "local, service, file.  service not on cloud.",
-                "enroll/format": "pem, json, pkcs12, jks",
                 "enroll/file": "output file. required for format pkcs12 and jks",
-                "enroll/chain": "root-last, root-first, ignore",
                 "enroll/nickname": "name for new certificate object.  not on cloud.",
                 "enroll/field": "custom fields, key=value format, multiple allowed.  not on cloud.",
                 "enroll/no-pickup": "dont retrieve cert",
