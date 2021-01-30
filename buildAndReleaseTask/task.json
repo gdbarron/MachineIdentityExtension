@@ -291,6 +291,7 @@
                 "renew/id": "id for renewal or file:filepath",
                 "renew/thumbprint": "sha1 thumbprint, string or read from cert file with file:filepath"
             },
+            "required": false,
             "groupName": "advanced"
         },
         {

@@ -24,9 +24,9 @@ async function run() {
         let runParams = tl.getInput('runParams', false) as string
         let serverUrlTpp = tl.getInput('serverUrlTpp', (serverType === 'tpp')) as string
         let authTypeTpp = tl.getInput('authTypeTpp', (serverType === 'tpp')) as string
-        let authTokenTpp = tl.getInput('authTokenTpp', (authTypeTpp === 'token')) as string
-        let authUsernameTpp = tl.getInput('authUsernameTpp', (authTypeTpp === 'username')) as string
-        let authPasswordTpp = tl.getInput('authPasswordTpp', (authTypeTpp === 'username')) as string
+        let authTokenTpp = tl.getInput('authTokenTpp', (serverType === 'tpp' && authTypeTpp === 'token')) as string
+        let authUsernameTpp = tl.getInput('authUsernameTpp', (serverType === 'tpp' && authTypeTpp === 'username')) as string
+        let authPasswordTpp = tl.getInput('authPasswordTpp', (serverType === 'tpp' && authTypeTpp === 'username')) as string
         let apiKeyCloud = tl.getInput('apiKeyCloud', (serverType === 'cloud')) as string
         let enrollZoneCloud = tl.getInput('enrollZoneCloud', (serverType === 'cloud')) as string
 
