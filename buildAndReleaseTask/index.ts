@@ -8,8 +8,8 @@ import fs = require('fs');
 async function run() {
     try {
 
-        console.log('Token: ' + tl.getTaskVariable('getcredToken'))
-        tl.setTaskVariable('getcredToken', 'TokenTest')
+        console.log('Token: ' + tl.getVariable('getcredToken'))
+        tl.setVariable('getcredToken', 'TokenTest')
 
         let vcertArgs: string[] = []
         let vcertPath: string = path.join(__dirname, 'bin/vcert_')
