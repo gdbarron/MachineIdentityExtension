@@ -8,7 +8,7 @@ import fs = require('fs');
 async function run() {
     try {
 
-        console.log('Token: ' + tl.getVariable('getcredToken'))
+        console.log(tl.getVariables())
         tl.setVariable('getcredToken', 'TokenTest')
 
         let vcertArgs: string[] = []
