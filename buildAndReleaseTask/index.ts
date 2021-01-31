@@ -19,7 +19,6 @@ async function run() {
         var isLinux = process.platform === "linux";
         var isMac = process.platform === "darwin";
 
-        // let action:string = tl.getInput('action', true)
         let action = tl.getInput('action', true) as string
         let serverType = tl.getInput('serverType', true) as string
         let runParams = tl.getInput('runParams', false) as string
@@ -29,9 +28,9 @@ async function run() {
         let authUsernameTpp = tl.getInput('authUsernameTpp', (serverType === 'tpp' && authTypeTpp === 'username')) as string
         let authPasswordTpp = tl.getInput('authPasswordTpp', (serverType === 'tpp' && authTypeTpp === 'username')) as string
         let apiKeyCloud = tl.getInput('apiKeyCloud', (serverType === 'cloud')) as string
-        let enrollZoneCloud = tl.getInput('enrollZoneCloud', (serverType === 'cloud')) as string
 
         // enroll
+        let enrollZoneCloud = tl.getInput('enrollZoneCloud', (serverType === 'cloud')) as string
         let enrollCommonName = tl.getInput('enrollCommonName', (action === 'enrollAction')) as string
         let enrollNicknameTpp = tl.getInput('enrollNicknameTpp', false) as string
         let enrollZoneTpp = tl.getInput('enrollZoneTpp', (serverType === 'tpp')) as string
@@ -42,6 +41,9 @@ async function run() {
         let enrollSanEmailTpp = tl.getDelimitedInput('enrollSanEmailTpp', ',', false) as string[]
         let enrollSanIpTpp = tl.getDelimitedInput('enrollSanIpTpp', ',', false) as string[]
         let enrollCustomFieldsTpp = tl.getInput('enrollCustomFieldsTpp', false) as string
+        let enrollCsrTpp = tl.getInput('enrollCsrTpp', false) as string
+        let enrollCsrCloud = tl.getInput('enrollCsrCloud', false) as string
+        let enrollCsrFile = tl.getInput('enrollCsrFile', false) as string
 
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
@@ -85,6 +87,20 @@ async function run() {
                 vcertArgs.push(enrollFormat)
                 vcertArgs.push('--chain')
                 vcertArgs.push(enrollChain)
+                vcertArgs.push('--csr')
+                if (serverType === 'cloud') {
+                    if (enrollCsrCloud === 'file') {
+                        vcertArgs.push('file:' + enrollCsrFile)
+                    } else {
+                        vcertArgs.push(enrollCsrCloud)
+                    }
+                } else {
+                    if (enrollCsrCloud === 'file') {
+                        vcertArgs.push('file:' + enrollCsrFile)
+                    } else {
+                        vcertArgs.push(enrollCsrTpp)
+                    }
+                }
 
                 if (enrollSanDns) {
                     // var sanDns = enrollSanDns.split(",")

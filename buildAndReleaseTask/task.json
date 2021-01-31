@@ -206,6 +206,45 @@
             "groupName": "enrollGroup"
         },
         {
+            "name": "enrollCsrTpp",
+            "type": "radio",
+            "label": "Certificate Signing Request (CSR)",
+            "defaultValue": "local",
+            "required": false,
+            "options": {
+                "local": "Local",
+                "service": "Service",
+                "file": "File"
+            },
+            "visibleRule": "serverType = tpp",
+            "helpMarkDown": "Specify the CSR and private key location.<br/></br/>Local: private key and CSR will be generated locally<br/>Service: private key and CSR will be generated within Venafi Platform<br/>File: CSR will be read from a file by name",
+            "groupName": "enrollGroup"
+        },
+        {
+            "name": "enrollCsrCloud",
+            "type": "radio",
+            "label": "Certificate Signing Request (CSR)",
+            "defaultValue": "local",
+            "required": false,
+            "options": {
+                "local": "Local",
+                "file": "File"
+            },
+            "visibleRule": "serverType = cloud",
+            "helpMarkDown": "Specify the CSR and private key location.<br/></br/>Local: private key and CSR will be generated locally<br/>File: CSR will be read from a file by name",
+            "groupName": "enrollGroup"
+        },
+        {
+            "name": "enrollCsrFile",
+            "type": "string",
+            "label": "CSR File",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "",
+            "visibleRule": "enrollCsrTpp = file || enrollCsrCloud = file",
+            "groupName": "enrollGroup"
+        },
+        {
             "name": "enrollSanDns",
             "type": "string",
             "label": "DNS SAN",
@@ -250,8 +289,9 @@
             "label": "Custom Fields",
             "required": false,
             "defaultValue": "",
+            "visibleRule": "serverType = tpp",
             "groupName": "enrollGroup",
-            "helpMarkDown": "Enter custom fields 1 name/value per line.  To provide more than 1 value per name, separate the values with a comma.  Click on the elipsis to edit easily.",
+            "helpMarkDown": "Enter custom fields in json format.  To provide more than 1 value per name, separate the values with a comma.  Click on the elipsis to edit easily.",
             "properties": {
                 "editorExtension": "ms.vss-services-azure.azure-servicebus-message-grid"
             }
