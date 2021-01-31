@@ -8,9 +8,9 @@ import fs = require('fs');
 async function run() {
     try {
 
-        console.log('Token: ' + (tl.getVariable('getcredToken')))
-        console.log(tl.getVariables())
-        tl.setVariable('getcredToken', 'TokenTest')
+        // console.log('Token: ' + (tl.getVariable('getcredToken')))
+        // console.log(tl.getVariables())
+        // tl.setVariable('getcredToken', 'TokenTest')
 
         let vcertArgs: string[] = []
         let vcertPath: string = path.join(__dirname, 'bin/vcert_')
@@ -41,6 +41,7 @@ async function run() {
         let enrollSanDns = tl.getDelimitedInput('enrollSanDns', ',', false) as string[]
         let enrollSanEmailTpp = tl.getDelimitedInput('enrollSanEmailTpp', ',', false) as string[]
         let enrollSanIpTpp = tl.getDelimitedInput('enrollSanIpTpp', ',', false) as string[]
+        let enrollCustomFieldsTpp = tl.getInput('enrollCustomFieldsTpp', false) as string
 
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
@@ -122,6 +123,11 @@ async function run() {
                             vcertArgs.push(element)
                         });
                     }
+
+                    console.log(enrollCustomFieldsTpp)
+                    // for (var item of enrollCustomFieldsTpp) {
+                    //     console.log('item: ', [item.firstname, ...]);
+                    // }
                 }
 
                 break;
