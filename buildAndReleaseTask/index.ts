@@ -48,19 +48,13 @@ async function run() {
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
 
+        vcertPath += process.platform
         switch (process.platform) {
             case 'win32':
-                vcertPath += 'windows.exe'
                 break;
 
             case 'linux':
-                vcertPath += 'linux'
-                // need to make vcert executable
-                fs.chmodSync(vcertPath, 0o111)
-                break;
-
             case 'darwin':
-                vcertPath += 'darwin'
                 // need to make vcert executable
                 fs.chmodSync(vcertPath, 0o111)
                 break;
@@ -141,9 +135,12 @@ async function run() {
                     }
 
                     console.log(enrollCustomFieldsTpp)
-                    // for (var item of enrollCustomFieldsTpp) {
-                    //     console.log('item: ', [item.firstname, ...]);
-                    // }
+                    if (enrollCustomFieldsTpp) {
+                        const customFields = JSON.parse(enrollCustomFieldsTpp)
+                        for (var field of customFields) {
+                            console.log(field);
+                        }
+                    }
                 }
 
                 break;
