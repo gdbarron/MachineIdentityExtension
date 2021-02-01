@@ -40,7 +40,7 @@ async function run() {
         let enrollSanDns = tl.getDelimitedInput('enrollSanDns', ',', false) as string[]
         let enrollSanEmailTpp = tl.getDelimitedInput('enrollSanEmailTpp', ',', false) as string[]
         let enrollSanIpTpp = tl.getDelimitedInput('enrollSanIpTpp', ',', false) as string[]
-        let enrollCustomFieldsTpp = tl.getInput('enrollCustomFieldsTpp', false) as string
+        let enrollCustomFieldsTpp = tl.getInput('enrollCustomFieldsTpp', false) as any
         let enrollCsrTpp = tl.getInput('enrollCsrTpp', false) as string
         let enrollCsrCloud = tl.getInput('enrollCsrCloud', false) as string
         let enrollCsrFile = tl.getInput('enrollCsrFile', false) as string
@@ -134,11 +134,10 @@ async function run() {
                         });
                     }
 
-                    console.log(enrollCustomFieldsTpp)
                     if (enrollCustomFieldsTpp) {
-                        const customFields = JSON.parse(enrollCustomFieldsTpp)
-                        for (var field of customFields) {
-                            console.log(field);
+                        for (var key in enrollCustomFieldsTpp) {
+                            vcertArgs.push('--field')
+                            vcertArgs.push(key + '=' + enrollCustomFieldsTpp[key])
                         }
                     }
                 }
