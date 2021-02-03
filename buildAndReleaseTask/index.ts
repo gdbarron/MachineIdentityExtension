@@ -208,6 +208,7 @@ async function run() {
         switch (action) {
             case 'enrollAction':
                 if (outputType === 'outputEnvVar') {
+                    certOut = certOut.replace(/\n/g, '');
                     tl.setVariable('VCertEnroll', certOut)
                     console.log('Contents of certificate saved to environment variable VCertEnroll')
                 } else {

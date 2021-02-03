@@ -306,7 +306,7 @@
             "name": "outputType",
             "type": "radio",
             "label": "Type",
-            "defaultValue": "envvar",
+            "defaultValue": "outputEnvVar",
             "required": true,
             "options": {
                 "outputEnvVar": "Environment variable",
