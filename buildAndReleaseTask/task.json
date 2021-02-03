@@ -318,7 +318,7 @@
         },
         {
             "name": "outputFile",
-            "type": "string",
+            "type": "filePath",
             "label": "File Path",
             "defaultValue": "",
             "required": true,

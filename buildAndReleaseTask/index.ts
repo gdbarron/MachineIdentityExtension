@@ -15,6 +15,10 @@ async function run() {
         let vcertArgs: string[] = []
         let vcertPath: string = path.join(__dirname, 'bin/vcert_')
 
+        // pickup file will be placed here
+        let tempPath: string = tl.getVariable('Agent.TempDirectory')
+        let pickupIdFile: string = path.join(tempPath, 'pickupid')
+
         var isWin = process.platform === "win32";
         var isLinux = process.platform === "linux";
         var isMac = process.platform === "darwin";
@@ -47,7 +51,7 @@ async function run() {
 
         // output
         let outputType = tl.getInput('outputType', action === 'enrollAction') as string
-        let outputFile = tl.getInput('outputFile', outputType === 'outputFile' || enrollFormat === 'pkcs12' || enrollFormat === 'jks') as string
+        let outputFile = tl.getPathInput('outputFile', outputType === 'outputFile' || enrollFormat === 'pkcs12' || enrollFormat === 'jks') as string
 
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
@@ -81,10 +85,13 @@ async function run() {
 
                 vcertArgs.push('--cn')
                 vcertArgs.push(enrollCommonName)
+
                 vcertArgs.push('--format')
                 vcertArgs.push(enrollFormat)
+
                 vcertArgs.push('--chain')
                 vcertArgs.push(enrollChain)
+
                 vcertArgs.push('--csr')
                 if (serverType === 'cloud') {
                     if (enrollCsrCloud === 'file') {
@@ -152,6 +159,9 @@ async function run() {
                     }
                 }
 
+                vcertArgs.push('--pickup-id-file')
+                vcertArgs.push(pickupIdFile)
+
                 break;
             case "pickupAction":
                 vcertArgs.push('pickup')
@@ -216,10 +226,10 @@ async function run() {
         if (child.error) {
             throw child.error;
         }
-        tl.debug("stdout: " + child.stdout);
-        tl.debug("stderr: " + child.stderr);
-        tl.debug("exist code: " + child.status);
-        console.log(child.output)
+        // tl.debug("stdout: " + child.stdout);
+        // tl.debug("stderr: " + child.stderr);
+        tl.debug("exit code: " + child.status);
+        console.log(child.stderr)
 
         switch (action) {
             case 'enrollAction':
@@ -231,6 +241,11 @@ async function run() {
                 } else {
                     console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to ' + outputFile)
                 }
+
+                // write contents of pickup to env var
+                var pickupId = fs.readFileSync(pickupIdFile, 'utf8')
+                tl.setVariable('VCERT_PICKUPID', pickupId)
+
                 break;
 
             case 'getcredAction':
