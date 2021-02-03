@@ -16,7 +16,8 @@ async function run() {
         let vcertPath: string = path.join(__dirname, 'bin/vcert_')
 
         // pickup file will be placed here
-        const tempPath = process.env('AGENT_TEMPDIRECTORY')
+        const tempPath = process.env['AGENT_TEMPDIRECTORY']
+
         // const tempPath = tl.getVariable('AGENT_TEMPDIRECTORY')
         const pickupIdFile = path.join(tempPath, 'pickupid')
 
