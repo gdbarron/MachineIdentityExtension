@@ -29,6 +29,12 @@
             "visibleRule": "action = enrollAction"
         },
         {
+            "name": "outputGroup",
+            "displayName": "Output",
+            "isExpanded": false,
+            "visibleRule": "action = enrollAction"
+        },
+        {
             "name": "pickupGroup",
             "displayName": "Retrieve Certificate",
             "isExpanded": false,
@@ -59,7 +65,7 @@
                 "enrollAction": "Request Certificate",
                 "pickupAction": "Retrieve Certificate",
                 "renewAction": "Renew Certificate",
-                "getcredAction": "New Auth Token (TPP only)"
+                "getcredAction": "New Auth Token (TPP only) (beta)"
             }
         },
         {
@@ -236,11 +242,11 @@
         },
         {
             "name": "enrollCsrFile",
-            "type": "string",
+            "type": "filePath",
             "label": "CSR File",
             "defaultValue": "",
-            "required": false,
-            "helpMarkDown": "",
+            "required": true,
+            "helpMarkDown": "File to read the CSR from",
             "visibleRule": "enrollCsrTpp = file || enrollCsrCloud = file",
             "groupName": "enrollGroup"
         },
@@ -297,6 +303,30 @@
             }
         },
         {
+            "name": "outputType",
+            "type": "radio",
+            "label": "Type",
+            "defaultValue": "envvar",
+            "required": true,
+            "options": {
+                "outputEnvVar": "Environment variable",
+                "outputFile": "File"
+            },
+            "helpMarkDown": "Output to either a file or an environment variable to be used in a subsequent task.  The option for an environment variable is only available for pem and json formats.",
+            "visibleRule": "enrollFormat = pem || enrollFormat = json",
+            "groupName": "outputGroup"
+        },
+        {
+            "name": "outputFile",
+            "type": "string",
+            "label": "File Path",
+            "defaultValue": "",
+            "required": true,
+            "visibleRule": "outputType = outputFile || enrollFormat = pkcs12 || enrollFormat = jks",
+            "helpMarkDown": "Path to output file.  Required if output type 'file' was selected or format is either PKCS#12 or JKS.",
+            "groupName": "outputGroup"
+        },
+        {
             "name": "pickupBy",
             "type": "radio",
             "label": "Retrieve by",
@@ -332,9 +362,7 @@
             "label": "todo",
             "type": "pickList",
             "options": {
-                "enroll/csr": "local, service, file.  service not on cloud.",
                 "enroll/file": "output file. required for format pkcs12 and jks",
-                "enroll/field": "custom fields, key=value format, multiple allowed.  not on cloud.",
                 "enroll/no-pickup": "dont retrieve cert",
                 "pickup-id-file": "id for subsequent actions.  stdout by default, offer option for env var",
                 "pickup/pickup-id": "provide id for pickup, this or file below",

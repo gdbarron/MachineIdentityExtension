@@ -45,6 +45,10 @@ async function run() {
         let enrollCsrCloud = tl.getInput('enrollCsrCloud', false) as string
         let enrollCsrFile = tl.getInput('enrollCsrFile', false) as string
 
+        // output
+        let outputType = tl.getInput('outputType', action === 'enrollAction') as string
+        let outputFile = tl.getInput('outputFile', outputType === 'outputFile' || enrollFormat === 'pkcs12' || enrollFormat === 'jks') as string
+
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
 
@@ -183,6 +187,8 @@ async function run() {
 
         const { execFile } = require('child_process');
 
+        let certOut: string = ''
+
         // run with version switch first
         const childVersion = execFile(vcertPath, ['--version'], (error: string, stdout: string, stderr: string) => {
             if (error) {
@@ -195,9 +201,27 @@ async function run() {
             if (error) {
                 throw error;
             }
-            console.log(stdout);
+            // console.log(stdout);
+            certOut = stdout
         });
 
+        switch (action) {
+            case 'enrollAction':
+                if (outputType === 'outputEnvVar') {
+                    tl.setVariable('VCertEnroll', certOut)
+                    console.log('Contents of certificate saved to environment variable VCertEnroll')
+                } else {
+                    console.log(certOut)
+                }
+                break;
+
+            case 'getcredAction':
+
+                break;
+
+            default:
+                break;
+        }
         if (action === 'getcredAction') {
             // tl.setVariable('VCertToken', '', true)
         }
