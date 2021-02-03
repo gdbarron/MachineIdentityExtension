@@ -211,9 +211,9 @@ async function run() {
         if (child.error) {
             throw child.error;
         }
-        tl.debug("stdout: ", child.stdout);
-        tl.debug("stderr: ", child.stderr);
-        tl.debug("exist code: ", child.status);
+        tl.debug("stdout: " + child.stdout);
+        tl.debug("stderr: " + child.stderr);
+        tl.debug("exist code: " + child.status);
 
         switch (action) {
             case 'enrollAction':
