@@ -185,17 +185,18 @@ async function run() {
         console.log(vcertPath)
         console.log(vcertArgs)
 
-        const { execFile } = require('child_process');
-
-        let certOut: string = ''
+        // const { execFile } = require('child_process');
+        var child_process = require('child_process');
 
         // run with version switch first
-        const childVersion = execFile(vcertPath, ['--version'], (error: string, stdout: string, stderr: string) => {
-            if (error) {
-                throw error;
-            }
-            console.log(stdout);
-        });
+        var childVersion = child_process.spawnSync(vcertPath, ['--version'], { encoding: 'utf8' });
+        console.log(child.stdout)
+        // const childVersion = child_process(vcertPath, ['--version'], (error: string, stdout: string, stderr: string) => {
+        //     if (error) {
+        //         throw error;
+        //     }
+        //     console.log(stdout);
+        // });
 
         // const child = execFile(vcertPath, vcertArgs, (error: string, stdout: string, stderr: string) => {
         //     if (error) {
@@ -205,25 +206,24 @@ async function run() {
         //     certOut = stdout
         // });
 
-        var child_process = require('child_process');
         var child = child_process.spawnSync(vcertPath, vcertArgs, { encoding: 'utf8' });
-        console.log("Process finished.");
+
         if (child.error) {
-            console.log("ERROR: ", child.error);
+            throw child.error;
         }
-        console.log("stdout: ", child.stdout);
-        console.log("stderr: ", child.stderr);
-        console.log("exist code: ", child.status);
+        tl.debug("stdout: ", child.stdout);
+        tl.debug("stderr: ", child.stderr);
+        tl.debug("exist code: ", child.status);
 
         switch (action) {
             case 'enrollAction':
                 if (outputType === 'outputEnvVar') {
                     // certOut = certOut.replace(/\n/g, '');
                     // console.log(certOut)
-                    tl.setVariable('VCertEnroll', child.stdout)
-                    console.log('Contents of certificate saved to environment variable VCertEnroll')
+                    tl.setVariable('VCERT_ENROLL', child.stdout)
+                    console.log('Contents of certificate saved to environment variable VCERT_ENROLL')
                 } else {
-                    console.log(certOut)
+                    console.log(child.stdout)
                 }
                 break;
 
