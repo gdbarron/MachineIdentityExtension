@@ -115,6 +115,11 @@ async function run() {
                     vcertArgs.push('--no-prompt')
                 }
 
+                if (outputType === 'file' || enrollFormat === 'pkcs12' || enrollFormat === 'jks') {
+                    vcertArgs.push('--file')
+                    vcertArgs.push(outputFile)
+                }
+
                 // tpp specific params
                 if (serverType === 'tpp') {
                     if (enrollNicknameTpp) {
@@ -182,8 +187,8 @@ async function run() {
             vcertArgs.push('--verbose')
         }
 
-        console.log(vcertPath)
-        console.log(vcertArgs)
+        tl.verbose('vcert path' + vcertPath)
+        tl.verbose('vcert args' + vcertArgs)
 
         // const { execFile } = require('child_process');
         var child_process = require('child_process');
@@ -214,16 +219,17 @@ async function run() {
         tl.debug("stdout: " + child.stdout);
         tl.debug("stderr: " + child.stderr);
         tl.debug("exist code: " + child.status);
+        console.log(child.output)
 
         switch (action) {
             case 'enrollAction':
-                if (outputType === 'outputEnvVar') {
+                if (outputType === 'outputEnvVar' && (enrollFormat === 'pem' || enrollFormat === 'json')) {
                     // certOut = certOut.replace(/\n/g, '');
                     // console.log(certOut)
                     tl.setVariable('VCERT_ENROLL', child.stdout)
-                    console.log('Contents of certificate saved to environment variable VCERT_ENROLL')
+                    console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to environment variable VCERT_ENROLL')
                 } else {
-                    console.log(child.stdout)
+                    console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to ' + outputFile)
                 }
                 break;
 

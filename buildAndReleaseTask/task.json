@@ -361,6 +361,7 @@
             "name": "todo",
             "label": "todo",
             "type": "pickList",
+            "defaultValue": "",
             "options": {
                 "enroll/file": "output file. required for format pkcs12 and jks",
                 "enroll/no-pickup": "dont retrieve cert",
