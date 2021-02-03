@@ -190,7 +190,7 @@ async function run() {
 
         // run with version switch first
         var childVersion = child_process.spawnSync(vcertPath, ['--version'], { encoding: 'utf8' });
-        console.log(child.stdout)
+        console.log(childVersion.stdout)
         // const childVersion = child_process(vcertPath, ['--version'], (error: string, stdout: string, stderr: string) => {
         //     if (error) {
         //         throw error;
