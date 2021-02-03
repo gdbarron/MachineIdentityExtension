@@ -185,10 +185,10 @@ async function run() {
 
         if (verbose) {
             vcertArgs.push('--verbose')
+            console.log('vcert path' + vcertPath)
+            console.log('vcert args' + vcertArgs)
         }
 
-        tl.verbose('vcert path' + vcertPath)
-        tl.verbose('vcert args' + vcertArgs)
 
         // const { execFile } = require('child_process');
         var child_process = require('child_process');
