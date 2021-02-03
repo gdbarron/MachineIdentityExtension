@@ -16,8 +16,8 @@ async function run() {
         let vcertPath: string = path.join(__dirname, 'bin/vcert_')
 
         // pickup file will be placed here
-        let tempPath: string = tl.getVariable('Agent.TempDirectory')
-        let pickupIdFile: string = path.join(tempPath, 'pickupid')
+        const tempPath = tl.getVariable('Agent.TempDirectory')
+        const pickupIdFile = path.join(tempPath, 'pickupid')
 
         var isWin = process.platform === "win32";
         var isLinux = process.platform === "linux";
