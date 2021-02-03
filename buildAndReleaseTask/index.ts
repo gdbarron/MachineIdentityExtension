@@ -197,20 +197,30 @@ async function run() {
             console.log(stdout);
         });
 
-        const child = execFile(vcertPath, vcertArgs, (error: string, stdout: string, stderr: string) => {
-            if (error) {
-                throw error;
-            }
-            // console.log(stdout);
-            certOut = stdout
-        });
+        // const child = execFile(vcertPath, vcertArgs, (error: string, stdout: string, stderr: string) => {
+        //     if (error) {
+        //         throw error;
+        //     }
+        //     console.log(stdout);
+        //     certOut = stdout
+        // });
+
+        var child_process = require('child_process');
+        var child = child_process.spawnSync(vcertPath, vcertArgs, { encoding: 'utf8' });
+        console.log("Process finished.");
+        if (child.error) {
+            console.log("ERROR: ", child.error);
+        }
+        console.log("stdout: ", child.stdout);
+        console.log("stderr: ", child.stderr);
+        console.log("exist code: ", child.status);
 
         switch (action) {
             case 'enrollAction':
                 if (outputType === 'outputEnvVar') {
-                    certOut = certOut.replace(/\n/g, '');
-                    console.log(certOut)
-                    tl.setVariable('VCertEnroll', certOut)
+                    // certOut = certOut.replace(/\n/g, '');
+                    // console.log(certOut)
+                    tl.setVariable('VCertEnroll', child.stdout)
                     console.log('Contents of certificate saved to environment variable VCertEnroll')
                 } else {
                     console.log(certOut)
