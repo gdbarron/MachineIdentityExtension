@@ -50,6 +50,7 @@ async function run() {
         let enrollCsrTpp = tl.getInput('enrollCsrTpp', false) as string
         let enrollCsrCloud = tl.getInput('enrollCsrCloud', false) as string
         let enrollCsrFile = tl.getInput('enrollCsrFile', false) as string
+        let enrollNoPickup = tl.getBoolInput('enrollNoPickup', false) as boolean
 
         // output
         let outputType = tl.getInput('outputType', action === 'enrollAction') as string
@@ -129,7 +130,11 @@ async function run() {
                     vcertArgs.push(outputFile)
                 }
 
-                // tpp specific params
+                if (enrollNoPickup) {
+                    vcertArgs.push('--no-pickup')
+                }
+
+                // tpp specific params, not supported on cloud
                 if (serverType === 'tpp') {
                     if (enrollNicknameTpp) {
                         vcertArgs.push('--nickname')
@@ -161,6 +166,9 @@ async function run() {
                     }
                 }
 
+                // always redirect pickup id to a file
+                // without this it will go to stdout and cause issues
+                // as both the cert and this go to stdout
                 vcertArgs.push('--pickup-id-file')
                 vcertArgs.push(pickupIdFile)
 

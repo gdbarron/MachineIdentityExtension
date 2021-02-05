@@ -303,6 +303,15 @@
             }
         },
         {
+            "name": "enrollNoPickup",
+            "label": "Retrieve Certificate Later",
+            "defaultValue": false,
+            "required": false,
+            "type": "boolean",
+            "helpMarkDown": "By default, VCert will try to retrieve the certificate for 60 seconds.  If your CA might not respond in time or your workflow requires it, you can choose to not retrieve the certificate now and do so later with the pickup id which is automatically saved as environment variable VCERT_PICKUPID.",
+            "groupName": "enrollGroup"
+        },
+        {
             "name": "outputType",
             "type": "radio",
             "label": "Type",
@@ -363,8 +372,6 @@
             "type": "pickList",
             "defaultValue": "",
             "options": {
-                "enroll/file": "output file. required for format pkcs12 and jks",
-                "enroll/no-pickup": "dont retrieve cert",
                 "pickup-id-file": "id for subsequent actions.  stdout by default, offer option for env var",
                 "pickup/pickup-id": "provide id for pickup, this or file below",
                 "pickup/pickup-id-file": "provide file for id.  this or id above",
