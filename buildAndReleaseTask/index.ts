@@ -197,8 +197,8 @@ async function run() {
 
         if (verbose) {
             vcertArgs.push('--verbose')
-            console.log('vcert path' + vcertPath)
-            console.log('vcert args' + vcertArgs)
+            console.log('vcert path: ' + vcertPath)
+            console.log('vcert args: ' + vcertArgs)
         }
 
 
@@ -244,7 +244,7 @@ async function run() {
                     console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to ' + outputFile)
                 }
 
-                // write contents of pickup to env var
+                // write pickup id to env var
                 var pickupId = fs.readFileSync(pickupIdFile, 'utf8')
                 tl.setVariable('VCERT_PICKUPID', pickupId)
 
