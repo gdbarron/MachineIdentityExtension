@@ -3,7 +3,7 @@
     "id": "9cc4251b-4d50-48c3-819a-679484c9dcc3",
     "name": "VenafiVCert",
     "friendlyName": "Venafi VCert",
-    "description": "Generate keys and simplify certificate acquisition by eliminating the need to write code to interact with the Venafi REST API",
+    "description": "Generate keys and simplify certificate acquisition by eliminating the need to write code to interact with the Venafi REST API.  Azure DevOps extension for Venafi VCert, https://github.com/Venafi/vcert.",
     "helpMarkDown": "",
     "category": "Azure Pipelines",
     "visibility": [
@@ -339,31 +339,44 @@
             "name": "pickupBy",
             "type": "radio",
             "label": "Retrieve by",
-            "defaultValue": "pickupId",
+            "defaultValue": "pickupById",
             "required": true,
             "options": {
-                "pickupId": "ID",
-                "pickupIdFile": "File path"
+                "pickupById": "ID",
+                "pickupByFile": "File path"
             },
             "visibleRule": "action = pickupAction",
             "groupName": "pickupGroup"
         },
         {
-            "name": "pickupId",
-            "type": "string",
-            "label": "ID",
-            "defaultValue": "",
+            "name": "pickupIdFrom",
+            "type": "radio",
+            "label": "ID From",
+            "defaultValue": "pickupId",
             "required": true,
-            "visibleRule": "action = pickupAction && pickupBy = pickupId",
+            "options": {
+                "pickupIdFromEnv": "Environment variable",
+                "pickupIdFromId": "ID"
+            },
+            "visibleRule": "pickupBy = pickupById",
             "groupName": "pickupGroup"
         },
         {
-            "name": "pickupIdFile",
+            "name": "pickupId",
+            "type": "string",
+            "label": "Pickup ID",
+            "defaultValue": "",
+            "required": true,
+            "visibleRule": "pickupIdFrom = pickupIdFromId",
+            "groupName": "pickupGroup"
+        },
+        {
+            "name": "pickupFile",
             "type": "string",
             "label": "File path",
             "defaultValue": "",
             "required": true,
-            "visibleRule": "action = pickupAction && pickupBy = pickupIdFile",
+            "visibleRule": "pickupBy = pickupByFile",
             "groupName": "pickupGroup"
         },
         {
