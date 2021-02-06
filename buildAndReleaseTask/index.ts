@@ -19,7 +19,7 @@ async function run() {
         // const tempPath = process.env['AGENT_TEMPDIRECTORY']
 
         // const tempPath = tl.getVariable('AGENT_TEMPDIRECTORY')
-        const pickupIdFile = path.join(__dirname, 'pickupid')
+        const enrollIdFilePath = path.join(__dirname, 'pickupid')
 
         var isWin = process.platform === "win32";
         var isLinux = process.platform === "linux";
@@ -51,6 +51,11 @@ async function run() {
         let enrollCsrCloud = tl.getInput('enrollCsrCloud', false) as string
         let enrollCsrFile = tl.getInput('enrollCsrFile', false) as string
         let enrollNoPickup = tl.getBoolInput('enrollNoPickup', false) as boolean
+
+        // pickup
+        let pickupIdFrom = tl.getInput('pickupIdFrom', (action === 'pickupAction')) as string
+        let pickupId = tl.getInput('pickupId', pickupIdFrom === 'pickupIdFromId') as string
+        let pickupFile = tl.getPathInput('pickupFile', pickupIdFrom === 'pickupIdFromFile') as string
 
         // output
         let outputType = tl.getInput('outputType', action === 'enrollAction') as string
@@ -170,11 +175,34 @@ async function run() {
                 // without this it will go to stdout and cause issues
                 // as both the cert and this go to stdout
                 vcertArgs.push('--pickup-id-file')
-                vcertArgs.push(pickupIdFile)
+                vcertArgs.push(enrollIdFilePath)
 
                 break;
             case "pickupAction":
                 vcertArgs.push('pickup')
+
+                var thisId: string
+                switch (pickupIdFrom) {
+                    case 'pickIdFromEnvVar':
+                        vcertArgs.push('--pickup-id')
+                        vcertArgs.push(tl.getVariable('VCERT_PICKUPID'))
+                        break;
+
+                    case 'pickIdFromID':
+                        vcertArgs.push('--pickup-id')
+                        vcertArgs.push(pickupId)
+                        break;
+
+                    case 'pickIdFromEnvVar':
+                        vcertArgs.push('--pickup-id-file')
+                        vcertArgs.push(pickupFile)
+                        break;
+
+                    default:
+                        throw 'Unknown pickup type ' + pickupIdFrom
+                        break;
+                }
+
                 break;
             case "renewAction":
                 vcertArgs.push('renew')
@@ -255,8 +283,8 @@ async function run() {
                 }
 
                 // write pickup id to env var
-                var pickupId = fs.readFileSync(pickupIdFile, 'utf8')
-                tl.setVariable('VCERT_PICKUPID', pickupId)
+                var enrollPickupId = fs.readFileSync(enrollIdFilePath, 'utf8')
+                tl.setVariable('VCERT_PICKUPID', enrollPickupId)
                 console.log('Pickup ID saved to environment variable VCERT_PICKUPID')
 
                 break;

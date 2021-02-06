@@ -152,7 +152,7 @@
             "label": "Project Zone",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "DevOps project zone where the certificate will be located.<br/><br/>Example: vvvvvvvv-wwww-xxxx-yyyy-zzzzzzzzzzzz",
+            "helpMarkDown": "Application and associated issuing template in the form application\\template",
             "groupName": "enrollGroup"
         },
         {
@@ -312,6 +312,39 @@
             "groupName": "enrollGroup"
         },
         {
+            "name": "pickupIdFrom",
+            "type": "radio",
+            "label": "Pickup ID From",
+            "defaultValue": "pickupIdFromEnvVar",
+            "required": true,
+            "options": {
+                "pickupIdFromEnvVar": "Environment Variable",
+                "pickupIdFromId": "ID",
+                "pickupIdFromFile": "File path"
+            },
+            "helpMarkDown": "Where to get the pickup ID from.<br/><br/>Environment variable: From VCERT_PICKUPID from a prior VCert Request operation.<br/>ID: provide the pickup ID<br/>File path: provide the path to a file which contains the pickup ID",
+            "visibleRule": "action = pickupAction",
+            "groupName": "pickupGroup"
+        },
+        {
+            "name": "pickupId",
+            "type": "string",
+            "label": "ID",
+            "defaultValue": "",
+            "required": true,
+            "visibleRule": "pickupIdFrom = pickupIdFromId",
+            "groupName": "pickupGroup"
+        },
+        {
+            "name": "pickupFile",
+            "type": "filePath",
+            "label": "File path",
+            "defaultValue": "",
+            "required": true,
+            "visibleRule": "pickupIdFrom = pickupIdFromFile",
+            "groupName": "pickupGroup"
+        },
+        {
             "name": "outputType",
             "type": "radio",
             "label": "Type",
@@ -334,50 +367,6 @@
             "visibleRule": "outputType = outputFile || enrollFormat = pkcs12 || enrollFormat = jks",
             "helpMarkDown": "Path to output file.  Required if output type 'file' was selected or format is either PKCS#12 or JKS.",
             "groupName": "outputGroup"
-        },
-        {
-            "name": "pickupBy",
-            "type": "radio",
-            "label": "Retrieve by",
-            "defaultValue": "pickupById",
-            "required": true,
-            "options": {
-                "pickupById": "ID",
-                "pickupByFile": "File path"
-            },
-            "visibleRule": "action = pickupAction",
-            "groupName": "pickupGroup"
-        },
-        {
-            "name": "pickupIdFrom",
-            "type": "radio",
-            "label": "ID From",
-            "defaultValue": "pickupId",
-            "required": true,
-            "options": {
-                "pickupIdFromEnv": "Environment variable",
-                "pickupIdFromId": "ID"
-            },
-            "visibleRule": "pickupBy = pickupById",
-            "groupName": "pickupGroup"
-        },
-        {
-            "name": "pickupId",
-            "type": "string",
-            "label": "Pickup ID",
-            "defaultValue": "",
-            "required": true,
-            "visibleRule": "pickupIdFrom = pickupIdFromId",
-            "groupName": "pickupGroup"
-        },
-        {
-            "name": "pickupFile",
-            "type": "string",
-            "label": "File path",
-            "defaultValue": "",
-            "required": true,
-            "visibleRule": "pickupBy = pickupByFile",
-            "groupName": "pickupGroup"
         },
         {
             "name": "todo",
