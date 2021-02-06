@@ -243,18 +243,21 @@ async function run() {
 
         switch (action) {
             case 'enrollAction':
-                if (outputType === 'outputEnvVar' && (enrollFormat === 'pem' || enrollFormat === 'json')) {
-                    // certOut = certOut.replace(/\n/g, '');
-                    // console.log(certOut)
-                    tl.setVariable('VCERT_ENROLL', child.stdout)
-                    console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to environment variable VCERT_ENROLL')
-                } else {
-                    console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to ' + outputFile)
+                if (!enrollNoPickup) {
+                    if (outputType === 'outputEnvVar' && (enrollFormat === 'pem' || enrollFormat === 'json')) {
+                        // certOut = certOut.replace(/\n/g, '');
+                        // console.log(certOut)
+                        tl.setVariable('VCERT_ENROLL', child.stdout)
+                        console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to environment variable VCERT_ENROLL')
+                    } else {
+                        console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to ' + outputFile)
+                    }
                 }
 
                 // write pickup id to env var
                 var pickupId = fs.readFileSync(pickupIdFile, 'utf8')
                 tl.setVariable('VCERT_PICKUPID', pickupId)
+                console.log('Pickup ID saved to environment variable VCERT_PICKUPID')
 
                 break;
 
