@@ -181,11 +181,15 @@ async function run() {
             case "pickupAction":
                 vcertArgs.push('pickup')
 
-                var thisId: string
                 switch (pickupIdFrom) {
                     case 'pickIdFromEnvVar':
-                        vcertArgs.push('--pickup-id')
-                        vcertArgs.push(tl.getVariable('VCERT_PICKUPID'))
+                        var thisId: string = tl.getVariable('VCERT_PICKUPID')
+                        if (thisId) {
+                            vcertArgs.push('--pickup-id')
+                            vcertArgs.push(thisId)
+                        } else {
+                            throw 'No pickup ID was found at environment variable VCERT_PICKUPID'
+                        }
                         break;
 
                     case 'pickIdFromID':
