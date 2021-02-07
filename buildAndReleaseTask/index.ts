@@ -12,6 +12,8 @@ async function run() {
         // console.log(tl.getVariables())
         // tl.setVariable('getcredToken', 'TokenTest')
 
+        var pickupIdEnvVarName: string = 'VCERT_PICKUPID'
+        var certEnvVarName: string = 'VCERT_CERT'
         let vcertArgs: string[] = []
         let vcertPath: string = path.join(__dirname, 'bin/vcert_')
 
@@ -183,12 +185,12 @@ async function run() {
 
                 switch (pickupIdFrom) {
                     case 'pickIdFromEnvVar':
-                        var thisId = tl.getVariable('VCERT_PICKUPID')
-                        if (thisId === undefined) {
-                            throw 'No pickup ID was found at environment variable VCERT_PICKUPID'
-                        } else {
+                        var thisId = tl.getVariable(pickupIdEnvVarName)
+                        if (thisId) {
                             vcertArgs.push('--pickup-id')
                             vcertArgs.push(thisId)
+                        } else {
+                            throw 'No pickup ID was found at environment variable ' + pickupIdEnvVarName
                         }
                         break;
 
@@ -279,8 +281,8 @@ async function run() {
                     if (outputType === 'outputEnvVar' && (enrollFormat === 'pem' || enrollFormat === 'json')) {
                         // certOut = certOut.replace(/\n/g, '');
                         // console.log(certOut)
-                        tl.setVariable('VCERT_ENROLL', child.stdout)
-                        console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to environment variable VCERT_ENROLL')
+                        tl.setVariable(certEnvVarName, child.stdout)
+                        console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to environment variable ' + certEnvVarName)
                     } else {
                         console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to ' + outputFile)
                     }
@@ -288,8 +290,8 @@ async function run() {
 
                 // write pickup id to env var
                 var enrollPickupId = fs.readFileSync(enrollIdFilePath, 'utf8')
-                tl.setVariable('VCERT_PICKUPID', enrollPickupId)
-                console.log('Pickup ID saved to environment variable VCERT_PICKUPID')
+                tl.setVariable(pickupIdEnvVarName, enrollPickupId)
+                console.log('Pickup ID saved to environment variable ' + pickupIdEnvVarName)
 
                 break;
 

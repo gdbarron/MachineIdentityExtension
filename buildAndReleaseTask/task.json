@@ -345,6 +345,21 @@
             "groupName": "pickupGroup"
         },
         {
+            "name": "pickupFormat",
+            "type": "radio",
+            "label": "Format",
+            "defaultValue": "pem",
+            "required": true,
+            "options": {
+                "pem": "PEM",
+                "json": "JSON",
+                "pkcs12": "PKCS#12",
+                "jks": "JKS"
+            },
+            "helpMarkDown": "",
+            "groupName": "pickupGroup"
+        },
+        {
             "name": "outputType",
             "type": "radio",
             "label": "Type",
@@ -355,7 +370,7 @@
                 "outputFile": "File"
             },
             "helpMarkDown": "Output to either a file or an environment variable to be used in a subsequent task.  The option for an environment variable is only available for pem and json formats.",
-            "visibleRule": "enrollFormat = pem || enrollFormat = json",
+            "visibleRule": "enrollFormat = pem || enrollFormat = json || pickupFormat = pem || pickupFormat = json",
             "groupName": "outputGroup"
         },
         {
@@ -364,7 +379,7 @@
             "label": "File Path",
             "defaultValue": "",
             "required": true,
-            "visibleRule": "outputType = outputFile || enrollFormat = pkcs12 || enrollFormat = jks",
+            "visibleRule": "outputType = outputFile || enrollFormat = pkcs12 || enrollFormat = jks || pickupFormat = pkcs12 || pickupFormat = jks",
             "helpMarkDown": "Path to output file.  Required if output type 'file' was selected or format is either PKCS#12 or JKS.",
             "groupName": "outputGroup"
         },
