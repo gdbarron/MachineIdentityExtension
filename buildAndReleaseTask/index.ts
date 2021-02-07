@@ -183,12 +183,12 @@ async function run() {
 
                 switch (pickupIdFrom) {
                     case 'pickIdFromEnvVar':
-                        try {
-                            var thisId: string = tl.getVariable('VCERT_PICKUPID')
+                        var thisId = tl.getVariable('VCERT_PICKUPID')
+                        if (thisId === undefined) {
+                            throw 'No pickup ID was found at environment variable VCERT_PICKUPID'
+                        } else {
                             vcertArgs.push('--pickup-id')
                             vcertArgs.push(thisId)
-                        } catch (error) {
-                            throw 'No pickup ID was found at environment variable VCERT_PICKUPID'
                         }
                         break;
 
