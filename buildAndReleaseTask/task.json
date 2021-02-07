@@ -16,6 +16,7 @@
         "Minor": 0,
         "Patch": 1
     },
+    "instanceNameFormat": "Venafi VCert $(action)",
     "groups": [
         {
             "name": "mainGroup",
@@ -27,12 +28,6 @@
             "displayName": "Request Certificate",
             "isExpanded": false,
             "visibleRule": "action = enrollAction"
-        },
-        {
-            "name": "outputGroup",
-            "displayName": "Output",
-            "isExpanded": false,
-            "visibleRule": "action = enrollAction || action = pickupAction"
         },
         {
             "name": "pickupGroup",
@@ -47,12 +42,17 @@
             "visibleRule": "action = renewAction"
         },
         {
+            "name": "outputGroup",
+            "displayName": "Output",
+            "isExpanded": false,
+            "visibleRule": "action = enrollAction || action = pickupAction"
+        },
+        {
             "name": "advanced",
             "displayName": "Advanced",
             "isExpanded": false
         }
     ],
-    "instanceNameFormat": "Venafi VCert",
     "inputs": [
         {
             "name": "action",
@@ -370,7 +370,7 @@
                 "outputFile": "File"
             },
             "helpMarkDown": "Output to either a file or an environment variable to be used in a subsequent task.  The option for an environment variable is only available for pem and json formats.",
-            "visibleRule": "enrollFormat = pem || enrollFormat = json || pickupFormat = pem || pickupFormat = json",
+            "visibleRule": "(action = enrollAction && (enrollFormat = pem || enrollFormat = json)) || (action = pickupAction && (pickupFormat = pem || pickupFormat = json))",
             "groupName": "outputGroup"
         },
         {

@@ -55,13 +55,14 @@ async function run() {
         let enrollNoPickup = tl.getBoolInput('enrollNoPickup', false) as boolean
 
         // pickup
-        let pickupIdFrom = tl.getInput('pickupIdFrom', (action === 'pickupAction')) as string
+        let pickupFormat = tl.getInput('pickupFormat', true) as string
+        let pickupIdFrom = tl.getInput('pickupIdFrom', action === 'pickupAction') as string
         let pickupId = tl.getInput('pickupId', pickupIdFrom === 'pickupIdFromId') as string
         let pickupFile = tl.getPathInput('pickupFile', pickupIdFrom === 'pickupIdFromFile') as string
 
         // output
         let outputType = tl.getInput('outputType', action === 'enrollAction') as string
-        let outputFile = tl.getPathInput('outputFile', outputType === 'outputFile' || enrollFormat === 'pkcs12' || enrollFormat === 'jks') as string
+        let outputFile = tl.getPathInput('outputFile', outputType === 'outputFile' || enrollFormat === 'pkcs12' || enrollFormat === 'jks' || pickupFormat === 'pkcs12' || pickupFormat === 'jks') as string
 
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
