@@ -32,7 +32,7 @@
             "name": "outputGroup",
             "displayName": "Output",
             "isExpanded": false,
-            "visibleRule": "action = enrollAction"
+            "visibleRule": "action = enrollAction || action = pickupAction"
         },
         {
             "name": "pickupGroup",
