@@ -43,8 +43,8 @@ async function run() {
         let enrollNicknameTpp = tl.getInput('enrollNicknameTpp', false) as string
         let enrollZoneTpp = tl.getInput('enrollZoneTpp', (serverType === 'tpp')) as string
         let enrollKeyPassword = tl.getInput('enrollKeyPassword', false) as string
-        let enrollFormat = tl.getInput('enrollFormat', false) as string
-        let enrollChain = tl.getInput('enrollChain', false) as string
+        let enrollFormat = tl.getInput('enrollFormat', true) as string
+        let enrollChain = tl.getInput('enrollChain', true) as string
         let enrollSanDns = tl.getDelimitedInput('enrollSanDns', ',', false) as string[]
         let enrollSanEmailTpp = tl.getDelimitedInput('enrollSanEmailTpp', ',', false) as string[]
         let enrollSanIpTpp = tl.getDelimitedInput('enrollSanIpTpp', ',', false) as string[]

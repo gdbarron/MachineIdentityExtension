@@ -43,9 +43,9 @@
         },
         {
             "name": "outputGroup",
-            "displayName": "Output",
+            "displayName": "Certificate Output",
             "isExpanded": false,
-            "visibleRule": "action = enrollAction || action = pickupAction"
+            "visibleRule": "(action = enrollAction && enrollNoPickup = false) || action = pickupAction"
         },
         {
             "name": "advanced",
