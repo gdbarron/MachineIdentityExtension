@@ -308,7 +308,7 @@
         {
             "name": "enrollOutputType",
             "type": "radio",
-            "label": "Certificate Output Type",
+            "label": "Certificate Output",
             "defaultValue": "outputEnvVar",
             "required": true,
             "options": {
@@ -380,7 +380,7 @@
         {
             "name": "pickupOutputType",
             "type": "radio",
-            "label": "Certificate Output Type",
+            "label": "Certificate Output",
             "defaultValue": "outputEnvVar",
             "required": true,
             "options": {

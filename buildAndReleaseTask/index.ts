@@ -53,12 +53,16 @@ async function run() {
         let enrollCsrCloud = tl.getInput('enrollCsrCloud', false) as string
         let enrollCsrFile = tl.getInput('enrollCsrFile', false) as string
         let enrollNoPickup = tl.getBoolInput('enrollNoPickup', false) as boolean
+        let enrollOutputType = tl.getInput('enrollOutputType', enrollNoPickup === false && (enrollFormat === 'pem' || enrollFormat === 'json')) as string
+        let enrollOutputFile = tl.getPathInput('enrollOutputFile', enrollOutputType === 'outputFile' || enrollFormat === 'pkcs12.file' || enrollFormat === 'jks.file') as string
 
         // pickup
         let pickupFormat = tl.getInput('pickupFormat', true) as string
         let pickupIdFrom = tl.getInput('pickupIdFrom', action === 'pickupAction') as string
         let pickupId = tl.getInput('pickupId', pickupIdFrom === 'pickupIdFromId') as string
         let pickupFile = tl.getPathInput('pickupFile', pickupIdFrom === 'pickupIdFromFile') as string
+        let pickupOutputType = tl.getInput('pickupOutputType', pickupFormat === 'pem' || pickupFormat === 'json') as string
+        let pickupOutputFile = tl.getPathInput('pickupOutputFile', pickupOutputType === 'outputFile' || pickupFormat === 'pkcs12' || pickupFormat === 'jks') as string
 
         // output
         let outputType = tl.getInput('outputType', action === 'enrollAction') as string
@@ -136,9 +140,9 @@ async function run() {
                 if (enrollNoPickup) {
                     vcertArgs.push('--no-pickup')
                 } else {
-                    if (outputType === 'file' || enrollFormat === 'pkcs12.file' || enrollFormat === 'jks.file') {
+                    if (enrollOutputFile) {
                         vcertArgs.push('--file')
-                        vcertArgs.push(outputFile)
+                        vcertArgs.push(enrollOutputFile)
                     }
                 }
 
@@ -181,11 +185,13 @@ async function run() {
                 vcertArgs.push(enrollIdFilePath)
 
                 break;
+
             case "pickupAction":
+
                 vcertArgs.push('pickup')
 
                 switch (pickupIdFrom) {
-                    case 'pickIdFromEnvVar':
+                    case 'pickupIdFromEnvVar':
                         var thisId = tl.getVariable(pickupIdEnvVarName)
                         if (thisId) {
                             vcertArgs.push('--pickup-id')
@@ -195,12 +201,12 @@ async function run() {
                         }
                         break;
 
-                    case 'pickIdFromID':
+                    case 'pickupIdFromId':
                         vcertArgs.push('--pickup-id')
                         vcertArgs.push(pickupId)
                         break;
 
-                    case 'pickIdFromEnvVar':
+                    case 'pickupIdFromFile':
                         vcertArgs.push('--pickup-id-file')
                         vcertArgs.push(pickupFile)
                         break;
@@ -211,12 +217,17 @@ async function run() {
                 }
 
                 break;
+
             case "renewAction":
+
                 vcertArgs.push('renew')
                 break;
+
             case "getcredAction":
+
                 vcertArgs.push('getcred')
                 break;
+
         }
 
         // needed for all cloud/tpp actions
