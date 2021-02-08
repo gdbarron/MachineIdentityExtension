@@ -185,8 +185,8 @@
             "options": {
                 "pem": "PEM",
                 "json": "JSON",
-                "pkcs12*": "PKCS#12",
-                "jks*": "JKS"
+                "pkcs12.file": "PKCS#12",
+                "jks.file": "JKS"
             },
             "helpMarkDown": "",
             "groupName": "enrollGroup"
@@ -316,7 +316,7 @@
                 "outputFile": "File"
             },
             "helpMarkDown": "Output to either a file or an environment variable to be used in a subsequent task.  The option for an environment variable is only available for pem and json formats.",
-            "visibleRule": "enrollFormat NotEndsWith * && enrollNoPickup = false",
+            "visibleRule": "enrollFormat NotEndsWith .file && enrollNoPickup = false",
             "groupName": "enrollGroup"
         },
         {
@@ -325,7 +325,7 @@
             "label": "File Path",
             "defaultValue": "",
             "required": true,
-            "visibleRule": "enrollOutputType = outputFile || enrollFormat = pkcs12* || enrollFormat = jks*",
+            "visibleRule": "enrollOutputType = outputFile || enrollFormat = pkcs12.file || enrollFormat = jks.file",
             "helpMarkDown": "Path to output file.  Required if output type 'file' was selected or format is either PKCS#12 or JKS.",
             "groupName": "enrollGroup"
         },
