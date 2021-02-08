@@ -308,7 +308,7 @@
         {
             "name": "enrollOutputType",
             "type": "radio",
-            "label": "Type",
+            "label": "Certificate Output Type",
             "defaultValue": "outputEnvVar",
             "required": true,
             "options": {
@@ -322,7 +322,7 @@
         {
             "name": "enrollOutputFile",
             "type": "filePath",
-            "label": "File Path",
+            "label": "Certificate Output File Path",
             "defaultValue": "",
             "required": true,
             "visibleRule": "enrollOutputType = outputFile || enrollFormat EndsWith .file",
@@ -380,7 +380,7 @@
         {
             "name": "pickupOutputType",
             "type": "radio",
-            "label": "Type",
+            "label": "Certificate Output Type",
             "defaultValue": "outputEnvVar",
             "required": true,
             "options": {
@@ -394,7 +394,7 @@
         {
             "name": "pickupOutputFile",
             "type": "filePath",
-            "label": "File Path",
+            "label": "Certificate Output File Path",
             "defaultValue": "",
             "required": true,
             "visibleRule": "pickupOutputType = outputFile || pickupFormat = pkcs12 || pickupFormat = jks",

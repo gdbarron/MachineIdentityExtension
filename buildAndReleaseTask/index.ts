@@ -23,9 +23,9 @@ async function run() {
         // const tempPath = tl.getVariable('AGENT_TEMPDIRECTORY')
         const enrollIdFilePath = path.join(__dirname, 'pickupid')
 
-        var isWin = process.platform === "win32";
-        var isLinux = process.platform === "linux";
-        var isMac = process.platform === "darwin";
+        var isWin = (process.platform === "win32")
+        var isLinux = (process.platform === "linux")
+        var isMac = (process.platform === "darwin")
 
         let action = tl.getInput('action', true) as string
         let serverType = tl.getInput('serverType', true) as string
@@ -98,7 +98,7 @@ async function run() {
                 vcertArgs.push(enrollCommonName)
 
                 vcertArgs.push('--format')
-                vcertArgs.push(enrollFormat)
+                vcertArgs.push(enrollFormat.replace('.file', ''))
 
                 vcertArgs.push('--chain')
                 vcertArgs.push(enrollChain)
@@ -133,13 +133,13 @@ async function run() {
                     vcertArgs.push('--no-prompt')
                 }
 
-                if (outputType === 'file' || enrollFormat === 'pkcs12' || enrollFormat === 'jks') {
-                    vcertArgs.push('--file')
-                    vcertArgs.push(outputFile)
-                }
-
                 if (enrollNoPickup) {
                     vcertArgs.push('--no-pickup')
+                } else {
+                    if (outputType === 'file' || enrollFormat === 'pkcs12.file' || enrollFormat === 'jks.file') {
+                        vcertArgs.push('--file')
+                        vcertArgs.push(outputFile)
+                    }
                 }
 
                 // tpp specific params, not supported on cloud
