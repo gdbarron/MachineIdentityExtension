@@ -325,7 +325,7 @@
             "label": "File Path",
             "defaultValue": "",
             "required": true,
-            "visibleRule": "enrollOutputType = outputFile || enrollFormat = pkcs12.file || enrollFormat = jks.file",
+            "visibleRule": "enrollOutputType = outputFile || enrollFormat EndsWith .file",
             "helpMarkDown": "Path to output file.  Required if output type 'file' was selected or format is either PKCS#12 or JKS.",
             "groupName": "enrollGroup"
         },
