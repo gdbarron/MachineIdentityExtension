@@ -194,6 +194,7 @@ async function run() {
                     case 'pickupIdFromEnvVar':
                         var thisId = tl.getVariable(pickupIdEnvVarName)
                         if (thisId) {
+                            thisId = thisId.trim()
                             vcertArgs.push('--pickup-id')
                             vcertArgs.push(thisId)
                         } else {
