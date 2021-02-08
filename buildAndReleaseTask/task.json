@@ -42,12 +42,6 @@
             "visibleRule": "action = renewAction"
         },
         {
-            "name": "outputGroup",
-            "displayName": "Certificate Output",
-            "isExpanded": false,
-            "visibleRule": "(action = enrollAction && enrollNoPickup = false) || action = pickupAction"
-        },
-        {
             "name": "advanced",
             "displayName": "Advanced",
             "isExpanded": false
@@ -312,6 +306,30 @@
             "groupName": "enrollGroup"
         },
         {
+            "name": "enrollOutputType",
+            "type": "radio",
+            "label": "Type",
+            "defaultValue": "outputEnvVar",
+            "required": true,
+            "options": {
+                "outputEnvVar": "Environment variable",
+                "outputFile": "File"
+            },
+            "helpMarkDown": "Output to either a file or an environment variable to be used in a subsequent task.  The option for an environment variable is only available for pem and json formats.",
+            "visibleRule": "enrollFormat = pem || enrollFormat = json && enrollNoPickup = false",
+            "groupName": "enrollGroup"
+        },
+        {
+            "name": "enrollOutputFile",
+            "type": "filePath",
+            "label": "File Path",
+            "defaultValue": "",
+            "required": true,
+            "visibleRule": "enrollOutputType = outputFile || enrollFormat = pkcs12 || enrollFormat = jks",
+            "helpMarkDown": "Path to output file.  Required if output type 'file' was selected or format is either PKCS#12 or JKS.",
+            "groupName": "enrollGroup"
+        },
+        {
             "name": "pickupIdFrom",
             "type": "radio",
             "label": "Pickup ID From",
@@ -360,7 +378,7 @@
             "groupName": "pickupGroup"
         },
         {
-            "name": "outputType",
+            "name": "pickupOutputType",
             "type": "radio",
             "label": "Type",
             "defaultValue": "outputEnvVar",
@@ -370,18 +388,18 @@
                 "outputFile": "File"
             },
             "helpMarkDown": "Output to either a file or an environment variable to be used in a subsequent task.  The option for an environment variable is only available for pem and json formats.",
-            "visibleRule": "(action = enrollAction && (enrollFormat = pem || enrollFormat = json)) || (action = pickupAction && (pickupFormat = pem || pickupFormat = json))",
-            "groupName": "outputGroup"
+            "visibleRule": "pickupFormat = pem || pickupFormat = json",
+            "groupName": "pickupGroup"
         },
         {
-            "name": "outputFile",
+            "name": "pickupOutputFile",
             "type": "filePath",
             "label": "File Path",
             "defaultValue": "",
             "required": true,
-            "visibleRule": "outputType = outputFile || enrollFormat = pkcs12 || enrollFormat = jks || pickupFormat = pkcs12 || pickupFormat = jks",
+            "visibleRule": "pickupOutputType = outputFile || pickupFormat = pkcs12 || pickupFormat = jks",
             "helpMarkDown": "Path to output file.  Required if output type 'file' was selected or format is either PKCS#12 or JKS.",
-            "groupName": "outputGroup"
+            "groupName": "pickupGroup"
         },
         {
             "name": "todo",

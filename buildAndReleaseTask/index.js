@@ -20,6 +20,8 @@ function run() {
             // console.log('Token: ' + (tl.getVariable('getcredToken')))
             // console.log(tl.getVariables())
             // tl.setVariable('getcredToken', 'TokenTest')
+            var pickupIdEnvVarName = 'VCERT_PICKUPID';
+            var certEnvVarName = 'VCERT_CERT';
             let vcertArgs = [];
             let vcertPath = path.join(__dirname, 'bin/vcert_');
             // pickup file will be placed here
@@ -44,8 +46,8 @@ function run() {
             let enrollNicknameTpp = tl.getInput('enrollNicknameTpp', false);
             let enrollZoneTpp = tl.getInput('enrollZoneTpp', (serverType === 'tpp'));
             let enrollKeyPassword = tl.getInput('enrollKeyPassword', false);
-            let enrollFormat = tl.getInput('enrollFormat', false);
-            let enrollChain = tl.getInput('enrollChain', false);
+            let enrollFormat = tl.getInput('enrollFormat', true);
+            let enrollChain = tl.getInput('enrollChain', true);
             let enrollSanDns = tl.getDelimitedInput('enrollSanDns', ',', false);
             let enrollSanEmailTpp = tl.getDelimitedInput('enrollSanEmailTpp', ',', false);
             let enrollSanIpTpp = tl.getDelimitedInput('enrollSanIpTpp', ',', false);
@@ -55,12 +57,13 @@ function run() {
             let enrollCsrFile = tl.getInput('enrollCsrFile', false);
             let enrollNoPickup = tl.getBoolInput('enrollNoPickup', false);
             // pickup
-            let pickupIdFrom = tl.getInput('pickupIdFrom', (action === 'pickupAction'));
+            let pickupFormat = tl.getInput('pickupFormat', true);
+            let pickupIdFrom = tl.getInput('pickupIdFrom', action === 'pickupAction');
             let pickupId = tl.getInput('pickupId', pickupIdFrom === 'pickupIdFromId');
             let pickupFile = tl.getPathInput('pickupFile', pickupIdFrom === 'pickupIdFromFile');
             // output
             let outputType = tl.getInput('outputType', action === 'enrollAction');
-            let outputFile = tl.getPathInput('outputFile', outputType === 'outputFile' || enrollFormat === 'pkcs12' || enrollFormat === 'jks');
+            let outputFile = tl.getPathInput('outputFile', outputType === 'outputFile' || enrollFormat === 'pkcs12' || enrollFormat === 'jks' || pickupFormat === 'pkcs12' || pickupFormat === 'jks');
             // advanced
             let verbose = tl.getBoolInput('verbose', false);
             vcertPath += process.platform;
@@ -168,8 +171,14 @@ function run() {
                     vcertArgs.push('pickup');
                     switch (pickupIdFrom) {
                         case 'pickIdFromEnvVar':
-                            vcertArgs.push('--pickup-id');
-                            vcertArgs.push(tl.getVariable('VCERT_PICKUPID'));
+                            var thisId = tl.getVariable(pickupIdEnvVarName);
+                            if (thisId) {
+                                vcertArgs.push('--pickup-id');
+                                vcertArgs.push(thisId);
+                            }
+                            else {
+                                throw 'No pickup ID was found at environment variable ' + pickupIdEnvVarName;
+                            }
                             break;
                         case 'pickIdFromID':
                             vcertArgs.push('--pickup-id');
@@ -248,8 +257,8 @@ function run() {
                         if (outputType === 'outputEnvVar' && (enrollFormat === 'pem' || enrollFormat === 'json')) {
                             // certOut = certOut.replace(/\n/g, '');
                             // console.log(certOut)
-                            tl.setVariable('VCERT_ENROLL', child.stdout);
-                            console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to environment variable VCERT_ENROLL');
+                            tl.setVariable(certEnvVarName, child.stdout);
+                            console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to environment variable ' + certEnvVarName);
                         }
                         else {
                             console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to ' + outputFile);
@@ -257,8 +266,8 @@ function run() {
                     }
                     // write pickup id to env var
                     var enrollPickupId = fs.readFileSync(enrollIdFilePath, 'utf8');
-                    tl.setVariable('VCERT_PICKUPID', enrollPickupId);
-                    console.log('Pickup ID saved to environment variable VCERT_PICKUPID');
+                    tl.setVariable(pickupIdEnvVarName, enrollPickupId);
+                    console.log('Pickup ID saved to environment variable ' + pickupIdEnvVarName);
                     break;
                 case 'getcredAction':
                     break;
