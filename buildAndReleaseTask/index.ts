@@ -64,10 +64,6 @@ async function run() {
         let pickupOutputType = tl.getInput('pickupOutputType', pickupFormat === 'pem' || pickupFormat === 'json') as string
         let pickupOutputFile = tl.getPathInput('pickupOutputFile', pickupOutputType === 'outputFile' || pickupFormat === 'pkcs12' || pickupFormat === 'jks') as string
 
-        // output
-        let outputType = tl.getInput('outputType', action === 'enrollAction') as string
-        let outputFile = tl.getPathInput('outputFile', outputType === 'outputFile' || enrollFormat === 'pkcs12' || enrollFormat === 'jks' || pickupFormat === 'pkcs12' || pickupFormat === 'jks') as string
-
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
 
