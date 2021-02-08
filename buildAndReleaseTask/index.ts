@@ -287,13 +287,13 @@ async function run() {
         switch (action) {
             case 'enrollAction':
                 if (!enrollNoPickup) {
-                    if (outputType === 'enrollOutputEnvVar' && (enrollFormat === 'pem' || enrollFormat === 'json')) {
+                    if (enrollOutputType === 'outputEnvVar' && (enrollFormat === 'pem' || enrollFormat === 'json')) {
                         // certOut = certOut.replace(/\n/g, '');
                         // console.log(certOut)
                         tl.setVariable(certEnvVarName, child.stdout)
                         console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to environment variable ' + certEnvVarName)
                     } else {
-                        console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to ' + outputFile)
+                        console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to ' + enrollOutputFile)
                     }
                 }
 
