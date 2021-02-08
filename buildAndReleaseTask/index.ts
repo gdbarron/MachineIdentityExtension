@@ -291,7 +291,7 @@ async function run() {
         switch (action) {
             case 'enrollAction':
                 if (!enrollNoPickup) {
-                    if (outputType === 'outputEnvVar' && (enrollFormat === 'pem' || enrollFormat === 'json')) {
+                    if (outputType === 'enrollOutputEnvVar' && (enrollFormat === 'pem' || enrollFormat === 'json')) {
                         // certOut = certOut.replace(/\n/g, '');
                         // console.log(certOut)
                         tl.setVariable(certEnvVarName, child.stdout)
@@ -305,6 +305,17 @@ async function run() {
                 var enrollPickupId = fs.readFileSync(enrollIdFilePath, 'utf8')
                 tl.setVariable(pickupIdEnvVarName, enrollPickupId)
                 console.log('Pickup ID saved to environment variable ' + pickupIdEnvVarName)
+
+                break;
+
+            case 'pickupAction':
+
+                if (pickupOutputType === 'outputEnvVar' && (pickupFormat === 'pem' || pickupFormat === 'json')) {
+                    tl.setVariable(certEnvVarName, child.stdout)
+                    console.log('Contents of certificate, with ' + pickupFormat + ' format, saved to environment variable ' + certEnvVarName)
+                } else {
+                    console.log('Contents of certificate, with ' + pickupFormat + ' format, saved to ' + pickupOutputFile)
+                }
 
                 break;
 
