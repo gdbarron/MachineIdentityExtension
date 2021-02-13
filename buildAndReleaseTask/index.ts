@@ -12,7 +12,7 @@ async function run() {
         // console.log(tl.getVariables())
         // tl.setVariable('getcredToken', 'TokenTest')
 
-        var pickupIdEnvVarName: string = 'VCERT_PICKUPID'
+        var pickupIdEnvVarName: string = 'VCERT_ID'
         var certEnvVarName: string = 'VCERT_CERT'
         let vcertArgs: string[] = []
         let vcertPath: string = path.join(__dirname, 'bin/vcert_')

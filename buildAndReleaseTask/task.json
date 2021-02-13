@@ -16,7 +16,7 @@
         "Minor": 0,
         "Patch": 1
     },
-    "instanceNameFormat": "Venafi VCert $(action)",
+    "instanceNameFormat": "Venafi VCert - $(action)",
     "groups": [
         {
             "name": "mainGroup",
@@ -302,7 +302,7 @@
             "defaultValue": false,
             "required": false,
             "type": "boolean",
-            "helpMarkDown": "By default, VCert will try to retrieve the certificate for 60 seconds.  If your CA might not respond in time or your workflow requires it, you can choose to not retrieve the certificate now and do so later with the pickup id which is automatically saved as environment variable VCERT_PICKUPID.",
+            "helpMarkDown": "By default, VCert will try to retrieve the certificate for 60 seconds.  If your CA might not respond in time or your workflow requires it, you can choose to not retrieve the certificate now and do so later with the pickup id which is automatically saved as environment variable VCERT_ID.",
             "groupName": "enrollGroup"
         },
         {
@@ -340,23 +340,24 @@
                 "pickupIdFromId": "ID",
                 "pickupIdFromFile": "File path"
             },
-            "helpMarkDown": "Where to get the pickup ID from.<br/><br/>Environment variable: From VCERT_PICKUPID from a prior VCert Request operation.<br/>ID: provide the pickup ID<br/>File path: provide the path to a file which contains the pickup ID",
+            "helpMarkDown": "Where to get the pickup ID from.<br/><br/>Environment variable: From VCERT_ID from a prior VCert Request operation.<br/>ID: provide the pickup ID<br/>File path: provide the path to a file which contains the pickup ID",
             "visibleRule": "action = pickupAction",
             "groupName": "pickupGroup"
         },
         {
             "name": "pickupId",
             "type": "string",
-            "label": "ID",
+            "label": "ID / Path",
             "defaultValue": "",
             "required": true,
+            "helpMarkDown": "Reference ID for certificate to pickup.  For Venafi Cloud this will be a GUID and for TPP this will be the path to the certificate, eg. \\ved\\policy\\mycert.com",
             "visibleRule": "pickupIdFrom = pickupIdFromId",
             "groupName": "pickupGroup"
         },
         {
             "name": "pickupFile",
             "type": "filePath",
-            "label": "File path",
+            "label": "File Path",
             "defaultValue": "",
             "required": true,
             "visibleRule": "pickupIdFrom = pickupIdFromFile",
@@ -402,14 +403,45 @@
             "groupName": "pickupGroup"
         },
         {
+            "name": "renewIdFrom",
+            "type": "radio",
+            "label": "Certificate ID From",
+            "defaultValue": "renewIdFromEnvVar",
+            "required": true,
+            "options": {
+                "renewIdFromEnvVar": "Environment Variable",
+                "renewIdFromId": "ID",
+                "renewIdFromFile": "File path"
+            },
+            "helpMarkDown": "Where to get the renew ID from.<br/><br/>Environment variable: From VCERT_ID from a prior VCert Request operation.<br/>ID: provide the renew ID<br/>File path: provide the path to a file which contains the renew ID",
+            "visibleRule": "action = renewAction",
+            "groupName": "renewGroup"
+        },
+        {
+            "name": "renewId",
+            "type": "string",
+            "label": "ID",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Reference ID for certificate to renew.  For Venafi Cloud this will be a GUID and for TPP this will be the path to the certificate, eg. \\ved\\policy\\mycert.com",
+            "visibleRule": "renewIdFrom = renewIdFromId",
+            "groupName": "renewGroup"
+        },
+        {
+            "name": "renewFile",
+            "type": "filePath",
+            "label": "File Path",
+            "defaultValue": "",
+            "required": true,
+            "visibleRule": "renewIdFrom = renewIdFromFile",
+            "groupName": "renewGroup"
+        },
+        {
             "name": "todo",
             "label": "todo",
             "type": "pickList",
             "defaultValue": "",
             "options": {
-                "pickup-id-file": "id for subsequent actions.  stdout by default, offer option for env var",
-                "pickup/pickup-id": "provide id for pickup, this or file below",
-                "pickup/pickup-id-file": "provide file for id.  this or id above",
                 "renew/id": "id for renewal or file:filepath",
                 "renew/thumbprint": "sha1 thumbprint, string or read from cert file with file:filepath"
             },
