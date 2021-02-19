@@ -12,7 +12,7 @@ async function run() {
         // console.log(tl.getVariables())
         // tl.setVariable('getcredToken', 'TokenTest')
 
-        var pickupIdEnvVarName: string = 'VCERT_ID'
+        var certIdEnvVarName: string = 'VCERT_ID'
         var certEnvVarName: string = 'VCERT_CERT'
         let vcertArgs: string[] = []
         let vcertPath: string = path.join(__dirname, 'bin/vcert_')
@@ -64,6 +64,11 @@ async function run() {
         let pickupOutputType = tl.getInput('pickupOutputType', pickupFormat === 'pem' || pickupFormat === 'json') as string
         let pickupOutputFile = tl.getPathInput('pickupOutputFile', pickupOutputType === 'outputFile' || pickupFormat === 'pkcs12' || pickupFormat === 'jks') as string
 
+        // renew
+        let renewIdFrom = tl.getInput('renewIdFrom', action === 'renewAction') as string
+        let renewId = tl.getInput('renewId', renewIdFrom === 'renewIdFromId') as string
+        let renewFile = tl.getPathInput('renewFile', renewIdFrom === 'renewIdFromFile') as string
+
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
         let testMode = tl.getBoolInput('testMode', false) as boolean
@@ -75,7 +80,7 @@ async function run() {
 
             case 'linux':
             case 'darwin':
-                // need to make vcert executable
+                // need to make vcert executable for linux and mac
                 fs.chmodSync(vcertPath, 0o111)
                 break;
 
@@ -189,13 +194,13 @@ async function run() {
 
                 switch (pickupIdFrom) {
                     case 'pickupIdFromEnvVar':
-                        var thisId = tl.getVariable(pickupIdEnvVarName)
+                        var thisId = tl.getVariable(certIdEnvVarName)
                         if (thisId) {
-                            thisId = thisId.trim()
+                            // thisId = thisId.trim()
                             vcertArgs.push('--pickup-id')
                             vcertArgs.push(thisId)
                         } else {
-                            throw 'No pickup ID was found at environment variable ' + pickupIdEnvVarName
+                            throw 'No pickup ID was found at environment variable ' + certIdEnvVarName
                         }
                         break;
 
@@ -219,6 +224,34 @@ async function run() {
             case "renewAction":
 
                 vcertArgs.push('renew')
+
+                switch (renewIdFrom) {
+                    case 'renewIdFromEnvVar':
+                        var thisId = tl.getVariable(certIdEnvVarName)
+                        if (thisId) {
+                            // thisId = thisId.trim()
+                            vcertArgs.push('--id')
+                            vcertArgs.push(thisId)
+                        } else {
+                            throw 'No pickup ID was found at environment variable ' + certIdEnvVarName
+                        }
+                        break;
+
+                    case 'renewIdFromId':
+                        vcertArgs.push('--id')
+                        vcertArgs.push(renewId)
+                        break;
+
+                    case 'renewIdFromFile':
+                        vcertArgs.push('--id')
+                        vcertArgs.push('file:' + renewFile)
+                        break;
+
+                    default:
+                        throw 'Unknown pickup type ' + pickupIdFrom
+                        break;
+                }
+
                 break;
 
             case "getcredAction":
@@ -303,8 +336,9 @@ async function run() {
 
                 // write pickup id to env var
                 var enrollPickupId = fs.readFileSync(enrollIdFilePath, 'utf8')
-                tl.setVariable(pickupIdEnvVarName, enrollPickupId)
-                console.log('Pickup ID saved to environment variable ' + pickupIdEnvVarName)
+                // there's a crlf on the pickup id so we need to trim it
+                tl.setVariable(certIdEnvVarName, enrollPickupId.trim())
+                console.log('Pickup ID saved to environment variable ' + certIdEnvVarName)
 
                 break;
 
