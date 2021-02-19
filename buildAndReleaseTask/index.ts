@@ -66,6 +66,7 @@ async function run() {
 
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
+        let testMode = tl.getBoolInput('testMode', false) as boolean
 
         vcertPath += process.platform
         switch (process.platform) {
@@ -252,6 +253,9 @@ async function run() {
             console.log('vcert args: ' + vcertArgs)
         }
 
+        if (testMode) {
+            vcertArgs.push('--test-mode')
+        }
 
         // const { execFile } = require('child_process');
         var child_process = require('child_process');
