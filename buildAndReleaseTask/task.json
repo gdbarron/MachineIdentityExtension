@@ -437,24 +437,21 @@
             "groupName": "renewGroup"
         },
         {
-            "name": "todo",
-            "label": "todo",
-            "type": "pickList",
-            "defaultValue": "",
-            "options": {
-                "renew/id": "id for renewal or file:filepath",
-                "renew/thumbprint": "sha1 thumbprint, string or read from cert file with file:filepath"
-            },
-            "required": false,
-            "groupName": "advanced"
-        },
-        {
             "name": "verbose",
             "label": "Verbose",
             "defaultValue": false,
             "required": false,
             "type": "boolean",
             "helpMarkDown": "Use to increase the level of logging detail, which is helpful when troubleshooting issues.",
+            "groupName": "advanced"
+        },
+        {
+            "name": "testMode",
+            "label": "Test Mode",
+            "defaultValue": false,
+            "required": false,
+            "type": "boolean",
+            "helpMarkDown": "Use to test operations without connecting to Venafi Platform. This option is useful for integration tests where the test environment does not have access to Venafi Platform",
             "groupName": "advanced"
         }
     ],

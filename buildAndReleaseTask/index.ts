@@ -136,7 +136,7 @@ async function run() {
                 if (enrollNoPickup) {
                     vcertArgs.push('--no-pickup')
                 } else {
-                    if (enrollOutputFile) {
+                    if (enrollOutputType === 'outputFile') {
                         vcertArgs.push('--file')
                         vcertArgs.push(enrollOutputFile)
                     }
