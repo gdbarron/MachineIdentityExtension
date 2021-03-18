@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "MachineIdentityExtension",
-    "name": "Machine Identity Extension for Azure DevOps",
+    "name": "Machine Identity Extension",
     "version": "0.1.0",
     "publisher": "GregBrownstein",
     "targets": [
