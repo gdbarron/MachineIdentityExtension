@@ -16,7 +16,7 @@
         "Minor": 0,
         "Patch": 1
     },
-    "instanceNameFormat": "Machine Identity Extension - $(action)",
+    "instanceNameFormat": "Machine Identity - $(action)",
     "groups": [
         {
             "name": "mainGroup",
