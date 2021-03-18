@@ -41,12 +41,12 @@ steps:
 - task: PackageAzureDevOpsExtension@3
   inputs:
     rootFolder: '.'
-    outputPath: './VcertExtension.vsix'
+    outputPath: './MachineIdentityExtension.vsix'
     updateTasksVersion: false
   enabled: false
 
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: VcertExtension'
+  displayName: 'Publish Artifact: MachineIdentityExtension'
   inputs:
     PathtoPublish: .
-    ArtifactName: 'VcertExtension'
+    ArtifactName: 'MachineIdentityExtension'
