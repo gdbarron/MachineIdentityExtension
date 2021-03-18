@@ -413,7 +413,7 @@
                 "renewIdFromId": "ID",
                 "renewIdFromFile": "File path"
             },
-            "helpMarkDown": "Where to get the renew ID from.<br/><br/>Environment variable: From VCERT_ID from a prior VCert Request operation.<br/>ID: provide the renew ID<br/>File path: provide the path to a file which contains the renew ID",
+            "helpMarkDown": "Where to get the certificate ID from.<br/><br/>Environment variable: From VCERT_ID from a prior VCert Request operation.<br/>ID: provide the renew ID<br/>File path: provide the path to a file which contains the renew ID",
             "visibleRule": "action = renewAction",
             "groupName": "renewGroup"
         },

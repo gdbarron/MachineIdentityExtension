@@ -1,20 +1,32 @@
 {
     "manifestVersion": 1,
-    "id": "VenafiVCert",
-    "name": "Venafi VCert",
-    "version": "0.0.1",
+    "id": "MachineIdentityExtension",
+    "name": "Machine Identity Extension for Azure DevOps",
+    "version": "0.1.0",
     "publisher": "GregBrownstein",
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
         }
     ],
-    "description": "Create, retrieve, and renew certificates via Venafi TPP or Venafi Cloud.",
+    "description": "Create, retrieve, and renew certificates with Venafi Trust Protection Platform (TPP) or Venafi Cloud utilizing VCert.",
     "categories": [
         "Azure Pipelines"
     ],
     "icons": {
         "default": "images/ven_circlev_logo.png"
+    },
+    "content": {
+        "details": {
+            "path": "readme.md"
+        },
+        "license": {
+            "path": "license.md"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/gdbarron/MachineIdentityExtension"
     },
     "files": [
         {
@@ -41,7 +53,7 @@
     ],
     "contributions": [
         {
-            "id": "VenafiVCert",
+            "id": "MachineIdentityExtension",
             "type": "ms.vss-distributed-task.task",
             "targets": [
                 "ms.vss-distributed-task.tasks"
