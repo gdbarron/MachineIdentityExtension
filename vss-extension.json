@@ -18,10 +18,10 @@
     },
     "content": {
         "details": {
-            "path": "readme.md"
+            "path": "README.md"
         },
         "license": {
-            "path": "license.md"
+            "path": "LICENSE"
         }
     },
     "repository": {
