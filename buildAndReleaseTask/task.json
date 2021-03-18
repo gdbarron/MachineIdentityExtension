@@ -1,8 +1,8 @@
 {
     "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
-    "id": "9cc4251b-4d50-48c3-819a-679484c9dcc3",
-    "name": "VenafiVCert",
-    "friendlyName": "Venafi VCert",
+    "id": "fe725709-3b76-4504-8d6a-a280c20d6ef3",
+    "name": "MachineIdentityExtension",
+    "friendlyName": "Machine Identity Extension",
     "description": "Generate keys and simplify certificate acquisition by eliminating the need to write code to interact with the Venafi REST API.  Azure DevOps extension for Venafi VCert, https://github.com/Venafi/vcert.",
     "helpMarkDown": "",
     "category": "Azure Pipelines",
@@ -16,7 +16,7 @@
         "Minor": 0,
         "Patch": 1
     },
-    "instanceNameFormat": "Venafi VCert - $(action)",
+    "instanceNameFormat": "Machine Identity Extension - $(action)",
     "groups": [
         {
             "name": "mainGroup",
