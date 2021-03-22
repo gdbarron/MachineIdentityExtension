@@ -14,7 +14,7 @@ steps:
   displayName: 'npm install'
   inputs:
     command: 'install'
-    workingDir: ./buildAndReleaseTask
+    workingDir: ./extension
     verbose: false
 
 - task: Bash@3
@@ -22,13 +22,13 @@ steps:
   inputs:
     targetType: "inline"
     script: |
-      cd buildAndReleaseTask
+      cd extension
       tsc
 
 - powershell: |
    & .\node_modules\.bin\tsc.cmd -p .\tsconfig.json
 
-  workingDirectory: ./buildAndReleaseTask
+  workingDirectory: ./extension
   displayName: 'Compile code'
   enabled: false
   env:
