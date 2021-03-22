@@ -13,12 +13,24 @@
     "categories": [
         "Azure Pipelines"
     ],
+    "tags": [
+        "venafi",
+        "ssl",
+        "tls",
+        "certificate",
+        "certificates",
+        "key",
+        "keys"
+    ],
+    "screenshots": [
+
+    ],
     "icons": {
         "default": "images/ven_circlev_logo.png"
     },
     "content": {
         "details": {
-            "path": "buildAndReleaseTask/readme.md"
+            "path": "extension/readme.md"
         },
         "license": {
             "path": "LICENSE"
@@ -30,22 +42,22 @@
     },
     "files": [
         {
-            "path": "buildAndReleaseTask/bin"
+            "path": "extension/bin"
         },
         {
-            "path": "buildAndReleaseTask/node_modules/azure-pipelines-task-lib"
+            "path": "extension/node_modules/azure-pipelines-task-lib"
         },
         {
-            "path": "buildAndReleaseTask/node_modules/vss-web-extension-sdk"
+            "path": "extension/node_modules/vss-web-extension-sdk"
         },
         {
-            "path": "buildAndReleaseTask/icon.png"
+            "path": "extension/images/icon.png"
         },
         {
-            "path": "buildAndReleaseTask/index.js"
+            "path": "extension/index.js"
         },
         {
-            "path": "buildAndReleaseTask/task.json"
+            "path": "extension/task.json"
         }
     ],
     "galleryFlags": [
@@ -59,7 +71,7 @@
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "buildAndReleaseTask"
+                "name": "extension"
             }
         }
     ]
