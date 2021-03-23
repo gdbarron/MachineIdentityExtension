@@ -6,6 +6,4 @@
 
 Simplify key generation and enrollment of machine identities (also known as SSL/TLS certificates and keys) that comply with enterprise security policy by using the [Venafi Platform](https://www.venafi.com/platform/trust-protection-platform) or [Venafi Cloud](https://pki.venafi.com/venafi-cloud/).
 
-In lieu of direct API calls, this extension takes advantage of [VCert](https://github.com/Venafi/vcert).  Please see this site for prerequisites and additional parameter details.
-
-Supported on Windows, Linux, and Mac.
+In lieu of direct API calls, this extension takes advantage of [VCert CLI](https://github.com/Venafi/vcert).

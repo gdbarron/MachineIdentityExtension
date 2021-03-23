@@ -9,7 +9,7 @@
             "id": "Microsoft.VisualStudio.Services"
         }
     ],
-    "description": "Create, retrieve, and renew certificates with Venafi Trust Protection Platform (TPP) or Venafi Cloud utilizing VCert.",
+    "description": "Simplify key generation and enrollment of machine identities (also known as SSL/TLS certificates and keys)",
     "categories": [
         "Azure Pipelines"
     ],
