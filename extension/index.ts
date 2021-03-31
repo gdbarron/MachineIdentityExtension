@@ -92,6 +92,8 @@ async function run() {
         switch (action) {
             case "enrollAction":
                 vcertArgs.push('enroll')
+                vcertArgs.push('--app-info')
+                vcertArgs.push('Machine Identity Extension for Azure DevOps')
 
                 vcertArgs.push('-z')
                 if (serverType === 'cloud') {
