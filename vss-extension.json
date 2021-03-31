@@ -72,7 +72,7 @@
             ],
             "properties": {
                 "name": "extension",
-                "icon": "images/icon.png"
+                "icon": "extension/images/icon.png"
             }
         }
     ]

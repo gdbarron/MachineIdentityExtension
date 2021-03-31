@@ -7,12 +7,12 @@ This extension takes advantage of [VCert](https://github.com/Venafi/vcert).  Bas
 
 Supported on Windows, Linux, and Mac.
 
-## Usage
-
-### Prerequisites
+## Prerequisites
 Ensure the following prerequisites are met prior to using this extension:
 - [Venafi Cloud](https://github.com/Venafi/vcert/blob/master/README-CLI-CLOUD.md#prerequisites)
 - [Trust Protection Platform](https://github.com/Venafi/vcert/blob/master/README-CLI-PLATFORM.md#prerequisites)
+## Usage
+There are different authentication mechanisms depending on if you use TPP or Venafi Cloud.
 ### Venafi Cloud
 ![Cloud server - Main](https://raw.githubusercontent.com/gdbarron/MachineIdentityExtension/master/extension/images/CloudMain.jpg)
 
