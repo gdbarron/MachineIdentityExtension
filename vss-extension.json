@@ -51,7 +51,7 @@
             "path": "extension/node_modules/vss-web-extension-sdk"
         },
         {
-            "path": "extension/images/icon.png"
+            "path": "extension/icon.png"
         },
         {
             "path": "extension/index.js"
