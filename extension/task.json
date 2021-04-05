@@ -3,7 +3,7 @@
     "id": "fe725709-3b76-4504-8d6a-a280c20d6ef3",
     "name": "MachineIdentityExtension",
     "friendlyName": "Machine Identity Extension",
-    "description": "Generate keys and simplify certificate acquisition by eliminating the need to write code to interact with the Venafi REST API.  Azure DevOps extension for Venafi VCert, https://github.com/Venafi/vcert.",
+    "description": "Simplify key generation and enrollment of machine identities (also known as SSL/TLS certificates and keys)",
     "helpMarkDown": "",
     "category": "Azure Pipelines",
     "visibility": [
@@ -65,7 +65,7 @@
                 "request": "Request Certificate",
                 "retrieve": "Retrieve Certificate",
                 "renew": "Renew Certificate",
-                "getToken": "New Auth Token (TPP only) (beta)"
+                "getToken": "Get Token (TPP only)"
             }
         },
         {
@@ -93,13 +93,27 @@
             "groupName": "mainGroup"
         },
         {
+            "name": "authTokenFromTpp",
+            "type": "radio",
+            "label": "Auth Token From",
+            "defaultValue": "inline",
+            "required": true,
+            "helpMarkDown": "You can either provide your token directly or use the token obtained from a prior Get Token action",
+            "options": {
+                "inline": "Inline",
+                "envVar": "Environment Variable"
+            },
+            "visibleRule": "serverType = tpp",
+            "groupName": "mainGroup"
+        },
+        {
             "name": "authTokenTpp",
             "type": "string",
             "label": "Auth Token",
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "Authentication token, requires TPP v20.1 or greater",
-            "visibleRule": "serverType = tpp",
+            "visibleRule": "serverType = tpp && authTokenFromTpp = inline",
             "groupName": "mainGroup"
         },
         {

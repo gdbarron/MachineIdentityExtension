@@ -12,8 +12,9 @@ async function run() {
         // console.log(tl.getVariables())
         // tl.setVariable('getcredToken', 'TokenTest')
 
-        var certIdEnvVarName: string = 'VCERT_ID'
-        var certEnvVarName: string = 'VCERT_CERT'
+        var certIdEnvVarName: string = 'VENAFI_ID'
+        var certEnvVarName: string = 'VENAFI_CERT'
+        var tppTokenEnvVarName: string = 'VENAFI_TPP_TOKEN'
         let vcertArgs: string[] = []
         let vcertPath: string = path.join(__dirname, 'bin/vcert_')
 
@@ -31,7 +32,7 @@ async function run() {
         let serverType = tl.getInput('serverType', true) as string
         let runParams = tl.getInput('runParams', false) as string
         let serverUrlTpp = tl.getInput('serverUrlTpp', (serverType === 'tpp')) as string
-        // let authTypeTpp = tl.getInput('authTypeTpp', (serverType === 'tpp')) as string
+        let authTokenFromTpp = tl.getInput('authTokenFromTpp', (serverType === 'tpp')) as string
         let authTokenTpp = tl.getInput('authTokenTpp', (serverType === 'tpp')) as string
         let apiKeyCloud = tl.getInput('apiKeyCloud', (serverType === 'cloud')) as string
 
@@ -283,7 +284,16 @@ async function run() {
 
             if (action !== 'getToken') {
                 vcertArgs.push('-t')
-                vcertArgs.push(authTokenTpp)
+                if (authTokenFromTpp === 'inline') {
+                    vcertArgs.push(authTokenTpp)
+                } else {
+                    var thisToken = tl.getVariable(tppTokenEnvVarName)
+                    if (thisToken) {
+                        vcertArgs.push(thisToken)
+                    } else {
+                        throw 'No token was found at environment variable ' + tppTokenEnvVarName + '.  Do you have a Get Token action task earlier in the pipeline?'
+                    }
+                }
             }
             // if (authTypeTpp === 'token' && action !== 'getToken') {
             // } else {
@@ -368,6 +378,10 @@ async function run() {
                 break;
 
             case 'getToken':
+
+                var fullToken = JSON.parse(child.stdout)
+                tl.setVariable(tppTokenEnvVarName, fullToken.access_token)
+                console.log('Token saved to environment variable ' + tppTokenEnvVarName)
 
                 break;
 
