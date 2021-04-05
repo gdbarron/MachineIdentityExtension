@@ -3,7 +3,7 @@
     "id": "fe725709-3b76-4504-8d6a-a280c20d6ef3",
     "name": "MachineIdentityExtension",
     "friendlyName": "Machine Identity Extension",
-    "description": "Simplify key generation and enrollment of machine identities (also known as SSL/TLS certificates and keys)",
+    "description": "Simplify key generation and enrollment of machine identities (also known as SSL/TLS certificates and keys) with Venafi Cloud or Trust Protection Platform",
     "helpMarkDown": "",
     "category": "Azure Pipelines",
     "visibility": [
@@ -16,7 +16,7 @@
         "Minor": 0,
         "Patch": 1
     },
-    "instanceNameFormat": "Machine Identity - $(action)",
+    "instanceNameFormat": "$(serverType) $(action)",
     "groups": [
         {
             "name": "mainGroup",

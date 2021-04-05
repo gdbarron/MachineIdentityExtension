@@ -9,7 +9,7 @@
             "id": "Microsoft.VisualStudio.Services"
         }
     ],
-    "description": "Simplify key generation and enrollment of machine identities (also known as SSL/TLS certificates and keys)",
+    "description": "Simplify key generation and enrollment of machine identities (also known as SSL/TLS certificates and keys) with Venafi Cloud or Trust Protection Platform",
     "categories": [
         "Azure Pipelines"
     ],
