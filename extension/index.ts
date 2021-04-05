@@ -275,9 +275,9 @@ async function run() {
                 vcertArgs.push('-t')
                 vcertArgs.push(authTokenTpp)
             } else {
-                vcertArgs.push('--username')
+                vcertArgs.push('--tpp-user')
                 vcertArgs.push(authUsernameTpp)
-                vcertArgs.push('--password')
+                vcertArgs.push('--tpp-password')
                 vcertArgs.push(authPasswordTpp)
             }
         }

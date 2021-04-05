@@ -147,6 +147,7 @@
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "Application and associated issuing template in the form application\\template",
+            "visibleRule": "serverType = cloud",
             "groupName": "enrollGroup"
         },
         {
@@ -164,7 +165,7 @@
             "defaultValue": "",
             "required": true,
             "visibleRule": "serverType = tpp",
-            "helpMarkDown": "Folder path where the certificate object will be placed. \\VED\\Policy will be prepended, you only need to specify child folders under the root Policy folder.<br/><br/>Example: DevOps\\CorpApp",
+            "helpMarkDown": "Folder path where the certificate object will be placed. \\VED\\Policy\\ will be prepended, you only need to specify child folders under the root Policy folder.<br/><br/>Example: DevOps\\CorpApp",
             "groupName": "enrollGroup"
         },
         {
