@@ -31,15 +31,13 @@ async function run() {
         let serverType = tl.getInput('serverType', true) as string
         let runParams = tl.getInput('runParams', false) as string
         let serverUrlTpp = tl.getInput('serverUrlTpp', (serverType === 'tpp')) as string
-        let authTypeTpp = tl.getInput('authTypeTpp', (serverType === 'tpp')) as string
-        let authTokenTpp = tl.getInput('authTokenTpp', (serverType === 'tpp' && authTypeTpp === 'token')) as string
-        let authUsernameTpp = tl.getInput('authUsernameTpp', (serverType === 'tpp' && authTypeTpp === 'username')) as string
-        let authPasswordTpp = tl.getInput('authPasswordTpp', (serverType === 'tpp' && authTypeTpp === 'username')) as string
+        // let authTypeTpp = tl.getInput('authTypeTpp', (serverType === 'tpp')) as string
+        let authTokenTpp = tl.getInput('authTokenTpp', (serverType === 'tpp')) as string
         let apiKeyCloud = tl.getInput('apiKeyCloud', (serverType === 'cloud')) as string
 
-        // enroll
+        // request/enroll
         let enrollZoneCloud = tl.getInput('enrollZoneCloud', (serverType === 'cloud')) as string
-        let enrollCommonName = tl.getInput('enrollCommonName', (action === 'enrollAction')) as string
+        let enrollCommonName = tl.getInput('enrollCommonName', (action === 'request')) as string
         let enrollNicknameTpp = tl.getInput('enrollNicknameTpp', false) as string
         let enrollZoneTpp = tl.getInput('enrollZoneTpp', (serverType === 'tpp')) as string
         let enrollKeyPassword = tl.getInput('enrollKeyPassword', false) as string
@@ -56,18 +54,22 @@ async function run() {
         let enrollOutputType = tl.getInput('enrollOutputType', enrollNoPickup === false && (enrollFormat === 'pem' || enrollFormat === 'json')) as string
         let enrollOutputFile = tl.getPathInput('enrollOutputFile', enrollOutputType === 'outputFile' || enrollFormat === 'pkcs12.file' || enrollFormat === 'jks.file') as string
 
-        // pickup
+        // retrieve/pickup
         let pickupFormat = tl.getInput('pickupFormat', true) as string
-        let pickupIdFrom = tl.getInput('pickupIdFrom', action === 'pickupAction') as string
+        let pickupIdFrom = tl.getInput('pickupIdFrom', action === 'retrieve') as string
         let pickupId = tl.getInput('pickupId', pickupIdFrom === 'pickupIdFromId') as string
         let pickupFile = tl.getPathInput('pickupFile', pickupIdFrom === 'pickupIdFromFile') as string
         let pickupOutputType = tl.getInput('pickupOutputType', pickupFormat === 'pem' || pickupFormat === 'json') as string
         let pickupOutputFile = tl.getPathInput('pickupOutputFile', pickupOutputType === 'outputFile' || pickupFormat === 'pkcs12' || pickupFormat === 'jks') as string
 
         // renew
-        let renewIdFrom = tl.getInput('renewIdFrom', action === 'renewAction') as string
+        let renewIdFrom = tl.getInput('renewIdFrom', action === 'renew') as string
         let renewId = tl.getInput('renewId', renewIdFrom === 'renewIdFromId') as string
         let renewFile = tl.getPathInput('renewFile', renewIdFrom === 'renewIdFromFile') as string
+
+        // getToken
+        let getTokenUsernameTpp = tl.getInput('getTokenUsernameTpp', (serverType === 'tpp' && action === 'getToken')) as string
+        let getTokenPasswordTpp = tl.getInput('getTokenPasswordTpp', (serverType === 'tpp' && action === 'getToken')) as string
 
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
@@ -90,7 +92,7 @@ async function run() {
         }
 
         switch (action) {
-            case "enrollAction":
+            case "request":
                 vcertArgs.push('enroll')
                 vcertArgs.push('--app-info')
                 vcertArgs.push('Machine Identity Extension for Azure DevOps')
@@ -190,7 +192,7 @@ async function run() {
 
                 break;
 
-            case "pickupAction":
+            case "retrieve":
 
                 vcertArgs.push('pickup')
 
@@ -223,7 +225,7 @@ async function run() {
 
                 break;
 
-            case "renewAction":
+            case "renew":
 
                 vcertArgs.push('renew')
 
@@ -256,30 +258,40 @@ async function run() {
 
                 break;
 
-            case "getcredAction":
+            case "getToken":
 
                 vcertArgs.push('getcred')
+                vcertArgs.push('--username')
+                vcertArgs.push(getTokenUsernameTpp)
+                vcertArgs.push('--password')
+                vcertArgs.push(getTokenPasswordTpp)
+                vcertArgs.push('--format')
+                vcertArgs.push('json')
+
                 break;
 
         }
 
         // needed for all cloud/tpp actions
-        if (serverType === 'cloud' && action !== 'getcredAction') {
+        if (serverType === 'cloud') {
             vcertArgs.push('-k')
             vcertArgs.push(apiKeyCloud)
         } else {
             // tpp specific
             vcertArgs.push('-u')
             vcertArgs.push('https://' + serverUrlTpp)
-            if (authTypeTpp === 'token' && action !== 'getcredAction') {
+
+            if (action !== 'getToken') {
                 vcertArgs.push('-t')
                 vcertArgs.push(authTokenTpp)
-            } else {
-                vcertArgs.push('--tpp-user')
-                vcertArgs.push(authUsernameTpp)
-                vcertArgs.push('--tpp-password')
-                vcertArgs.push(authPasswordTpp)
             }
+            // if (authTypeTpp === 'token' && action !== 'getToken') {
+            // } else {
+            //     vcertArgs.push('--tpp-user')
+            //     vcertArgs.push(authUsernameTpp)
+            //     vcertArgs.push('--tpp-password')
+            //     vcertArgs.push(authPasswordTpp)
+            // }
         }
 
         if (verbose) {
@@ -324,7 +336,7 @@ async function run() {
         console.log(child.stderr)
 
         switch (action) {
-            case 'enrollAction':
+            case 'request':
                 if (!enrollNoPickup) {
                     if (enrollOutputType === 'outputEnvVar' && (enrollFormat === 'pem' || enrollFormat === 'json')) {
                         // certOut = certOut.replace(/\n/g, '');
@@ -344,7 +356,7 @@ async function run() {
 
                 break;
 
-            case 'pickupAction':
+            case 'retrieve':
 
                 if (pickupOutputType === 'outputEnvVar' && (pickupFormat === 'pem' || pickupFormat === 'json')) {
                     tl.setVariable(certEnvVarName, child.stdout)
@@ -355,14 +367,14 @@ async function run() {
 
                 break;
 
-            case 'getcredAction':
+            case 'getToken':
 
                 break;
 
             default:
                 break;
         }
-        if (action === 'getcredAction') {
+        if (action === 'getToken') {
             // tl.setVariable('VCertToken', '', true)
         }
     }

@@ -27,19 +27,25 @@
             "name": "enrollGroup",
             "displayName": "Request Certificate",
             "isExpanded": false,
-            "visibleRule": "action = enrollAction"
+            "visibleRule": "action = request"
         },
         {
             "name": "pickupGroup",
             "displayName": "Retrieve Certificate",
             "isExpanded": false,
-            "visibleRule": "action = pickupAction"
+            "visibleRule": "action = retrieve"
         },
         {
             "name": "renewGroup",
             "displayName": "Renew Certificate",
             "isExpanded": false,
-            "visibleRule": "action = renewAction"
+            "visibleRule": "action = renew"
+        },
+        {
+            "name": "getTokenGroup",
+            "displayName": "Get Token",
+            "isExpanded": false,
+            "visibleRule": "action = getToken"
         },
         {
             "name": "advanced",
@@ -52,14 +58,14 @@
             "name": "action",
             "type": "pickList",
             "label": "Action",
-            "defaultValue": "enrollAction",
+            "defaultValue": "request",
             "required": true,
             "helpMarkDown": "Select the action to perform",
             "options": {
-                "enrollAction": "Request Certificate",
-                "pickupAction": "Retrieve Certificate",
-                "renewAction": "Renew Certificate",
-                "getcredAction": "New Auth Token (TPP only) (beta)"
+                "request": "Request Certificate",
+                "retrieve": "Retrieve Certificate",
+                "renew": "Renew Certificate",
+                "getToken": "New Auth Token (TPP only) (beta)"
             }
         },
         {
@@ -73,21 +79,7 @@
                 "cloud": "Venafi Cloud",
                 "tpp": "Trust Protection Platform (TPP)"
             },
-            "visibleRule": "action != getcredAction",
-            "groupName": "mainGroup"
-        },
-        {
-            "name": "authTypeTpp",
-            "type": "radio",
-            "label": "Auth Type",
-            "defaultValue": "token",
-            "required": true,
-            "helpMarkDown": "",
-            "options": {
-                "token": "Token",
-                "username": "Username/Password"
-            },
-            "visibleRule": "serverType = tpp",
+            "visibleRule": "action != getToken",
             "groupName": "mainGroup"
         },
         {
@@ -97,7 +89,7 @@
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "TPP server URL, eg. tpp.venafi.example. 'https://' will be appended automatically.",
-            "visibleRule": "serverType = tpp || action = getcredAction",
+            "visibleRule": "serverType = tpp || action = getToken",
             "groupName": "mainGroup"
         },
         {
@@ -107,27 +99,7 @@
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "Authentication token, requires TPP v20.1 or greater",
-            "visibleRule": "authTypeTpp = token",
-            "groupName": "mainGroup"
-        },
-        {
-            "name": "authUsernameTpp",
-            "type": "string",
-            "label": "Username",
-            "defaultValue": "",
-            "required": true,
-            "helpMarkDown": "",
-            "visibleRule": "authTypeTpp = username || action = getcredAction",
-            "groupName": "mainGroup"
-        },
-        {
-            "name": "authPasswordTpp",
-            "type": "string",
-            "label": "Password",
-            "defaultValue": "",
-            "required": true,
-            "helpMarkDown": "",
-            "visibleRule": "authTypeTpp = username || action = getcredAction",
+            "visibleRule": "serverType = tpp",
             "groupName": "mainGroup"
         },
         {
@@ -342,7 +314,7 @@
                 "pickupIdFromFile": "File path"
             },
             "helpMarkDown": "Where to get the pickup ID from.<br/><br/>Environment variable: From VCERT_ID from a prior VCert Request operation.<br/>ID: provide the pickup ID<br/>File path: provide the path to a file which contains the pickup ID",
-            "visibleRule": "action = pickupAction",
+            "visibleRule": "action = retrieve",
             "groupName": "pickupGroup"
         },
         {
@@ -415,7 +387,7 @@
                 "renewIdFromFile": "File path"
             },
             "helpMarkDown": "Where to get the certificate ID from.<br/><br/>Environment variable: From VCERT_ID from a prior VCert Request operation.<br/>ID: provide the renew ID<br/>File path: provide the path to a file which contains the renew ID",
-            "visibleRule": "action = renewAction",
+            "visibleRule": "action = renew",
             "groupName": "renewGroup"
         },
         {
@@ -436,6 +408,26 @@
             "required": true,
             "visibleRule": "renewIdFrom = renewIdFromFile",
             "groupName": "renewGroup"
+        },
+        {
+            "name": "getTokenUsernameTpp",
+            "type": "string",
+            "label": "Username",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "",
+            "visibleRule": "action = getToken",
+            "groupName": "getTokenGroup"
+        },
+        {
+            "name": "getTokenPasswordTpp",
+            "type": "string",
+            "label": "Password",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "",
+            "visibleRule": "action = getToken",
+            "groupName": "getTokenGroup"
         },
         {
             "name": "verbose",
