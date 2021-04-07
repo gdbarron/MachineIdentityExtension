@@ -101,7 +101,7 @@
             "helpMarkDown": "You can either provide your token directly or use the token obtained from a prior Get Token action",
             "options": {
                 "inline": "Inline",
-                "envVar": "Environment Variable"
+                "envVar": "Prior 'Get Token' task"
             },
             "visibleRule": "serverType = tpp",
             "groupName": "mainGroup"

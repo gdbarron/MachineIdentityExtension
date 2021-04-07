@@ -61,7 +61,8 @@
         }
     ],
     "galleryFlags": [
-        "Preview"
+        "Preview",
+        "Public"
     ],
     "contributions": [
         {
