@@ -98,10 +98,10 @@
             "label": "Auth Token From",
             "defaultValue": "inline",
             "required": true,
-            "helpMarkDown": "You can either provide your token directly or use the token obtained from a prior Get Token action",
+            "helpMarkDown": "You can either provide your token directly or use a token obtained from a prior Get Token action",
             "options": {
                 "inline": "Inline",
-                "envVar": "Prior 'Get Token' task"
+                "envVar": "Prior Get Token"
             },
             "visibleRule": "serverType = tpp",
             "groupName": "mainGroup"
@@ -289,7 +289,7 @@
             "defaultValue": false,
             "required": false,
             "type": "boolean",
-            "helpMarkDown": "By default, VCert will try to retrieve the certificate for 60 seconds.  If your CA might not respond in time or your workflow requires it, you can choose to not retrieve the certificate now and do so later with the pickup id which is automatically saved as environment variable VCERT_ID.",
+            "helpMarkDown": "By default, we will try to retrieve the certificate for 60 seconds.  If your CA might not respond in time or your workflow requires it, you can choose to forgo retrieving the certificate now and do so later with the pickup id which is automatically saved as environment variable VENAFI_ID.",
             "groupName": "enrollGroup"
         },
         {
@@ -302,7 +302,7 @@
                 "outputEnvVar": "Environment variable",
                 "outputFile": "File"
             },
-            "helpMarkDown": "Output to either a file or an environment variable to be used in a subsequent task.  The option for an environment variable is only available for pem and json formats.",
+            "helpMarkDown": "Output to either a file or an environment variable, VENAFI_CERT, to be used in a subsequent task.  The option for an environment variable is only available for pem and json formats.",
             "visibleRule": "enrollFormat NotEndsWith .file && enrollNoPickup = false",
             "groupName": "enrollGroup"
         },
@@ -313,7 +313,7 @@
             "defaultValue": "",
             "required": true,
             "visibleRule": "enrollOutputType = outputFile || enrollFormat EndsWith .file",
-            "helpMarkDown": "Path to output file.  Required if output type 'file' was selected or format is either PKCS#12 or JKS.",
+            "helpMarkDown": "Path to output file.  Required if output type 'File' was selected or format is either PKCS#12 or JKS.",
             "groupName": "enrollGroup"
         },
         {
@@ -323,11 +323,11 @@
             "defaultValue": "pickupIdFromEnvVar",
             "required": true,
             "options": {
-                "pickupIdFromEnvVar": "Environment Variable",
+                "pickupIdFromEnvVar": "Prior Request",
                 "pickupIdFromId": "ID",
                 "pickupIdFromFile": "File path"
             },
-            "helpMarkDown": "Where to get the pickup ID from.<br/><br/>Environment variable: From VCERT_ID from a prior VCert Request operation.<br/>ID: provide the pickup ID<br/>File path: provide the path to a file which contains the pickup ID",
+            "helpMarkDown": "Where to get the pickup ID from.<br/><br/>Prior Request: From a Request action earlier in the pipeline.<br/>ID: provide the pickup ID<br/>File path: provide the path to a file which contains the pickup ID",
             "visibleRule": "action = retrieve",
             "groupName": "pickupGroup"
         },
@@ -396,11 +396,11 @@
             "defaultValue": "renewIdFromEnvVar",
             "required": true,
             "options": {
-                "renewIdFromEnvVar": "Environment Variable",
+                "renewIdFromEnvVar": "Prior Request",
                 "renewIdFromId": "ID",
                 "renewIdFromFile": "File path"
             },
-            "helpMarkDown": "Where to get the certificate ID from.<br/><br/>Environment variable: From VCERT_ID from a prior VCert Request operation.<br/>ID: provide the renew ID<br/>File path: provide the path to a file which contains the renew ID",
+            "helpMarkDown": "Where to get the certificate ID from.<br/><br/>Prior Request: From a Request action earlier in the pipeline.<br/>ID: provide the renew ID<br/>File path: provide the path to a file which contains the renew ID",
             "visibleRule": "action = renew",
             "groupName": "renewGroup"
         },
