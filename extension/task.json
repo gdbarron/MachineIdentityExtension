@@ -132,7 +132,7 @@
             "label": "Destination",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "Certificate destination.<br/><br/>Cloud: Application and associated issuing template in the form application\\template<br/>TPP: Folder path. \\VED\\Policy\\ will be prepended, you only need to specify child folders under the root Policy folder.<br/><br/>Example: DevOps\\CorpApp",
+            "helpMarkDown": "Certificate destination.<br/><br/>Cloud: Application and associated issuing template in the form application\\template<br/><br/>TPP: Folder path. \\VED\\Policy\\ will be prepended, you only need to specify child folders under the root Policy folder.<br/>Example: DevOps\\CorpApp",
             "groupName": "requestGroup"
         },
         {
@@ -278,7 +278,7 @@
             "defaultValue": false,
             "required": false,
             "type": "boolean",
-            "helpMarkDown": "By default, we will try to retrieve the certificate for 60 seconds.  If your CA might not respond in time or your workflow requires it, you can choose to forgo retrieving the certificate now and do so later with the retrieval id which is automatically saved as environment variable VENAFI_ID.",
+            "helpMarkDown": "By default, we will try to retrieve the certificate for 60 seconds.  If your CA might not respond in time or your workflow requires it, you can choose to forgo retrieving the certificate now and do so later with the certificate id which is automatically saved as environment variable VENAFI_ID.",
             "groupName": "requestGroup"
         },
         {
@@ -323,10 +323,10 @@
         {
             "name": "retrieveId",
             "type": "string",
-            "label": "ID / Path",
+            "label": "Certificate ID",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "Reference ID for certificate to retrieve.  For Venafi Cloud this will be a GUID and for TPP this will be the path to the certificate, eg. \\ved\\policy\\mycert.com",
+            "helpMarkDown": "ID for certificate to retrieve.<br/><br/>Cloud: format is a GUID<br/><br/>TPP: path to the certificate excluding \\ved\\policy\\, eg. DevOps Certificates\\demo-pickup.venafi.example",
             "visibleRule": "retrieveIdFrom = id",
             "groupName": "retrieveGroup"
         },
@@ -358,13 +358,13 @@
             "name": "retrieveOutputType",
             "type": "radio",
             "label": "Certificate Output",
-            "defaultValue": "outputEnvVar",
+            "defaultValue": "envVar",
             "required": true,
             "options": {
                 "envVar": "Environment variable",
                 "file": "File"
             },
-            "helpMarkDown": "Output to either a file or an environment variable to be used in a subsequent task.  The option for an environment variable is only available for pem and json formats.",
+            "helpMarkDown": "Output to either a file or an environment variable, VENAFI_CERT, to be used in a subsequent task.  The option for an environment variable is only available for pem and json formats.",
             "visibleRule": "retrieveFormat = pem || retrieveFormat = json",
             "groupName": "retrieveGroup"
         },
@@ -374,7 +374,7 @@
             "label": "Certificate Output File Path",
             "defaultValue": "",
             "required": true,
-            "visibleRule": "retrieveOutputType = outputFile || retrieveFormat = pkcs12 || retrieveFormat = jks",
+            "visibleRule": "retrieveOutputType = file || retrieveFormat = pkcs12 || retrieveFormat = jks",
             "helpMarkDown": "Path to output file.  Required if output type 'file' was selected or format is either PKCS#12 or JKS.",
             "groupName": "retrieveGroup"
         },
@@ -399,7 +399,7 @@
             "label": "ID",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "Reference ID for certificate to renew.  For Venafi Cloud this will be a GUID and for TPP this will be the path to the certificate, eg. \\ved\\policy\\mycert.com",
+            "helpMarkDown": "ID for certificate to renew.<br/><br/>Cloud: format is a GUID<br/><br/>TPP: path to the certificate excluding \\ved\\policy\\, eg. DevOps Certificates\\demo-pickup.venafi.example",
             "visibleRule": "renewIdFrom = id",
             "groupName": "renewGroup"
         },

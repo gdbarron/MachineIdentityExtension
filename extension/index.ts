@@ -64,8 +64,8 @@ async function run() {
 
         // renew
         let renewIdFrom = tl.getInput('renewIdFrom', action === 'renew') as string
-        let renewId = tl.getInput('renewId', renewIdFrom === 'renewIdFromId') as string
-        let renewFile = tl.getPathInput('renewFile', renewIdFrom === 'renewIdFromFile') as string
+        let renewId = tl.getInput('renewId', renewIdFrom === 'id') as string
+        let renewFile = tl.getPathInput('renewFile', renewIdFrom === 'file') as string
 
         // getToken
         let getTokenUsernameTpp = tl.getInput('getTokenUsernameTpp', (serverType === 'tpp' && action === 'getToken')) as string
@@ -198,7 +198,7 @@ async function run() {
                         if (thisId) {
                             // thisId = thisId.trim()
                             vcertArgs.push('--pickup-id')
-                            vcertArgs.push(thisId)
+                            vcertArgs.push('\\ved\\policy\\' + thisId)
                         } else {
                             throw 'No certificate ID was found at environment variable ' + certIdEnvVarName + '.  Ensure your prior request was successful.'
                         }
@@ -206,12 +206,14 @@ async function run() {
 
                     case 'id':
                         vcertArgs.push('--pickup-id')
-                        vcertArgs.push(retrieveId)
+                        vcertArgs.push('\\ved\\policy\\' + retrieveId)
                         break;
 
                     case 'file':
                         vcertArgs.push('--pickup-id-file')
-                        vcertArgs.push(retrieveFile)
+                        var retrieveIdFromFile = fs.readFileSync(retrieveFile, 'utf8')
+                        vcertArgs.push('\\ved\\policy\\' + retrieveIdFromFile)
+                        // vcertArgs.push(retrieveFile)
                         break;
 
                     default:
@@ -231,7 +233,7 @@ async function run() {
                         if (thisId) {
                             // thisId = thisId.trim()
                             vcertArgs.push('--id')
-                            vcertArgs.push(thisId)
+                            vcertArgs.push('\\ved\\policy\\' + thisId)
                         } else {
                             throw 'No certificate ID was found at environment variable ' + certIdEnvVarName + '.  Ensure your prior request was successful.'
                         }
@@ -239,12 +241,14 @@ async function run() {
 
                     case 'id':
                         vcertArgs.push('--id')
-                        vcertArgs.push(renewId)
+                        vcertArgs.push('\\ved\\policy\\' + renewId)
                         break;
 
                     case 'file':
                         vcertArgs.push('--id')
-                        vcertArgs.push('file:' + renewFile)
+                        var renewIdFromFile = fs.readFileSync(renewFile, 'utf8')
+                        vcertArgs.push('\\ved\\policy\\' + renewIdFromFile)
+                        // vcertArgs.push('file:' + renewFile)
                         break;
 
                     default:
