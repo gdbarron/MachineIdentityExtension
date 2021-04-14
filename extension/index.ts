@@ -32,9 +32,9 @@ async function run() {
         let serverType = tl.getInput('serverType', true) as string
         let runParams = tl.getInput('runParams', false) as string
         let serverUrlTpp = tl.getInput('serverUrlTpp', (serverType === 'tpp')) as string
-        let authTokenFromTpp = tl.getInput('authTokenFromTpp', (serverType === 'tpp')) as string
-        let authTokenTpp = tl.getInput('authTokenTpp', (serverType === 'tpp')) as string
-        let apiKeyCloud = tl.getInput('apiKeyCloud', (serverType === 'cloud')) as string
+        let authTokenFrom = tl.getInput('authTokenFrom', (serverType === 'tpp')) as string
+        let authToken = tl.getInput('authToken', (serverType === 'tpp')) as string
+        let apiKey = tl.getInput('apiKey', (serverType === 'cloud')) as string
 
         // request/enroll
         let requestDestination = tl.getInput('requestDestination', true) as string
@@ -68,8 +68,8 @@ async function run() {
         let renewFile = tl.getPathInput('renewFile', renewIdFrom === 'file') as string
 
         // getToken
-        let getTokenUsernameTpp = tl.getInput('getTokenUsernameTpp', (serverType === 'tpp' && action === 'getToken')) as string
-        let getTokenPasswordTpp = tl.getInput('getTokenPasswordTpp', (serverType === 'tpp' && action === 'getToken')) as string
+        let getTokenUsername = tl.getInput('getTokenUsername', (serverType === 'tpp' && action === 'getToken')) as string
+        let getTokenPassword = tl.getInput('getTokenPassword', (serverType === 'tpp' && action === 'getToken')) as string
 
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
@@ -262,9 +262,9 @@ async function run() {
 
                 vcertArgs.push('getcred')
                 vcertArgs.push('--username')
-                vcertArgs.push(getTokenUsernameTpp)
+                vcertArgs.push(getTokenUsername)
                 vcertArgs.push('--password')
-                vcertArgs.push(getTokenPasswordTpp)
+                vcertArgs.push(getTokenPassword)
                 vcertArgs.push('--format')
                 vcertArgs.push('json')
 
@@ -275,7 +275,7 @@ async function run() {
         // needed for all cloud/tpp actions
         if (serverType === 'cloud') {
             vcertArgs.push('-k')
-            vcertArgs.push(apiKeyCloud)
+            vcertArgs.push(apiKey)
         } else {
             // tpp specific
             vcertArgs.push('-u')
@@ -283,8 +283,8 @@ async function run() {
 
             if (action !== 'getToken') {
                 vcertArgs.push('-t')
-                if (authTokenFromTpp === 'inline') {
-                    vcertArgs.push(authTokenTpp)
+                if (authTokenFrom === 'inline') {
+                    vcertArgs.push(authToken)
                 } else {
                     var thisToken = tl.getVariable(tppTokenEnvVarName)
                     if (thisToken) {

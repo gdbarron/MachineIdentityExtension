@@ -4,7 +4,7 @@
     "name": "MachineIdentityExtension",
     "friendlyName": "Machine Identity Extension",
     "description": "Simplify key generation and enrollment of machine identities (also known as SSL/TLS certificates and keys) with Venafi Cloud or Trust Protection Platform",
-    "helpMarkDown": "",
+    "helpMarkDown": "If using TPP, v20.1 or greater is required.",
     "category": "Azure Pipelines",
     "visibility": [
         "Build",
@@ -93,36 +93,36 @@
             "groupName": "mainGroup"
         },
         {
-            "name": "authTokenFromTpp",
+            "name": "authTokenFrom",
             "type": "radio",
             "label": "Auth Token From",
-            "defaultValue": "inline",
+            "defaultValue": "priorGetToken",
             "required": true,
             "helpMarkDown": "You can either provide your token directly or use a token obtained from a prior Get Token action",
             "options": {
-                "inline": "Inline",
-                "envVar": "Prior Get Token"
+                "priorGetToken": "Prior Get Token",
+                "inline": "Inline"
             },
             "visibleRule": "serverType = tpp",
             "groupName": "mainGroup"
         },
         {
-            "name": "authTokenTpp",
+            "name": "authToken",
             "type": "string",
             "label": "Auth Token",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "Authentication token, requires TPP v20.1 or greater",
-            "visibleRule": "serverType = tpp && authTokenFromTpp = inline",
+            "helpMarkDown": "Authentication token to connect to TPP.",
+            "visibleRule": "serverType = tpp && authTokenFrom = inline",
             "groupName": "mainGroup"
         },
         {
-            "name": "apiKeyCloud",
+            "name": "apiKey",
             "type": "string",
             "label": "API Key",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "API key for Venafi Cloud.<br/><br/>Example: vvvvvvvv-wwww-xxxx-yyyy-zzzzzzzzzzzz",
+            "helpMarkDown": "API key for Venafi Cloud found under user profile->preferences.<br/><br/>Example: vvvvvvvv-wwww-xxxx-yyyy-zzzzzzzzzzzz",
             "visibleRule": "serverType = cloud",
             "groupName": "mainGroup"
         },
@@ -382,7 +382,7 @@
             "name": "renewIdFrom",
             "type": "radio",
             "label": "Certificate ID From",
-            "defaultValue": "renewIdFromEnvVar",
+            "defaultValue": "priorRequest",
             "required": true,
             "options": {
                 "priorRequest": "Prior Request",
@@ -413,7 +413,7 @@
             "groupName": "renewGroup"
         },
         {
-            "name": "getTokenUsernameTpp",
+            "name": "getTokenUsername",
             "type": "string",
             "label": "Username",
             "defaultValue": "",
@@ -423,7 +423,7 @@
             "groupName": "getTokenGroup"
         },
         {
-            "name": "getTokenPasswordTpp",
+            "name": "getTokenPassword",
             "type": "string",
             "label": "Password",
             "defaultValue": "",
