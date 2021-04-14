@@ -37,10 +37,9 @@ async function run() {
         let apiKeyCloud = tl.getInput('apiKeyCloud', (serverType === 'cloud')) as string
 
         // request/enroll
-        let requestZoneCloud = tl.getInput('requestZoneCloud', (serverType === 'cloud')) as string
+        let requestDestination = tl.getInput('requestDestination', true) as string
         let requestCommonName = tl.getInput('requestCommonName', (action === 'request')) as string
         let requestNicknameTpp = tl.getInput('requestNicknameTpp', false) as string
-        let requestZoneTpp = tl.getInput('requestZoneTpp', (serverType === 'tpp')) as string
         let requestKeyPassword = tl.getInput('requestKeyPassword', false) as string
         let requestFormat = tl.getInput('requestFormat', true) as string
         let requestChain = tl.getInput('requestChain', true) as string
@@ -99,11 +98,7 @@ async function run() {
                 vcertArgs.push('Machine Identity Extension for Azure DevOps')
 
                 vcertArgs.push('-z')
-                if (serverType === 'cloud') {
-                    vcertArgs.push(requestZoneCloud)
-                } else {
-                    vcertArgs.push(requestZoneTpp)
-                }
+                vcertArgs.push(requestDestination)
 
                 vcertArgs.push('--cn')
                 vcertArgs.push(requestCommonName)

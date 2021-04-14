@@ -127,13 +127,12 @@
             "groupName": "mainGroup"
         },
         {
-            "name": "requestZoneCloud",
+            "name": "requestDestination",
             "type": "string",
-            "label": "Project Zone",
+            "label": "Destination",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "Application and associated issuing template in the form application\\template",
-            "visibleRule": "serverType = cloud",
+            "helpMarkDown": "Certificate destination.<br/><br/>Cloud: Application and associated issuing template in the form application\\template<br/>TPP: Folder path. \\VED\\Policy\\ will be prepended, you only need to specify child folders under the root Policy folder.<br/><br/>Example: DevOps\\CorpApp",
             "groupName": "requestGroup"
         },
         {
@@ -142,16 +141,6 @@
             "label": "Common Name (CN)",
             "defaultValue": "",
             "required": true,
-            "groupName": "requestGroup"
-        },
-        {
-            "name": "requestZoneTpp",
-            "type": "string",
-            "label": "Target Folder Path",
-            "defaultValue": "",
-            "required": true,
-            "visibleRule": "serverType = tpp",
-            "helpMarkDown": "Folder path where the certificate object will be placed. \\VED\\Policy\\ will be prepended, you only need to specify child folders under the root Policy folder.<br/><br/>Example: DevOps\\CorpApp",
             "groupName": "requestGroup"
         },
         {
@@ -296,7 +285,7 @@
             "name": "requestOutputType",
             "type": "radio",
             "label": "Certificate Output",
-            "defaultValue": "outputEnvVar",
+            "defaultValue": "envVar",
             "required": true,
             "options": {
                 "envVar": "Environment variable",
@@ -312,7 +301,7 @@
             "label": "Certificate Output File Path",
             "defaultValue": "",
             "required": true,
-            "visibleRule": "requestOutputType = outputFile || requestFormat EndsWith .file",
+            "visibleRule": "requestOutputType = file || requestFormat EndsWith .file",
             "helpMarkDown": "Path to output file.  Required if output type 'File' was selected or format is either PKCS#12 or JKS.",
             "groupName": "requestGroup"
         },
