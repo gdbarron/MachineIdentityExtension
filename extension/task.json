@@ -24,13 +24,13 @@
             "isExpanded": true
         },
         {
-            "name": "enrollGroup",
+            "name": "requestGroup",
             "displayName": "Request Certificate",
             "isExpanded": false,
             "visibleRule": "action = request"
         },
         {
-            "name": "pickupGroup",
+            "name": "retrieveGroup",
             "displayName": "Retrieve Certificate",
             "isExpanded": false,
             "visibleRule": "action = retrieve"
@@ -127,44 +127,44 @@
             "groupName": "mainGroup"
         },
         {
-            "name": "enrollZoneCloud",
+            "name": "requestZoneCloud",
             "type": "string",
             "label": "Project Zone",
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "Application and associated issuing template in the form application\\template",
             "visibleRule": "serverType = cloud",
-            "groupName": "enrollGroup"
+            "groupName": "requestGroup"
         },
         {
-            "name": "enrollCommonName",
+            "name": "requestCommonName",
             "type": "string",
             "label": "Common Name (CN)",
             "defaultValue": "",
             "required": true,
-            "groupName": "enrollGroup"
+            "groupName": "requestGroup"
         },
         {
-            "name": "enrollZoneTpp",
+            "name": "requestZoneTpp",
             "type": "string",
             "label": "Target Folder Path",
             "defaultValue": "",
             "required": true,
             "visibleRule": "serverType = tpp",
             "helpMarkDown": "Folder path where the certificate object will be placed. \\VED\\Policy\\ will be prepended, you only need to specify child folders under the root Policy folder.<br/><br/>Example: DevOps\\CorpApp",
-            "groupName": "enrollGroup"
+            "groupName": "requestGroup"
         },
         {
-            "name": "enrollKeyPassword",
+            "name": "requestKeyPassword",
             "type": "string",
             "label": "Private Key Password",
             "defaultValue": "",
             "required": false,
             "helpMarkDown": "Password for encrypting the private key.  Specifying a value here will override the default non-encrypted private key.  It is recommended to use a secret variable, <https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#secret-variables>.",
-            "groupName": "enrollGroup"
+            "groupName": "requestGroup"
         },
         {
-            "name": "enrollFormat",
+            "name": "requestFormat",
             "type": "radio",
             "label": "Format",
             "defaultValue": "pem",
@@ -176,10 +176,10 @@
                 "jks.file": "JKS"
             },
             "helpMarkDown": "",
-            "groupName": "enrollGroup"
+            "groupName": "requestGroup"
         },
         {
-            "name": "enrollChain",
+            "name": "requestChain",
             "type": "radio",
             "label": "Chain",
             "defaultValue": "root-last",
@@ -190,10 +190,10 @@
                 "ignore": "Ignore"
             },
             "helpMarkDown": "Use to include the certificate chain in the output, and to specify where to place it in the file.",
-            "groupName": "enrollGroup"
+            "groupName": "requestGroup"
         },
         {
-            "name": "enrollCsrTpp",
+            "name": "requestCsrTpp",
             "type": "radio",
             "label": "Certificate Signing Request (CSR)",
             "defaultValue": "local",
@@ -204,11 +204,11 @@
                 "file": "File"
             },
             "visibleRule": "serverType = tpp",
-            "helpMarkDown": "Specify the CSR and private key location.<br/></br/>Local: private key and CSR will be generated locally<br/>Service: private key and CSR will be generated within Venafi Platform<br/>File: CSR will be read from a file by name",
-            "groupName": "enrollGroup"
+            "helpMarkDown": "Specify the CSR and private key location.<br/><br/>Local: private key and CSR will be generated locally<br/>Service: private key and CSR will be generated within Venafi Platform<br/>File: CSR will be read from a file by name",
+            "groupName": "requestGroup"
         },
         {
-            "name": "enrollCsrCloud",
+            "name": "requestCsrCloud",
             "type": "radio",
             "label": "Certificate Signing Request (CSR)",
             "defaultValue": "local",
@@ -218,140 +218,140 @@
                 "file": "File"
             },
             "visibleRule": "serverType = cloud",
-            "helpMarkDown": "Specify the CSR and private key location.<br/></br/>Local: private key and CSR will be generated locally<br/>File: CSR will be read from a file by name",
-            "groupName": "enrollGroup"
+            "helpMarkDown": "Specify the CSR and private key location.<br/><br/>Local: private key and CSR will be generated locally<br/>File: CSR will be read from a file by name",
+            "groupName": "requestGroup"
         },
         {
-            "name": "enrollCsrFile",
+            "name": "requestCsrFile",
             "type": "filePath",
             "label": "CSR File",
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "File to read the CSR from",
-            "visibleRule": "enrollCsrTpp = file || enrollCsrCloud = file",
-            "groupName": "enrollGroup"
+            "visibleRule": "requestCsrTpp = file || requestCsrCloud = file",
+            "groupName": "requestGroup"
         },
         {
-            "name": "enrollSanDns",
+            "name": "requestSanDns",
             "type": "string",
             "label": "DNS SAN",
             "defaultValue": "",
             "required": false,
             "helpMarkDown": "Use to specify a DNS Subject Alternative Name. To specify more than one, separate with a comma.",
-            "groupName": "enrollGroup"
+            "groupName": "requestGroup"
         },
         {
-            "name": "enrollSanEmailTpp",
+            "name": "requestSanEmailTpp",
             "type": "string",
             "label": "Email SAN",
             "defaultValue": "",
             "required": false,
             "visibleRule": "serverType = tpp",
             "helpMarkDown": "Use to specify a Email Subject Alternative Name. To specify more than one, separate with a comma.",
-            "groupName": "enrollGroup"
+            "groupName": "requestGroup"
         },
         {
-            "name": "enrollSanIpTpp",
+            "name": "requestSanIpTpp",
             "type": "string",
             "label": "IP SAN",
             "defaultValue": "",
             "required": false,
             "visibleRule": "serverType = tpp",
             "helpMarkDown": "Use to specify a IP Subject Alternative Name. To specify more than one, separate with a comma.",
-            "groupName": "enrollGroup"
+            "groupName": "requestGroup"
         },
         {
-            "name": "enrollNicknameTpp",
+            "name": "requestNicknameTpp",
             "type": "string",
             "label": "New Certificate Name",
             "defaultValue": "",
             "required": false,
             "visibleRule": "serverType = tpp",
             "helpMarkDown": "Create a new certificate with the same CN, but a distinct object in TPP.",
-            "groupName": "enrollGroup"
+            "groupName": "requestGroup"
         },
         {
-            "name": "enrollCustomFieldsTpp",
+            "name": "requestCustomFieldsTpp",
             "type": "multiLine",
             "label": "Custom Fields",
             "required": false,
             "defaultValue": "",
             "visibleRule": "serverType = tpp",
-            "groupName": "enrollGroup",
+            "groupName": "requestGroup",
             "helpMarkDown": "Enter custom fields in json format.  To provide more than 1 value per name, separate the values with a comma.  Click on the elipsis to edit easily.",
             "properties": {
                 "editorExtension": "ms.vss-services-azure.azure-servicebus-message-grid"
             }
         },
         {
-            "name": "enrollNoPickup",
+            "name": "requestNoRetrieve",
             "label": "Retrieve Certificate Later",
             "defaultValue": false,
             "required": false,
             "type": "boolean",
-            "helpMarkDown": "By default, we will try to retrieve the certificate for 60 seconds.  If your CA might not respond in time or your workflow requires it, you can choose to forgo retrieving the certificate now and do so later with the pickup id which is automatically saved as environment variable VENAFI_ID.",
-            "groupName": "enrollGroup"
+            "helpMarkDown": "By default, we will try to retrieve the certificate for 60 seconds.  If your CA might not respond in time or your workflow requires it, you can choose to forgo retrieving the certificate now and do so later with the retrieval id which is automatically saved as environment variable VENAFI_ID.",
+            "groupName": "requestGroup"
         },
         {
-            "name": "enrollOutputType",
+            "name": "requestOutputType",
             "type": "radio",
             "label": "Certificate Output",
             "defaultValue": "outputEnvVar",
             "required": true,
             "options": {
-                "outputEnvVar": "Environment variable",
-                "outputFile": "File"
+                "envVar": "Environment variable",
+                "file": "File"
             },
             "helpMarkDown": "Output to either a file or an environment variable, VENAFI_CERT, to be used in a subsequent task.  The option for an environment variable is only available for pem and json formats.",
-            "visibleRule": "enrollFormat NotEndsWith .file && enrollNoPickup = false",
-            "groupName": "enrollGroup"
+            "visibleRule": "requestFormat NotEndsWith .file && requestNoRetrieve = false",
+            "groupName": "requestGroup"
         },
         {
-            "name": "enrollOutputFile",
+            "name": "requestOutputFile",
             "type": "filePath",
             "label": "Certificate Output File Path",
             "defaultValue": "",
             "required": true,
-            "visibleRule": "enrollOutputType = outputFile || enrollFormat EndsWith .file",
+            "visibleRule": "requestOutputType = outputFile || requestFormat EndsWith .file",
             "helpMarkDown": "Path to output file.  Required if output type 'File' was selected or format is either PKCS#12 or JKS.",
-            "groupName": "enrollGroup"
+            "groupName": "requestGroup"
         },
         {
-            "name": "pickupIdFrom",
+            "name": "retrieveIdFrom",
             "type": "radio",
-            "label": "Pickup ID From",
-            "defaultValue": "pickupIdFromEnvVar",
+            "label": "Certificate ID From",
+            "defaultValue": "priorRequest",
             "required": true,
             "options": {
-                "pickupIdFromEnvVar": "Prior Request",
-                "pickupIdFromId": "ID",
-                "pickupIdFromFile": "File path"
+                "priorRequest": "Prior Request",
+                "id": "ID",
+                "file": "File path"
             },
-            "helpMarkDown": "Where to get the pickup ID from.<br/><br/>Prior Request: From a Request action earlier in the pipeline.<br/>ID: provide the pickup ID<br/>File path: provide the path to a file which contains the pickup ID",
+            "helpMarkDown": "Where to get the certificate ID from.<br/><br/>Prior Request: From a Request action earlier in the pipeline.<br/>ID: provide the certificate ID directly<br/>File path: provide the path to a file which contains the certificate ID",
             "visibleRule": "action = retrieve",
-            "groupName": "pickupGroup"
+            "groupName": "retrieveGroup"
         },
         {
-            "name": "pickupId",
+            "name": "retrieveId",
             "type": "string",
             "label": "ID / Path",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "Reference ID for certificate to pickup.  For Venafi Cloud this will be a GUID and for TPP this will be the path to the certificate, eg. \\ved\\policy\\mycert.com",
-            "visibleRule": "pickupIdFrom = pickupIdFromId",
-            "groupName": "pickupGroup"
+            "helpMarkDown": "Reference ID for certificate to retrieve.  For Venafi Cloud this will be a GUID and for TPP this will be the path to the certificate, eg. \\ved\\policy\\mycert.com",
+            "visibleRule": "retrieveIdFrom = id",
+            "groupName": "retrieveGroup"
         },
         {
-            "name": "pickupFile",
+            "name": "retrieveFile",
             "type": "filePath",
             "label": "File Path",
             "defaultValue": "",
             "required": true,
-            "visibleRule": "pickupIdFrom = pickupIdFromFile",
-            "groupName": "pickupGroup"
+            "visibleRule": "retrieveIdFrom = file",
+            "groupName": "retrieveGroup"
         },
         {
-            "name": "pickupFormat",
+            "name": "retrieveFormat",
             "type": "radio",
             "label": "Format",
             "defaultValue": "pem",
@@ -363,31 +363,31 @@
                 "jks": "JKS"
             },
             "helpMarkDown": "",
-            "groupName": "pickupGroup"
+            "groupName": "retrieveGroup"
         },
         {
-            "name": "pickupOutputType",
+            "name": "retrieveOutputType",
             "type": "radio",
             "label": "Certificate Output",
             "defaultValue": "outputEnvVar",
             "required": true,
             "options": {
-                "outputEnvVar": "Environment variable",
-                "outputFile": "File"
+                "envVar": "Environment variable",
+                "file": "File"
             },
             "helpMarkDown": "Output to either a file or an environment variable to be used in a subsequent task.  The option for an environment variable is only available for pem and json formats.",
-            "visibleRule": "pickupFormat = pem || pickupFormat = json",
-            "groupName": "pickupGroup"
+            "visibleRule": "retrieveFormat = pem || retrieveFormat = json",
+            "groupName": "retrieveGroup"
         },
         {
-            "name": "pickupOutputFile",
+            "name": "retrieveOutputFile",
             "type": "filePath",
             "label": "Certificate Output File Path",
             "defaultValue": "",
             "required": true,
-            "visibleRule": "pickupOutputType = outputFile || pickupFormat = pkcs12 || pickupFormat = jks",
+            "visibleRule": "retrieveOutputType = outputFile || retrieveFormat = pkcs12 || retrieveFormat = jks",
             "helpMarkDown": "Path to output file.  Required if output type 'file' was selected or format is either PKCS#12 or JKS.",
-            "groupName": "pickupGroup"
+            "groupName": "retrieveGroup"
         },
         {
             "name": "renewIdFrom",
@@ -396,9 +396,9 @@
             "defaultValue": "renewIdFromEnvVar",
             "required": true,
             "options": {
-                "renewIdFromEnvVar": "Prior Request",
-                "renewIdFromId": "ID",
-                "renewIdFromFile": "File path"
+                "priorRequest": "Prior Request",
+                "id": "ID",
+                "file": "File path"
             },
             "helpMarkDown": "Where to get the certificate ID from.<br/><br/>Prior Request: From a Request action earlier in the pipeline.<br/>ID: provide the renew ID<br/>File path: provide the path to a file which contains the renew ID",
             "visibleRule": "action = renew",
@@ -411,7 +411,7 @@
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "Reference ID for certificate to renew.  For Venafi Cloud this will be a GUID and for TPP this will be the path to the certificate, eg. \\ved\\policy\\mycert.com",
-            "visibleRule": "renewIdFrom = renewIdFromId",
+            "visibleRule": "renewIdFrom = id",
             "groupName": "renewGroup"
         },
         {
@@ -420,7 +420,7 @@
             "label": "File Path",
             "defaultValue": "",
             "required": true,
-            "visibleRule": "renewIdFrom = renewIdFromFile",
+            "visibleRule": "renewIdFrom = file",
             "groupName": "renewGroup"
         },
         {

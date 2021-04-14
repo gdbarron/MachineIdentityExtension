@@ -22,7 +22,7 @@ async function run() {
         // const tempPath = process.env['AGENT_TEMPDIRECTORY']
 
         // const tempPath = tl.getVariable('AGENT_TEMPDIRECTORY')
-        const enrollIdFilePath = path.join(__dirname, 'pickupid')
+        const requestIdFilePath = path.join(__dirname, 'certid')
 
         var isWin = (process.platform === "win32")
         var isLinux = (process.platform === "linux")
@@ -37,31 +37,31 @@ async function run() {
         let apiKeyCloud = tl.getInput('apiKeyCloud', (serverType === 'cloud')) as string
 
         // request/enroll
-        let enrollZoneCloud = tl.getInput('enrollZoneCloud', (serverType === 'cloud')) as string
-        let enrollCommonName = tl.getInput('enrollCommonName', (action === 'request')) as string
-        let enrollNicknameTpp = tl.getInput('enrollNicknameTpp', false) as string
-        let enrollZoneTpp = tl.getInput('enrollZoneTpp', (serverType === 'tpp')) as string
-        let enrollKeyPassword = tl.getInput('enrollKeyPassword', false) as string
-        let enrollFormat = tl.getInput('enrollFormat', true) as string
-        let enrollChain = tl.getInput('enrollChain', true) as string
-        let enrollSanDns = tl.getDelimitedInput('enrollSanDns', ',', false) as string[]
-        let enrollSanEmailTpp = tl.getDelimitedInput('enrollSanEmailTpp', ',', false) as string[]
-        let enrollSanIpTpp = tl.getDelimitedInput('enrollSanIpTpp', ',', false) as string[]
-        let enrollCustomFieldsTpp = tl.getInput('enrollCustomFieldsTpp', false) as string
-        let enrollCsrTpp = tl.getInput('enrollCsrTpp', false) as string
-        let enrollCsrCloud = tl.getInput('enrollCsrCloud', false) as string
-        let enrollCsrFile = tl.getInput('enrollCsrFile', false) as string
-        let enrollNoPickup = tl.getBoolInput('enrollNoPickup', false) as boolean
-        let enrollOutputType = tl.getInput('enrollOutputType', enrollNoPickup === false && (enrollFormat === 'pem' || enrollFormat === 'json')) as string
-        let enrollOutputFile = tl.getPathInput('enrollOutputFile', enrollOutputType === 'outputFile' || enrollFormat === 'pkcs12.file' || enrollFormat === 'jks.file') as string
+        let requestZoneCloud = tl.getInput('requestZoneCloud', (serverType === 'cloud')) as string
+        let requestCommonName = tl.getInput('requestCommonName', (action === 'request')) as string
+        let requestNicknameTpp = tl.getInput('requestNicknameTpp', false) as string
+        let requestZoneTpp = tl.getInput('requestZoneTpp', (serverType === 'tpp')) as string
+        let requestKeyPassword = tl.getInput('requestKeyPassword', false) as string
+        let requestFormat = tl.getInput('requestFormat', true) as string
+        let requestChain = tl.getInput('requestChain', true) as string
+        let requestSanDns = tl.getDelimitedInput('requestSanDns', ',', false) as string[]
+        let requestSanEmailTpp = tl.getDelimitedInput('requestSanEmailTpp', ',', false) as string[]
+        let requestSanIpTpp = tl.getDelimitedInput('requestSanIpTpp', ',', false) as string[]
+        let requestCustomFieldsTpp = tl.getInput('requestCustomFieldsTpp', false) as string
+        let requestCsrTpp = tl.getInput('requestCsrTpp', false) as string
+        let requestCsrCloud = tl.getInput('requestCsrCloud', false) as string
+        let requestCsrFile = tl.getInput('requestCsrFile', false) as string
+        let requestNoRetrieval = tl.getBoolInput('requestNoRetrieval', false) as boolean
+        let requestOutputType = tl.getInput('requestOutputType', requestNoRetrieval === false && (requestFormat === 'pem' || requestFormat === 'json')) as string
+        let requestOutputFile = tl.getPathInput('requestOutputFile', requestOutputType === 'file' || requestFormat === 'pkcs12.file' || requestFormat === 'jks.file') as string
 
         // retrieve/pickup
-        let pickupFormat = tl.getInput('pickupFormat', true) as string
-        let pickupIdFrom = tl.getInput('pickupIdFrom', action === 'retrieve') as string
-        let pickupId = tl.getInput('pickupId', pickupIdFrom === 'pickupIdFromId') as string
-        let pickupFile = tl.getPathInput('pickupFile', pickupIdFrom === 'pickupIdFromFile') as string
-        let pickupOutputType = tl.getInput('pickupOutputType', pickupFormat === 'pem' || pickupFormat === 'json') as string
-        let pickupOutputFile = tl.getPathInput('pickupOutputFile', pickupOutputType === 'outputFile' || pickupFormat === 'pkcs12' || pickupFormat === 'jks') as string
+        let retrieveFormat = tl.getInput('retrieveFormat', true) as string
+        let retrieveIdFrom = tl.getInput('retrieveIdFrom', action === 'retrieve') as string
+        let retrieveId = tl.getInput('retrieveId', retrieveIdFrom === 'id') as string
+        let retrieveFile = tl.getPathInput('retrieveFile', retrieveIdFrom === 'file') as string
+        let retrieveOutputType = tl.getInput('retrieveOutputType', retrieveFormat === 'pem' || retrieveFormat === 'json') as string
+        let retrieveOutputFile = tl.getPathInput('retrieveOutputFile', retrieveOutputType === 'file' || retrieveFormat === 'pkcs12' || retrieveFormat === 'jks') as string
 
         // renew
         let renewIdFrom = tl.getInput('renewIdFrom', action === 'renew') as string
@@ -100,84 +100,84 @@ async function run() {
 
                 vcertArgs.push('-z')
                 if (serverType === 'cloud') {
-                    vcertArgs.push(enrollZoneCloud)
+                    vcertArgs.push(requestZoneCloud)
                 } else {
-                    vcertArgs.push(enrollZoneTpp)
+                    vcertArgs.push(requestZoneTpp)
                 }
 
                 vcertArgs.push('--cn')
-                vcertArgs.push(enrollCommonName)
+                vcertArgs.push(requestCommonName)
 
                 vcertArgs.push('--format')
-                vcertArgs.push(enrollFormat.replace('.file', ''))
+                vcertArgs.push(requestFormat.replace('.file', ''))
 
                 vcertArgs.push('--chain')
-                vcertArgs.push(enrollChain)
+                vcertArgs.push(requestChain)
 
                 vcertArgs.push('--csr')
                 if (serverType === 'cloud') {
-                    if (enrollCsrCloud === 'file') {
-                        vcertArgs.push('file:' + enrollCsrFile)
+                    if (requestCsrCloud === 'file') {
+                        vcertArgs.push('file:' + requestCsrFile)
                     } else {
-                        vcertArgs.push(enrollCsrCloud)
+                        vcertArgs.push(requestCsrCloud)
                     }
                 } else {
-                    if (enrollCsrCloud === 'file') {
-                        vcertArgs.push('file:' + enrollCsrFile)
+                    if (requestCsrCloud === 'file') {
+                        vcertArgs.push('file:' + requestCsrFile)
                     } else {
-                        vcertArgs.push(enrollCsrTpp)
+                        vcertArgs.push(requestCsrTpp)
                     }
                 }
 
-                if (enrollSanDns) {
-                    // var sanDns = enrollSanDns.split(",")
-                    enrollSanDns.forEach(element => {
+                if (requestSanDns) {
+                    // var sanDns = requestSanDns.split(",")
+                    requestSanDns.forEach(element => {
                         vcertArgs.push('--san-dns')
                         vcertArgs.push(element)
                     });
                 }
 
-                if (enrollKeyPassword) {
+                if (requestKeyPassword) {
                     vcertArgs.push('--key-password')
-                    vcertArgs.push(enrollKeyPassword)
+                    vcertArgs.push(requestKeyPassword)
                 } else {
                     vcertArgs.push('--no-prompt')
                 }
 
-                if (enrollNoPickup) {
+                if (requestNoRetrieval) {
                     vcertArgs.push('--no-pickup')
                 } else {
-                    if (enrollOutputType === 'outputFile') {
+                    if (requestOutputType === 'file') {
                         vcertArgs.push('--file')
-                        vcertArgs.push(enrollOutputFile)
+                        vcertArgs.push(requestOutputFile)
                     }
                 }
 
                 // tpp specific params, not supported on cloud
                 if (serverType === 'tpp') {
-                    if (enrollNicknameTpp) {
+                    if (requestNicknameTpp) {
                         vcertArgs.push('--nickname')
-                        vcertArgs.push(enrollNicknameTpp)
+                        vcertArgs.push(requestNicknameTpp)
                     }
 
-                    if (enrollSanEmailTpp) {
-                        // var sanEmail = enrollSanEmailTpp.split(",")
-                        enrollSanEmailTpp.forEach(element => {
+                    if (requestSanEmailTpp) {
+                        // var sanEmail = requestSanEmailTpp.split(",")
+                        requestSanEmailTpp.forEach(element => {
                             vcertArgs.push('--san-email')
                             vcertArgs.push(element)
                         });
                     }
 
-                    if (enrollSanIpTpp) {
-                        // var sanIp = enrollSanIpTpp.split(",")
-                        enrollSanIpTpp.forEach(element => {
+                    if (requestSanIpTpp) {
+                        // var sanIp = requestSanIpTpp.split(",")
+                        requestSanIpTpp.forEach(element => {
                             vcertArgs.push('--san-ip')
                             vcertArgs.push(element)
                         });
                     }
 
-                    if (enrollCustomFieldsTpp) {
-                        const customFields = JSON.parse(enrollCustomFieldsTpp)
+                    if (requestCustomFieldsTpp) {
+                        const customFields = JSON.parse(requestCustomFieldsTpp)
                         for (var key in customFields) {
                             vcertArgs.push('--field')
                             vcertArgs.push(key + '=' + customFields[key])
@@ -189,7 +189,7 @@ async function run() {
                 // without this it will go to stdout and cause issues
                 // as both the cert and this go to stdout
                 vcertArgs.push('--pickup-id-file')
-                vcertArgs.push(enrollIdFilePath)
+                vcertArgs.push(requestIdFilePath)
 
                 break;
 
@@ -197,30 +197,30 @@ async function run() {
 
                 vcertArgs.push('pickup')
 
-                switch (pickupIdFrom) {
-                    case 'pickupIdFromEnvVar':
+                switch (retrieveIdFrom) {
+                    case 'priorRequest':
                         var thisId = tl.getVariable(certIdEnvVarName)
                         if (thisId) {
                             // thisId = thisId.trim()
                             vcertArgs.push('--pickup-id')
                             vcertArgs.push(thisId)
                         } else {
-                            throw 'No pickup ID was found at environment variable ' + certIdEnvVarName
+                            throw 'No certificate ID was found at environment variable ' + certIdEnvVarName + '.  Ensure your prior request was successful.'
                         }
                         break;
 
-                    case 'pickupIdFromId':
+                    case 'id':
                         vcertArgs.push('--pickup-id')
-                        vcertArgs.push(pickupId)
+                        vcertArgs.push(retrieveId)
                         break;
 
-                    case 'pickupIdFromFile':
+                    case 'file':
                         vcertArgs.push('--pickup-id-file')
-                        vcertArgs.push(pickupFile)
+                        vcertArgs.push(retrieveFile)
                         break;
 
                     default:
-                        throw 'Unknown pickup type ' + pickupIdFrom
+                        throw 'Unknown retrieve type ' + retrieveIdFrom
                         break;
                 }
 
@@ -231,29 +231,29 @@ async function run() {
                 vcertArgs.push('renew')
 
                 switch (renewIdFrom) {
-                    case 'renewIdFromEnvVar':
+                    case 'envVar':
                         var thisId = tl.getVariable(certIdEnvVarName)
                         if (thisId) {
                             // thisId = thisId.trim()
                             vcertArgs.push('--id')
                             vcertArgs.push(thisId)
                         } else {
-                            throw 'No pickup ID was found at environment variable ' + certIdEnvVarName
+                            throw 'No certificate ID was found at environment variable ' + certIdEnvVarName + '.  Ensure your prior request was successful.'
                         }
                         break;
 
-                    case 'renewIdFromId':
+                    case 'id':
                         vcertArgs.push('--id')
                         vcertArgs.push(renewId)
                         break;
 
-                    case 'renewIdFromFile':
+                    case 'file':
                         vcertArgs.push('--id')
                         vcertArgs.push('file:' + renewFile)
                         break;
 
                     default:
-                        throw 'Unknown pickup type ' + pickupIdFrom
+                        throw 'Unknown renew from ' + renewIdFrom
                         break;
                 }
 
@@ -347,32 +347,32 @@ async function run() {
 
         switch (action) {
             case 'request':
-                if (!enrollNoPickup) {
-                    if (enrollOutputType === 'outputEnvVar' && (enrollFormat === 'pem' || enrollFormat === 'json')) {
+                if (!requestNoRetrieval) {
+                    if (requestOutputType === 'envVar' && (requestFormat === 'pem' || requestFormat === 'json')) {
                         // certOut = certOut.replace(/\n/g, '');
                         // console.log(certOut)
                         tl.setVariable(certEnvVarName, child.stdout)
-                        console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to environment variable ' + certEnvVarName)
+                        console.log('Contents of certificate, with ' + requestFormat + ' format, saved to environment variable ' + certEnvVarName)
                     } else {
-                        console.log('Contents of certificate, with ' + enrollFormat + ' format, saved to ' + enrollOutputFile)
+                        console.log('Contents of certificate, with ' + requestFormat + ' format, saved to ' + requestOutputFile)
                     }
                 }
 
                 // write pickup id to env var
-                var enrollPickupId = fs.readFileSync(enrollIdFilePath, 'utf8')
+                var requestPickupId = fs.readFileSync(requestIdFilePath, 'utf8')
                 // there's a crlf on the pickup id so we need to trim it
-                tl.setVariable(certIdEnvVarName, enrollPickupId.trim())
-                console.log('Pickup ID saved to environment variable ' + certIdEnvVarName)
+                tl.setVariable(certIdEnvVarName, requestPickupId.trim())
+                console.log('Certificate ID saved to environment variable ' + certIdEnvVarName)
 
                 break;
 
             case 'retrieve':
 
-                if (pickupOutputType === 'outputEnvVar' && (pickupFormat === 'pem' || pickupFormat === 'json')) {
+                if (retrieveOutputType === 'envVar' && (retrieveFormat === 'pem' || retrieveFormat === 'json')) {
                     tl.setVariable(certEnvVarName, child.stdout)
-                    console.log('Contents of certificate, with ' + pickupFormat + ' format, saved to environment variable ' + certEnvVarName)
+                    console.log('Contents of certificate, with ' + retrieveFormat + ' format, saved to environment variable ' + certEnvVarName)
                 } else {
-                    console.log('Contents of certificate, with ' + pickupFormat + ' format, saved to ' + pickupOutputFile)
+                    console.log('Contents of certificate, with ' + retrieveFormat + ' format, saved to ' + retrieveOutputFile)
                 }
 
                 break;
