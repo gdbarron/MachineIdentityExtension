@@ -22,3 +22,5 @@ TPP requires a token which can either be precreated and provided with the 'Inlin
 
 ![TPP server - Main](https://raw.githubusercontent.com/gdbarron/MachineIdentityExtension/master/extension/images/TppMain.jpg)
 
+### YAML example - Get token and Request
+![yaml example](https://raw.githubusercontent.com/gdbarron/MachineIdentityExtension/master/extension/images/yaml.jpg)
