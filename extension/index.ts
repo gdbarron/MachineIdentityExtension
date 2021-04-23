@@ -30,19 +30,19 @@ async function run() {
 
         let action = tl.getInput('action', true) as string
         let serverType = tl.getInput('serverType', true) as string
-        let runParams = tl.getInput('runParams', false) as string
+        // let runParams = tl.getInput('runParams', false) as string
         let serverUrlTpp = tl.getInput('serverUrlTpp', (serverType === 'tpp')) as string
-        let authTokenFrom = tl.getInput('authTokenFrom', (serverType === 'tpp')) as string
-        let authToken = tl.getInput('authToken', (serverType === 'tpp')) as string
+        let authTokenFrom = tl.getInput('authTokenFrom', serverType === 'tpp' && action !== 'getToken') as string
+        let authToken = tl.getInput('authToken', serverType === 'tpp' && authTokenFrom === 'inline' && action !== 'getToken') as string
         let apiKey = tl.getInput('apiKey', (serverType === 'cloud')) as string
 
         // request/enroll
-        let requestDestination = tl.getInput('requestDestination', true) as string
-        let requestCommonName = tl.getInput('requestCommonName', (action === 'request')) as string
+        let requestDestination = tl.getInput('requestDestination', action === 'request') as string
+        let requestCommonName = tl.getInput('requestCommonName', action === 'request') as string
         let requestNicknameTpp = tl.getInput('requestNicknameTpp', false) as string
         let requestKeyPassword = tl.getInput('requestKeyPassword', false) as string
-        let requestFormat = tl.getInput('requestFormat', true) as string
-        let requestChain = tl.getInput('requestChain', true) as string
+        let requestFormat = tl.getInput('requestFormat', action === 'request') as string
+        let requestChain = tl.getInput('requestChain', action === 'request') as string
         let requestSanDns = tl.getDelimitedInput('requestSanDns', ',', false) as string[]
         let requestSanEmailTpp = tl.getDelimitedInput('requestSanEmailTpp', ',', false) as string[]
         let requestSanIpTpp = tl.getDelimitedInput('requestSanIpTpp', ',', false) as string[]
@@ -55,7 +55,7 @@ async function run() {
         let requestOutputFile = tl.getPathInput('requestOutputFile', requestOutputType === 'file' || requestFormat === 'pkcs12.file' || requestFormat === 'jks.file') as string
 
         // retrieve/pickup
-        let retrieveFormat = tl.getInput('retrieveFormat', true) as string
+        let retrieveFormat = tl.getInput('retrieveFormat', action === 'retrieve') as string
         let retrieveIdFrom = tl.getInput('retrieveIdFrom', action === 'retrieve') as string
         let retrieveId = tl.getInput('retrieveId', retrieveIdFrom === 'id') as string
         let retrieveFile = tl.getPathInput('retrieveFile', retrieveIdFrom === 'file') as string

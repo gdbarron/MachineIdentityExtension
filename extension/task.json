@@ -103,7 +103,7 @@
                 "priorGetToken": "Prior Get Token",
                 "inline": "Inline"
             },
-            "visibleRule": "serverType = tpp",
+            "visibleRule": "serverType = tpp && action != getToken",
             "groupName": "mainGroup"
         },
         {
@@ -113,7 +113,7 @@
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "Authentication token to connect to TPP.",
-            "visibleRule": "serverType = tpp && authTokenFrom = inline",
+            "visibleRule": "serverType = tpp && authTokenFrom = inline && action != getToken",
             "groupName": "mainGroup"
         },
         {
