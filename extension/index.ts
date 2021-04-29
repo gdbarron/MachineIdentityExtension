@@ -350,7 +350,7 @@ async function run() {
                     if (requestOutputType === 'envVar' && (requestFormat === 'pem' || requestFormat === 'json')) {
                         // certOut = certOut.replace(/\n/g, '');
                         // console.log(certOut)
-                        tl.setVariable(certEnvVarName, child.stdout.replace(/(\r\n|\n|\r)/gm, ""))
+                        tl.setVariable(certEnvVarName, child.stdout.replace(/(\r\n|\n|\r)/gm, '\n'))
                         console.log('Contents of certificate, with ' + requestFormat + ' format, saved to environment variable ' + certEnvVarName)
                     } else {
                         console.log('Contents of certificate, with ' + requestFormat + ' format, saved to ' + requestOutputFile)
@@ -368,7 +368,7 @@ async function run() {
             case 'retrieve':
 
                 if (retrieveOutputType === 'envVar' && (retrieveFormat === 'pem' || retrieveFormat === 'json')) {
-                    tl.setVariable(certEnvVarName, child.stdout.replace(/(\r\n|\n|\r)/gm, ""))
+                    tl.setVariable(certEnvVarName, child.stdout.replace(/(\r\n|\n|\r)/gm, '\n'))
                     console.log('Contents of certificate, with ' + retrieveFormat + ' format, saved to environment variable ' + certEnvVarName)
                 } else {
                     console.log('Contents of certificate, with ' + retrieveFormat + ' format, saved to ' + retrieveOutputFile)
@@ -379,7 +379,7 @@ async function run() {
             case 'getToken':
 
                 var fullToken = JSON.parse(child.stdout)
-                tl.setVariable(tppTokenEnvVarName, fullToken.access_token)
+                tl.setVariable(tppTokenEnvVarName, fullToken.access_token, true)
                 console.log('Token saved to environment variable ' + tppTokenEnvVarName)
 
                 break;
