@@ -36,6 +36,20 @@
             "path": "LICENSE"
         }
     },
+    "links": {
+        "repository": {
+            "uri": "https://github.com/gdbarron/MachineIdentityExtension"
+        },
+        "issues": {
+            "uri": "https://github.com/gdbarron/MachineIdentityExtension/issues"
+        },
+        "support": {
+            "uri": "https://github.com/gdbarron/MachineIdentityExtension/discussions"
+        },
+        "privacypolicy": {
+            "uri": "https://github.com/gdbarron/MachineIdentityExtension/privacy-policy.md"
+        }
+    },
     "repository": {
         "type": "git",
         "uri": "https://github.com/gdbarron/MachineIdentityExtension"
