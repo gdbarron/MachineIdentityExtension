@@ -1,7 +1,7 @@
-# Machine Identity Extension for Azure DevOps
+# Venafi Machine Identity Extension for Azure DevOps
 
 ## Background
-Simplify key generation and enrollment of machine identities (also known as SSL/TLS certificates and keys) that comply with enterprise security policy by using the [Venafi Trust Protection Platform](https://www.venafi.com/platform/trust-protection-platform)(TPP) or [Venafi as a Service](https://www.venafi.com/venaficloud).  You can request, retrieve, and renew certificates.
+Simplify key generation and enrollment of machine identities (also known as SSL/TLS certificates and keys) that comply with enterprise security policy by using the [Venafi Trust Protection Platform](https://www.venafi.com/platform/trust-protection-platform) (TPP) or [Venafi as a Service](https://www.venafi.com/venaficloud).  You can request, retrieve, and renew certificates.
 
 This extension takes advantage of the [VCert](https://github.com/Venafi/vcert) CLI.  Basic usage can be found below and in the extension help itself; please see the VCert site for additional parameter details.
 

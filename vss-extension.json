@@ -17,10 +17,9 @@
         "venafi",
         "ssl",
         "tls",
-        "certificate",
         "certificates",
-        "key",
-        "keys"
+        "keys",
+        "machine identity"
     ],
     "screenshots": [
 
@@ -75,7 +74,6 @@
         }
     ],
     "galleryFlags": [
-        "Preview",
         "Public"
     ],
     "contributions": [

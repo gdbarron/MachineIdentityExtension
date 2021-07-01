@@ -1,4 +1,4 @@
-# Machine Identity Extension for Azure DevOps
+# Venafi Machine Identity Extension for Azure DevOps
 
 ![Azure DevOps builds](https://img.shields.io/azure-devops/build/gd-barron/11b2b21a-0109-430d-8f46-9facf705c42a/5?label=build&style=plastic)
 ![Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/GregBrownstein.MachineIdentityExtension?label=version&style=plastic)
