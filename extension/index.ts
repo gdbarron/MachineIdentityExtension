@@ -70,6 +70,8 @@ async function run() {
         // getToken
         let getTokenUsername = tl.getInput('getTokenUsername', (serverType === 'tpp' && action === 'getToken')) as string
         let getTokenPassword = tl.getInput('getTokenPassword', (serverType === 'tpp' && action === 'getToken')) as string
+        let getTokenClientId = tl.getInput('getTokenClientId', false) as string
+        let getTokenScope = tl.getInput('getTokenScope', false) as string
 
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
@@ -268,8 +270,17 @@ async function run() {
                 vcertArgs.push('--format')
                 vcertArgs.push('json')
 
-                break;
+                if (getTokenClientId) {
+                    vcertArgs.push('--client-id')
+                    vcertArgs.push(getTokenClientId)
+                }
 
+                if (getTokenScope) {
+                    vcertArgs.push('--scope')
+                    vcertArgs.push(getTokenScope)
+                }
+
+                break;
         }
 
         // needed for all cloud/tpp actions

@@ -433,6 +433,26 @@
             "groupName": "getTokenGroup"
         },
         {
+            "name": "getTokenClientId",
+            "type": "string",
+            "label": "Application Name",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "If not provided, vcert-cli is the default.",
+            "visibleRule": "action = getToken",
+            "groupName": "getTokenGroup"
+        },
+        {
+            "name": "getTokenScope",
+            "type": "string",
+            "label": "Scope",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "If not provided, 'certificate:manage,revoke;' is the default which is the minimum required to perform any actions supported by the VCert CLI.",
+            "visibleRule": "action = getToken",
+            "groupName": "getTokenGroup"
+        },
+        {
             "name": "verbose",
             "label": "Verbose",
             "defaultValue": false,
