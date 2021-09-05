@@ -403,7 +403,7 @@ async function run() {
         }
     }
     catch (err) {
-        let thisError: string = err.message
+        let thisError: string = (err as Error).message
         tl.setResult(tl.TaskResult.Failed, thisError);
     }
 }
