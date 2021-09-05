@@ -403,8 +403,8 @@ async function run() {
         }
     }
     catch (err) {
-        //     console.log(err)
-        tl.setResult(tl.TaskResult.Failed, 'hey, I failed');
+        let thisError: string = err.message
+        tl.setResult(tl.TaskResult.Failed, thisError);
     }
 }
 
