@@ -404,9 +404,9 @@ async function run() {
     }
     catch (err) {
         //     console.log(err)
-            tl.setResult(tl.TaskResult.Failed, err.message);
+        tl.setResult(tl.TaskResult.Failed, err);
     }
 }
 
 // use --no-prompt
-run(); 5
+run();
