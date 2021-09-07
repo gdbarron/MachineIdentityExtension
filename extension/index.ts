@@ -315,14 +315,12 @@ async function run() {
             // }
         }
 
-        if (testMode) {
-            vcertArgs.push('--test-mode')
-        }
-
         if (verbose) {
             vcertArgs.push('--verbose')
-            console.log('vcert path: ' + vcertPath)
-            console.log('vcert args: ' + vcertArgs)
+        }
+
+        if (testMode) {
+            vcertArgs.push('--test-mode')
         }
 
         if (additionalParameters) {
@@ -330,6 +328,12 @@ async function run() {
             addlParamsSplit.forEach(element => {
                 vcertArgs.push(element)
             });
+        }
+
+
+        if (verbose) {
+            console.log('vcert path: ' + vcertPath)
+            console.log('vcert args: ' + vcertArgs)
         }
 
         // const { execFile } = require('child_process');
