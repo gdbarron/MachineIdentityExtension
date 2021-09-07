@@ -70,10 +70,13 @@ async function run() {
         // getToken
         let getTokenUsername = tl.getInput('getTokenUsername', (serverType === 'tpp' && action === 'getToken')) as string
         let getTokenPassword = tl.getInput('getTokenPassword', (serverType === 'tpp' && action === 'getToken')) as string
+        let getTokenClientId = tl.getInput('getTokenClientId', false) as string
+        let getTokenScope = tl.getInput('getTokenScope', false) as string
 
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
         let testMode = tl.getBoolInput('testMode', false) as boolean
+        let additionalParameters = tl.getInput('additionalParameters', false) as string
 
         vcertPath += process.platform
         switch (process.platform) {
@@ -268,8 +271,17 @@ async function run() {
                 vcertArgs.push('--format')
                 vcertArgs.push('json')
 
-                break;
+                if (getTokenClientId) {
+                    vcertArgs.push('--client-id')
+                    vcertArgs.push(getTokenClientId)
+                }
 
+                if (getTokenScope) {
+                    vcertArgs.push('--scope')
+                    vcertArgs.push(getTokenScope)
+                }
+
+                break;
         }
 
         // needed for all cloud/tpp actions
@@ -294,23 +306,26 @@ async function run() {
                     }
                 }
             }
-            // if (authTypeTpp === 'token' && action !== 'getToken') {
-            // } else {
-            //     vcertArgs.push('--tpp-user')
-            //     vcertArgs.push(authUsernameTpp)
-            //     vcertArgs.push('--tpp-password')
-            //     vcertArgs.push(authPasswordTpp)
-            // }
         }
 
         if (verbose) {
             vcertArgs.push('--verbose')
-            console.log('vcert path: ' + vcertPath)
-            console.log('vcert args: ' + vcertArgs)
         }
 
         if (testMode) {
             vcertArgs.push('--test-mode')
+        }
+
+        if (additionalParameters) {
+            var additionalParametersSplit = additionalParameters.split(" ")
+            additionalParametersSplit.forEach(element => {
+                vcertArgs.push(element)
+            });
+        }
+
+        if (verbose) {
+            console.log('vcert path: ' + vcertPath)
+            console.log('vcert args: ' + vcertArgs)
         }
 
         // const { execFile } = require('child_process');
@@ -387,12 +402,10 @@ async function run() {
             default:
                 break;
         }
-        if (action === 'getToken') {
-            // tl.setVariable('VCertToken', '', true)
-        }
     }
     catch (err) {
-        tl.setResult(tl.TaskResult.Failed, err.message);
+        let thisError: string = (err as Error).message
+        tl.setResult(tl.TaskResult.Failed, thisError);
     }
 }
 
