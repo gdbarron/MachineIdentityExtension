@@ -306,13 +306,6 @@ async function run() {
                     }
                 }
             }
-            // if (authTypeTpp === 'token' && action !== 'getToken') {
-            // } else {
-            //     vcertArgs.push('--tpp-user')
-            //     vcertArgs.push(authUsernameTpp)
-            //     vcertArgs.push('--tpp-password')
-            //     vcertArgs.push(authPasswordTpp)
-            // }
         }
 
         if (verbose) {
@@ -329,7 +322,6 @@ async function run() {
                 vcertArgs.push(element)
             });
         }
-
 
         if (verbose) {
             console.log('vcert path: ' + vcertPath)

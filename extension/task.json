@@ -468,7 +468,8 @@
             "required": false,
             "type": "boolean",
             "helpMarkDown": "Use to test operations without connecting to Venafi Platform. This option is useful for integration tests where the test environment does not have access to Venafi Platform",
-            "groupName": "advanced"
+            "groupName": "advanced",
+            "visibleRule": "action = request || action = retrieve || action = renew"
         },
         {
             "name": "additionalParameters",
@@ -476,7 +477,7 @@
             "defaultValue": "",
             "required": false,
             "type": "string",
-            "helpMarkDown": "Provide additional parameters for vcert features the extension does not support yet.",
+            "helpMarkDown": "Provide additional names/values for vcert features the extension does not support yet.  Provide just as you would on the command line, eg. --name value --name2 value2.",
             "groupName": "advanced"
         }
     ],
