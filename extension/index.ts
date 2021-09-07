@@ -326,7 +326,10 @@ async function run() {
         }
 
         if (additionalParameters) {
-            // vcertArgs.push(additionalParameters)
+            var addlParamsSplit = additionalParameters.split(" ")
+            addlParamsSplit.forEach(element => {
+                vcertArgs.push(element)
+            });
         }
 
         // const { execFile } = require('child_process');
