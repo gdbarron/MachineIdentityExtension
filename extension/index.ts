@@ -315,18 +315,18 @@ async function run() {
             // }
         }
 
+        if (testMode) {
+            vcertArgs.push('--test-mode')
+        }
+
         if (verbose) {
             vcertArgs.push('--verbose')
             console.log('vcert path: ' + vcertPath)
             console.log('vcert args: ' + vcertArgs)
         }
 
-        if (testMode) {
-            vcertArgs.push('--test-mode')
-        }
-
         if (additionalParameters) {
-            vcertArgs.push(' ' + additionalParameters)
+            vcertArgs.push(additionalParameters)
         }
 
         // const { execFile } = require('child_process');
