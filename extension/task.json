@@ -473,7 +473,7 @@
         {
             "name": "additionalParameters",
             "label": "Addition Parameters",
-            "defaultValue": false,
+            "defaultValue": "",
             "required": false,
             "type": "string",
             "helpMarkDown": "Provide additional parameters for vcert features the extension does not support yet.",
