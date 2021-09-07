@@ -438,7 +438,7 @@
             "label": "Application Name",
             "defaultValue": "",
             "required": false,
-            "helpMarkDown": "If not provided, vcert-cli is the default.",
+            "helpMarkDown": "If not provided, 'vcert-cli' is the default.",
             "visibleRule": "action = getToken",
             "groupName": "getTokenGroup"
         },
@@ -448,7 +448,7 @@
             "label": "Scope",
             "defaultValue": "",
             "required": false,
-            "helpMarkDown": "If not provided, 'certificate:manage,revoke;' is the default which is the minimum required to perform any actions supported by the VCert CLI.",
+            "helpMarkDown": "See <https://docs.venafi.com/Docs/21.2SDK/TopNav/Content/SDK/AuthSDK/r-SDKa-OAuthScopePrivilegeMapping.php?tocpath=Auth%20REST%20for%20token%20management%7C_____5> for details on this value.  Separate multiple scopes with a semicolon.<br/><br/>If the value is not provided, 'certificate:manage,revoke;' is the default which is the minimum required to perform any actions supported by the VCert CLI.",
             "visibleRule": "action = getToken",
             "groupName": "getTokenGroup"
         },
@@ -468,6 +468,15 @@
             "required": false,
             "type": "boolean",
             "helpMarkDown": "Use to test operations without connecting to Venafi Platform. This option is useful for integration tests where the test environment does not have access to Venafi Platform",
+            "groupName": "advanced"
+        },
+        {
+            "name": "additionalParameters",
+            "label": "Addition Parameters",
+            "defaultValue": false,
+            "required": false,
+            "type": "string",
+            "helpMarkDown": "Provide additional parameters for vcert features the extension does not support yet.",
             "groupName": "advanced"
         }
     ],

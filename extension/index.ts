@@ -76,6 +76,7 @@ async function run() {
         // advanced
         let verbose = tl.getBoolInput('verbose', false) as boolean
         let testMode = tl.getBoolInput('testMode', false) as boolean
+        let additionalParameters = tl.getInput('additionalParameters', false) as string
 
         vcertPath += process.platform
         switch (process.platform) {
@@ -324,6 +325,10 @@ async function run() {
             vcertArgs.push('--test-mode')
         }
 
+        if (additionalParameters) {
+            vcertArgs.push(' ' + additionalParameters)
+        }
+
         // const { execFile } = require('child_process');
         var child_process = require('child_process');
 
@@ -397,9 +402,6 @@ async function run() {
 
             default:
                 break;
-        }
-        if (action === 'getToken') {
-            // tl.setVariable('VCertToken', '', true)
         }
     }
     catch (err) {
