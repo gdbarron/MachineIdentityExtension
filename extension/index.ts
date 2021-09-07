@@ -326,7 +326,7 @@ async function run() {
         }
 
         if (additionalParameters) {
-            vcertArgs.push(additionalParameters)
+            // vcertArgs.push(additionalParameters)
         }
 
         // const { execFile } = require('child_process');
