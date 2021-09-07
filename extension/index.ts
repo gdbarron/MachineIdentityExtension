@@ -317,8 +317,8 @@ async function run() {
         }
 
         if (additionalParameters) {
-            var addlParamsSplit = additionalParameters.split(" ")
-            addlParamsSplit.forEach(element => {
+            var additionalParametersSplit = additionalParameters.split(" ")
+            additionalParametersSplit.forEach(element => {
                 vcertArgs.push(element)
             });
         }
