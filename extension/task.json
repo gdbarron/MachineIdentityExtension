@@ -472,7 +472,7 @@
         },
         {
             "name": "additionalParameters",
-            "label": "Addition Parameters",
+            "label": "Additional Parameters",
             "defaultValue": "",
             "required": false,
             "type": "string",
