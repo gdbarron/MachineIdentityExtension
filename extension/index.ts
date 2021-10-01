@@ -354,10 +354,14 @@ async function run() {
         if (child.error) {
             throw child.error;
         }
-        // tl.debug("stdout: " + child.stdout);
-        // tl.debug("stderr: " + child.stderr);
+        tl.debug("stdout: " + child.stdout);
+        tl.debug("stderr: " + child.stderr);
         tl.debug("exit code: " + child.status);
         console.log(child.stderr)
+
+        if (child.status === 1 ) {
+            throw child.stderr
+        }
 
         switch (action) {
             case 'request':
