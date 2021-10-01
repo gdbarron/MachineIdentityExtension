@@ -356,6 +356,8 @@ async function run() {
         }
         tl.debug("stdout: " + child.stdout);
         tl.debug("stderr: " + child.stderr);
+        tl.debug("output: " + child.output);
+        tl.debug("last output: " + child.output[child.output.length-1]);
         tl.debug("exit code: " + child.status);
         console.log(child.stderr)
 
