@@ -65,7 +65,8 @@
                 "request": "Request Certificate",
                 "retrieve": "Retrieve Certificate",
                 "renew": "Renew Certificate",
-                "getToken": "Get Token (TPP only)"
+                "getToken": "Get Token (TPP only)",
+                "revokeToken": "Revoke Token (TPP only)"
             }
         },
         {
