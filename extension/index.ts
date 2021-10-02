@@ -282,6 +282,12 @@ async function run() {
                 }
 
                 break;
+
+            case "revokeToken":
+
+                vcertArgs.push('voidcred')
+
+                break;
         }
 
         // needed for all cloud/tpp actions
@@ -328,52 +334,26 @@ async function run() {
             console.log('vcert args: ' + vcertArgs)
         }
 
-        // const { execFile } = require('child_process');
         var child_process = require('child_process');
 
         // run with version switch first
         var childVersion = child_process.spawnSync(vcertPath, ['--version'], { encoding: 'utf8' });
         console.log(childVersion.stdout)
-        // const childVersion = child_process(vcertPath, ['--version'], (error: string, stdout: string, stderr: string) => {
-        //     if (error) {
-        //         throw error;
-        //     }
-        //     console.log(stdout);
-        // });
-
-        // const child = execFile(vcertPath, vcertArgs, (error: string, stdout: string, stderr: string) => {
-        //     if (error) {
-        //         throw error;
-        //     }
-        //     console.log(stdout);
-        //     certOut = stdout
-        // });
 
         var child = child_process.spawnSync(vcertPath, vcertArgs, { encoding: 'utf8' });
 
-        // if (child.error) {
-        //     throw child.error;
-        // }
-        // tl.debug("stdout: " + child.stdout);
-        // tl.debug("stderr: " + child.stderr);
-        // tl.debug("output: " + child.output);
-        // tl.debug("last output: " + child.output[child.output.length-1]);
-        // tl.debug("exit code: " + child.status);
+        console.log(child.stderr)
 
-        if (child.status === 0) {
-            console.log(child.stderr)
-        } else {
-            tl.setResult(tl.TaskResult.Failed, child.stderr);
+        // check if vcert failed
+        if (child.status !== 0) {
+            tl.setResult(tl.TaskResult.Failed, 'Vcert reported a failure, see log above');
             return;
-            // throw child.stderr
         }
 
         switch (action) {
             case 'request':
                 if (!requestNoRetrieval) {
                     if (requestOutputType === 'envVar' && (requestFormat === 'pem' || requestFormat === 'json')) {
-                        // certOut = certOut.replace(/\n/g, '');
-                        // console.log(certOut)
                         tl.setVariable(certEnvVarName, child.stdout.replace(/(\r\n|\n|\r)/gm, '\\n'), true)
                         console.log('Contents of certificate, with ' + requestFormat + ' format, saved to environment variable ' + certEnvVarName)
                     } else {
