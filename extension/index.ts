@@ -351,18 +351,21 @@ async function run() {
 
         var child = child_process.spawnSync(vcertPath, vcertArgs, { encoding: 'utf8' });
 
-        if (child.error) {
-            throw child.error;
-        }
-        tl.debug("stdout: " + child.stdout);
-        tl.debug("stderr: " + child.stderr);
-        tl.debug("output: " + child.output);
-        tl.debug("last output: " + child.output[child.output.length-1]);
-        tl.debug("exit code: " + child.status);
-        console.log(child.stderr)
+        // if (child.error) {
+        //     throw child.error;
+        // }
+        // tl.debug("stdout: " + child.stdout);
+        // tl.debug("stderr: " + child.stderr);
+        // tl.debug("output: " + child.output);
+        // tl.debug("last output: " + child.output[child.output.length-1]);
+        // tl.debug("exit code: " + child.status);
 
-        if (child.status === 1 ) {
-            throw child.stderr
+        if (child.status === 0) {
+            console.log(child.stderr)
+        } else {
+            tl.setResult(tl.TaskResult.Failed, child.stderr);
+            return;
+            // throw child.stderr
         }
 
         switch (action) {
