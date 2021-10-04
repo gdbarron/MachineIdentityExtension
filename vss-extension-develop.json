@@ -1,0 +1,92 @@
+{
+    "manifestVersion": 1,
+    "id": "MachineIdentityExtension-develop",
+    "name": "Machine Identity Extension-develop",
+    "version": "0.2.0",
+    "publisher": "GregBrownstein",
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "description": "Simplify key generation and enrollment of machine identities (also known as SSL/TLS certificates and keys) with Venafi as a Service or Trust Protection Platform",
+    "categories": [
+        "Azure Pipelines"
+    ],
+    "tags": [
+        "venafi",
+        "ssl",
+        "tls",
+        "certificates",
+        "keys",
+        "machine identity"
+    ],
+    "screenshots": [
+
+    ],
+    "icons": {
+        "default": "images/ven_circlev_logo.png"
+    },
+    "content": {
+        "details": {
+            "path": "extension/readme.md"
+        },
+        "license": {
+            "path": "LICENSE"
+        }
+    },
+    "links": {
+        "repository": {
+            "uri": "https://github.com/gdbarron/MachineIdentityExtension"
+        },
+        "issues": {
+            "uri": "https://github.com/gdbarron/MachineIdentityExtension/issues"
+        },
+        "support": {
+            "uri": "https://github.com/gdbarron/MachineIdentityExtension/discussions"
+        },
+        "privacypolicy": {
+            "uri": "https://github.com/gdbarron/MachineIdentityExtension/blob/main/privacy-policy.md"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/gdbarron/MachineIdentityExtension"
+    },
+    "files": [
+        {
+            "path": "extension/bin"
+        },
+        {
+            "path": "extension/node_modules/azure-pipelines-task-lib"
+        },
+        {
+            "path": "extension/node_modules/vss-web-extension-sdk"
+        },
+        {
+            "path": "extension/icon.png"
+        },
+        {
+            "path": "extension/index.js"
+        },
+        {
+            "path": "extension/task.json"
+        }
+    ],
+    "galleryFlags": [
+        "Public"
+    ],
+    "contributions": [
+        {
+            "id": "MachineIdentityExtension",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "extension",
+                "icon": "icon.png"
+            }
+        }
+    ]
+}
