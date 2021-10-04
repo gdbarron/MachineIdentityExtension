@@ -1,3 +1,6 @@
+## v1.2
+- Add workaround for ADO bug where fields were marked as required when they shouldn't be with yaml pipelines
+
 ## v1.1
 - Add revoke token action
 - Better error handling to ensure we always fail when vcert reports an issue
