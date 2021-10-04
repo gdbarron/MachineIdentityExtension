@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "MachineIdentityExtension-develop",
-    "name": "Machine Identity Extension-develop",
+    "name": "Machine Identity Extension.develop",
     "version": "0.2.0",
     "publisher": "GregBrownstein",
     "targets": [
