@@ -134,7 +134,8 @@
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "Certificate destination.<br/><br/>Venafi as a Service: Application and associated issuing template in the form application\\template<br/><br/>TPP: Folder path. \\VED\\Policy\\ will be prepended, you only need to specify child folders under the root Policy folder.<br/>Example: DevOps\\CorpApp",
-            "groupName": "requestGroup"
+            "groupName": "requestGroup",
+            "visibleRule": "action = request"
         },
         {
             "name": "requestCommonName",
@@ -142,7 +143,8 @@
             "label": "Common Name (CN)",
             "defaultValue": "",
             "required": true,
-            "groupName": "requestGroup"
+            "groupName": "requestGroup",
+            "visibleRule": "action = request"
         },
         {
             "name": "requestKeyPassword",
