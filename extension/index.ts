@@ -209,7 +209,11 @@ async function run() {
 
                     case 'id':
                         vcertArgs.push('--pickup-id')
-                        vcertArgs.push('\\ved\\policy\\' + retrieveId)
+                        if (serverType === 'cloud') {
+                            vcertArgs.push(retrieveId)
+                        } else {
+                            vcertArgs.push('\\ved\\policy\\' + retrieveId)
+                        }
                         break;
 
                     case 'file':
