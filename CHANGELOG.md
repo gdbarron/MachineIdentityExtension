@@ -1,3 +1,9 @@
+## v1.3
+- Fix task input grouping error, [#8](https://github.com/gdbarron/MachineIdentityExtension/issues/8)
+- Update vcert to 4.24
+- Fix incorrect command line for some cloud actions
+- Updated Venafi logo
+
 ## v1.2
 - Add workaround for ADO bug where fields were marked as required when they shouldn't be with yaml pipelines
 
