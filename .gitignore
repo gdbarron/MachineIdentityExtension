@@ -1,3 +1,4 @@
 node_modules/
 index.js
 .taskkey
+.DS_Store

@@ -67,7 +67,8 @@
                 "renew": "Renew Certificate",
                 "getToken": "Get Token (TPP only)",
                 "revokeToken": "Revoke Token (TPP only)"
-            }
+            },
+            "groupName": "mainGroup"
         },
         {
             "name": "serverType",
