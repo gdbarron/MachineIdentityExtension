@@ -244,7 +244,6 @@ async function run() {
                     case 'envVar':
                         var thisId = tl.getVariable(certIdEnvVarName)
                         if (thisId) {
-                            // thisId = thisId.trim()
                             vcertArgs.push('--id')
                             if (serverType === 'cloud') {
                                 vcertArgs.push(thisId)
@@ -350,6 +349,8 @@ async function run() {
             });
         }
 
+        vcertArgs.push('--no-prompt')
+
         if (verbose) {
             console.log('vcert path: ' + vcertPath)
             console.log('vcert args: ' + vcertArgs)
@@ -419,5 +420,4 @@ async function run() {
     }
 }
 
-// use --no-prompt
 run();
