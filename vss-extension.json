@@ -25,7 +25,7 @@
 
     ],
     "icons": {
-        "default": "images/icon.png"
+        "default": "images/icon-128.png"
     },
     "content": {
         "details": {
