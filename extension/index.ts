@@ -199,9 +199,12 @@ async function run() {
                     case 'priorRequest':
                         var thisId = tl.getVariable(certIdEnvVarName)
                         if (thisId) {
-                            // thisId = thisId.trim()
                             vcertArgs.push('--pickup-id')
-                            vcertArgs.push('\\ved\\policy\\' + thisId)
+                            if (serverType === 'cloud') {
+                                vcertArgs.push(thisId)
+                            } else {
+                                vcertArgs.push('\\ved\\policy\\' + thisId)
+                            }
                         } else {
                             throw 'No certificate ID was found at environment variable ' + certIdEnvVarName + '.  Ensure your prior request was successful.'
                         }
@@ -219,8 +222,11 @@ async function run() {
                     case 'file':
                         vcertArgs.push('--pickup-id-file')
                         var retrieveIdFromFile = fs.readFileSync(retrieveFile, 'utf8')
-                        vcertArgs.push('\\ved\\policy\\' + retrieveIdFromFile)
-                        // vcertArgs.push(retrieveFile)
+                        if (serverType === 'cloud') {
+                            vcertArgs.push(retrieveIdFromFile)
+                        } else {
+                            vcertArgs.push('\\ved\\policy\\' + retrieveIdFromFile)
+                        }
                         break;
 
                     default:
@@ -240,7 +246,11 @@ async function run() {
                         if (thisId) {
                             // thisId = thisId.trim()
                             vcertArgs.push('--id')
-                            vcertArgs.push('\\ved\\policy\\' + thisId)
+                            if (serverType === 'cloud') {
+                                vcertArgs.push(thisId)
+                            } else {
+                                vcertArgs.push('\\ved\\policy\\' + thisId)
+                            }
                         } else {
                             throw 'No certificate ID was found at environment variable ' + certIdEnvVarName + '.  Ensure your prior request was successful.'
                         }
@@ -248,14 +258,21 @@ async function run() {
 
                     case 'id':
                         vcertArgs.push('--id')
-                        vcertArgs.push('\\ved\\policy\\' + renewId)
+                        if (serverType === 'cloud') {
+                            vcertArgs.push(renewId)
+                        } else {
+                            vcertArgs.push('\\ved\\policy\\' + renewId)
+                        }
                         break;
 
                     case 'file':
                         vcertArgs.push('--id')
                         var renewIdFromFile = fs.readFileSync(renewFile, 'utf8')
-                        vcertArgs.push('\\ved\\policy\\' + renewIdFromFile)
-                        // vcertArgs.push('file:' + renewFile)
+                        if (serverType === 'cloud') {
+                            vcertArgs.push(renewIdFromFile)
+                        } else {
+                            vcertArgs.push('\\ved\\policy\\' + renewIdFromFile)
+                        }
                         break;
 
                     default:
