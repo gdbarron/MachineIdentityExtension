@@ -91,7 +91,7 @@
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "TPP server URL, eg. tpp.venafi.example. 'https://' will be appended automatically.",
-            "visibleRule": "serverType = tpp || action = getToken",
+            "visibleRule": "serverType = tpp || action = getToken || action = revokeToken",
             "groupName": "mainGroup"
         },
         {
@@ -100,7 +100,7 @@
             "label": "Auth Token From",
             "defaultValue": "priorGetToken",
             "required": true,
-            "helpMarkDown": "You can either provide your token directly or use a token obtained from a prior Get Token action",
+            "helpMarkDown": "You can either provide your token directly or use a token obtained from a prior 'Get Token' action",
             "options": {
                 "priorGetToken": "Prior Get Token",
                 "inline": "Inline"
@@ -439,7 +439,7 @@
         {
             "name": "getTokenClientId",
             "type": "string",
-            "label": "Application Name",
+            "label": "Client ID",
             "defaultValue": "",
             "required": false,
             "helpMarkDown": "If not provided, 'vcert-cli' is the default.",
