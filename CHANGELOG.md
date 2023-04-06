@@ -1,5 +1,5 @@
 ## v1.3
-- Fix task input grouping error, [[#8](https://github.com/gdbarron/MachineIdentityExtension/issues/8)
+- Fix task input grouping error, [#8](https://github.com/gdbarron/MachineIdentityExtension/issues/8)
 - Update vcert to 4.24
 - Fix incorrect command line for some cloud actions
 - Updated Venafi logo
