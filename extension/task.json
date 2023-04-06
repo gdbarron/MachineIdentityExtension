@@ -81,7 +81,7 @@
                 "cloud": "Venafi as a Service",
                 "tpp": "Trust Protection Platform (TPP)"
             },
-            "visibleRule": "action != getToken",
+            "visibleRule": "action != getToken && action != revokeToken",
             "groupName": "mainGroup"
         },
         {
